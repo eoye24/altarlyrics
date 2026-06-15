@@ -1684,10 +1684,10 @@ function initDisp(){
 
 function applyLU(state){
   if(!state)return;
-  // Sync lps from controller before re-parsing — display window may have stale local lps
+  // Sync lps from controller so future re-parses (loadSong etc.) use correct value
   if(state.cfg&&state.cfg.lps) cfg.lps=state.cfg.lps;
-  // Re-parse the incoming song with the now-correct lps
-  if(state.song) state={...state,song:freshSong(state.song)};
+  // Use song sections exactly as sent by controller — already correctly parsed there
+  // Do NOT re-parse here; re-parsing with a possibly-stale local cfg.lps causes wrong line count
   if(MODE==='display'){
     if(state.blank){clrDisp(state.cfg||state.settings);return;}
     if(state.song&&state.idx>=0){
@@ -1932,7 +1932,7 @@ function rBlank(){
   const nb=!remLive.blank;
   const upd={...remLive,blank:nb};
   if(bc)bc.postMessage({type:'live',state:upd});
-  if(fbRef)fbRef.update({blank:nb});
+  if(fbRef)fbRef.set(upd).catch(()=>{});
   remApply(upd);
 }
 
@@ -1945,7 +1945,7 @@ function rNext(){
 function rGoTo(idx){
   const upd={...remLive,idx,blank:false};
   if(bc)bc.postMessage({type:'live',state:upd});
-  if(fbRef)fbRef.update({idx,blank:false});
+  if(fbRef)fbRef.set(upd).catch(()=>{});
   remApply(upd);
 }
 
