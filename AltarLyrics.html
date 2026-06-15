@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>AltarLyrics v1.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Lato:wght@300;400;700&family=Oswald:wght@400;500;600&family=Raleway:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d14;--sf:#16161f;--sf2:#1e1e2a;--sf3:#252535;
+  --bd:#2a2a3d;--tx:#e0e0f0;--txd:#5a5a90;
+  --ac:#8855cc;--ach:#9966dd;--acg:rgba(136,85,204,.2);
+  --live:#e53935;--livebg:rgba(229,57,53,.15);
+  --bl:#ff8800;--blbg:rgba(255,136,0,.15);
+  --gn:#44cc88;--rd:#e53935;
+  --sab:rgba(136,85,204,.25);--sabo:#8855cc;
+  --hdr:50px;--lw:238px;--rw:268px
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
+  font-family:system-ui,-apple-system,sans-serif;font-size:13px}
+
+/* BUTTONS */
+.btn{background:var(--sf2);border:1px solid var(--bd);color:var(--tx);
+  padding:5px 11px;border-radius:6px;cursor:pointer;font-size:12px;
+  transition:all .14s;white-space:nowrap;line-height:1.4}
+.btn:hover{background:var(--sf3);border-color:var(--ac)}
+.btn-ac{background:var(--ac);border-color:var(--ac);color:#fff}
+.btn-ac:hover{background:var(--ach)}
+.btn-bl{background:var(--blbg);border-color:var(--bl);color:var(--bl)}
+.btn-sm{padding:3px 8px;font-size:11px}
+.btn-sm.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.bic{background:none;border:none;color:var(--txd);cursor:pointer;
+  padding:2px 4px;font-size:13px;border-radius:4px}
+.bic:hover{color:var(--tx);background:var(--sf3)}
+
+/* HEADER */
+#ctrl-hdr{height:var(--hdr);background:var(--sf);border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;padding:0 9px;gap:8px;flex-shrink:0}
+.brand{font-size:14px;font-weight:800;color:var(--ac);letter-spacing:.4px;white-space:nowrap}
+.sl-row{display:flex;align-items:center;gap:4px;flex:1;min-width:0}
+.sl-row select{flex:1;min-width:0;background:var(--sf2);border:1px solid var(--bd);
+  color:var(--tx);padding:4px 7px;border-radius:6px;font-size:12px}
+.hdr-r{display:flex;gap:4px;align-items:center;flex-shrink:0}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--txd);flex-shrink:0}
+.sdot.on{background:var(--gn)}
+.syn{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--txd)}
+
+/* BODY */
+#ctrl-body{display:flex;height:calc(100vh - var(--hdr));overflow:hidden}
+
+/* LIBRARY */
+#lib-pnl{width:var(--lw);background:var(--sf);border-right:1px solid var(--bd);
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+.ph{padding:7px 9px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.plbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--txd);
+  margin-bottom:5px;font-weight:700}
+#lib-srch{width:100%;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);
+  padding:5px 8px;border-radius:6px;font-size:12px}
+#lib-srch:focus{outline:none;border-color:var(--ac)}
+#songs-lst{flex:1;overflow-y:auto;padding:4px}
+.si{padding:5px 8px;border-radius:5px;cursor:pointer;font-size:12px;
+  display:flex;align-items:center;gap:4px;transition:background .1s}
+.si:hover{background:var(--sf2)}
+.si.on{background:var(--sab);color:var(--ac)}
+.si-ttl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.si-art{font-size:10px;color:var(--txd);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.si-acts{display:none;gap:1px}
+.si:hover .si-acts{display:flex}
+#lib-bot{padding:8px 9px;border-top:1px solid var(--bd);flex-direction:column;
+  gap:5px;flex-shrink:0}
+#sl-inner{overflow-y:auto;max-height:190px}
+.sli{padding:5px 8px;border-radius:5px;cursor:pointer;font-size:12px;
+  display:flex;align-items:center;gap:4px;border:1.5px solid transparent;
+  margin-bottom:2px;transition:all .1s}
+.sli:hover{background:var(--sf2)}
+.sli.on{border-color:var(--ac);background:var(--sab)}
+.sli.dov{border-color:var(--ac);background:var(--acg)}
+.dh{color:var(--txd);cursor:grab;font-size:10px;user-select:none}
+.slitl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slirm{background:none;border:none;color:var(--txd);cursor:pointer;font-size:10px}
+.slirm:hover{color:var(--rd)}
+
+/* GRID */
+#grid-pnl{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+#grid-hdr{display:flex;align-items:center;padding:7px 12px;border-bottom:1px solid var(--bd);
+  flex-shrink:0;gap:8px}
+#grid-title{font-size:13px;font-weight:600;flex:1;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap;color:var(--txd)}
+.lps-grp{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.lps-lbl{font-size:10px;color:var(--txd);white-space:nowrap}
+#slide-ctr{font-size:11px;color:var(--txd);white-space:nowrap;flex-shrink:0}
+#slide-grid{flex:1;overflow-y:auto;padding:10px}
+.slbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ac);
+  font-weight:700;margin:9px 0 4px;padding:0 1px}
+.slbl:first-child{margin-top:0}
+.srow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:3px}
+.sc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:7px;
+  padding:8px 10px;cursor:pointer;min-width:120px;max-width:200px;flex:1;
+  transition:all .13s}
+.sc:hover{border-color:var(--ac);background:var(--sf3)}
+.sc.on{border-color:var(--sabo);background:var(--sab);box-shadow:0 0 0 2px var(--acg)}
+.scn{font-size:9px;color:var(--txd);margin-bottom:3px}
+.sct{font-size:11px;line-height:1.5;color:var(--tx)}
+.scs{font-size:10px;color:var(--txd);line-height:1.4;margin-top:2px;font-style:italic}
+
+/* CONTROLS PANEL */
+#ctrl-pnl{width:var(--rw);background:var(--sf);border-left:1px solid var(--bd);
+  display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
+.cps{padding:9px;border-bottom:1px solid var(--bd)}
+
+/* Live preview only */
+.pvbox{background:var(--sf2);border:1px solid var(--bd);border-radius:7px;
+  padding:6px 8px;min-height:46px;margin-bottom:7px}
+.pvlbl{font-size:8px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px;color:var(--live)}
+.pvtxt{font-size:11px;line-height:1.5}
+.pvsc{font-size:10px;color:var(--txd);margin-top:2px;font-style:italic}
+
+.nav-row{display:flex;gap:5px;margin-bottom:5px}
+#blank-btn{width:100%;padding:8px;font-size:12px;font-weight:700}
+#prev-btn,#next-btn{flex:1;padding:8px;font-size:12px;font-weight:700}
+
+/* TABS */
+.tabs{display:flex;gap:2px;margin-bottom:8px}
+.tbtn{flex:1;padding:4px 3px;background:var(--sf2);border:1px solid var(--bd);
+  color:var(--txd);cursor:pointer;font-size:10px;border-radius:5px;transition:all .13s}
+.tbtn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.tpane{display:none !important}.tpane.on{display:block !important}
+.clbl{font-size:10px;color:var(--txd);margin-bottom:3px;display:block}
+.crow{margin-bottom:8px}
+input[type=range]{width:100%;accent-color:var(--ac);cursor:pointer}
+select,.cinp{width:100%;background:var(--sf2);border:1px solid var(--bd);
+  color:var(--tx);padding:4px 7px;border-radius:5px;font-size:11px}
+select:focus,.cinp:focus{outline:none;border-color:var(--ac)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+.crow-row{display:flex;gap:4px;align-items:center}
+.crow-row input[type=color]{width:30px;height:26px;padding:1px;flex-shrink:0;
+  cursor:pointer;border:1px solid var(--bd);border-radius:4px;background:none}
+.crow-row .cinp{flex:1}
+.tglrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.tgllbl{font-size:11px;color:var(--txd)}
+.tgl{position:relative;width:28px;height:16px;flex-shrink:0}
+.tgl input{opacity:0;width:0;height:0}
+.tgls{position:absolute;cursor:pointer;inset:0;background:var(--sf3);border-radius:16px;transition:.18s}
+.tgls::before{content:'';position:absolute;width:10px;height:10px;left:3px;top:3px;
+  background:var(--txd);border-radius:50%;transition:.18s}
+.tgl input:checked+.tgls{background:var(--ac)}
+.tgl input:checked+.tgls::before{transform:translateX(12px);background:#fff}
+.thmbtn{padding:4px 6px;border-radius:5px;border:1.5px solid var(--bd);
+  cursor:pointer;font-size:10px;text-align:center;transition:all .13s;
+  background:var(--sf2);color:var(--tx)}
+.thmbtn:hover,.thmbtn.on{border-color:var(--ac);background:var(--acg)}
+.fbtn{padding:3px 7px;border-radius:5px;border:1.5px solid var(--bd);
+  cursor:pointer;font-size:11px;transition:all .13s;background:var(--sf2);
+  color:var(--tx);text-align:left;width:100%;margin-bottom:3px}
+.fbtn:hover,.fbtn.on{border-color:var(--ac)}
+.sep{border-top:1px solid var(--bd);padding-top:8px;margin-top:4px}
+.seplbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--txd);
+  font-weight:700;margin-bottom:7px}
+
+/* DISPLAY */
+#disp-mode{position:fixed;inset:0;background:transparent;overflow:hidden;display:none}
+#bg-lyr{position:absolute;inset:0;z-index:1;pointer-events:none}
+#lyr-blk{position:absolute;z-index:2;pointer-events:none;display:none}
+#lyr-bg{position:absolute;inset:0;border-radius:4px;z-index:1}
+#lyr-in{position:relative;z-index:2}
+#ttl-disp{display:none;line-height:1.3}
+#artist-disp{display:none;opacity:.7}
+#sec-lines{display:none}
+.dl{display:block}
+@keyframes FI{from{opacity:0}to{opacity:1}}
+@keyframes FO{from{opacity:1}to{opacity:0}}
+@keyframes SI{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes SO{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-12px)}}
+.afi{animation:FI .28s ease forwards}
+.afo{animation:FO .2s ease forwards}
+.asi{animation:SI .28s ease forwards}
+.aso{animation:SO .2s ease forwards}
+
+/* SONG TITLE ON DISPLAY */
+#ttl-anchor{position:absolute;z-index:3;pointer-events:none;display:none;padding:10px 14px}
+
+/* REMOTE */
+#rem-mode{height:100vh;display:none;flex-direction:column;background:var(--bg);overflow:hidden}
+#rem-hdr{display:flex;align-items:center;padding:10px 12px;background:var(--sf);
+  border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px}
+#rem-sname{font-size:13px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#rem-blk{background:var(--blbg);border:2px solid var(--bl);color:var(--bl);
+  padding:7px 14px;border-radius:7px;font-weight:700;font-size:12px;cursor:pointer;flex-shrink:0}
+#rem-view-tgl{display:flex;gap:4px;padding:6px 9px;border-bottom:1px solid var(--bd);flex-shrink:0}
+#rem-secs{display:flex;gap:4px;padding:6px 9px;overflow-x:auto;
+  border-bottom:1px solid var(--bd);flex-shrink:0;scrollbar-width:none}
+#rem-secs::-webkit-scrollbar{display:none}
+.rsb{background:var(--sf2);border:1px solid var(--bd);color:var(--txd);
+  padding:4px 10px;border-radius:18px;font-size:11px;cursor:pointer;white-space:nowrap;
+  flex-shrink:0;transition:all .13s}
+.rsb:hover,.rsb.on{background:var(--ac);border-color:var(--ac);color:#fff}
+#rem-grid{flex:1;overflow-y:auto;padding:8px}
+.rc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:9px;
+  padding:11px 13px;margin-bottom:6px;cursor:pointer;transition:all .13s;
+  font-size:14px;line-height:1.6}
+.rc:active{transform:scale(.98)}
+.rc.on{border-color:var(--ac);background:var(--sab)}
+.rcs{font-size:9px;color:var(--ac);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-weight:700}
+.rcsec{font-size:12px;color:var(--txd);margin-top:3px;font-style:italic}
+/* PC view for remote */
+.pc-view .rc{font-size:11px;padding:6px 9px;line-height:1.4}
+.pc-view #rem-grid{padding:5px}
+#rem-nav{display:flex;gap:6px;padding:10px;background:var(--sf);
+  border-top:1px solid var(--bd);flex-shrink:0}
+#rp,#rn{flex:1;padding:13px;border-radius:9px;font-size:15px;font-weight:700;
+  cursor:pointer;border:1.5px solid var(--bd);background:var(--sf2);color:var(--tx);transition:all .13s}
+#rn{background:var(--ac);border-color:var(--ac);color:#fff}
+.pc-view #rp,.pc-view #rn{padding:8px;font-size:13px}
+#rp:active,#rn:active{transform:scale(.97)}
+
+/* MODALS */
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;
+  display:none;align-items:center;justify-content:center;padding:18px}
+.mov.open{display:flex}
+.mod{background:var(--sf);border:1px solid var(--bd);border-radius:11px;
+  width:100%;max-width:840px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
+.mhdr{display:flex;align-items:center;justify-content:space-between;
+  padding:11px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.mtit{font-size:14px;font-weight:700}
+.mx{background:none;border:none;color:var(--txd);font-size:19px;cursor:pointer}
+.mbdy{flex:1;overflow-y:auto;padding:16px}
+.mft{padding:10px 16px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:6px;flex-shrink:0}
+.fr{margin-bottom:12px}
+.fl{display:block;font-size:11px;color:var(--txd);margin-bottom:4px;font-weight:600}
+.fi{width:100%;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);
+  padding:6px 8px;border-radius:6px;font-size:12px}
+.fi:focus{outline:none;border-color:var(--ac)}
+textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100px}
+.dcols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dcols textarea.fi{min-height:180px}
+.ulbl{display:inline-flex;align-items:center;gap:4px;background:var(--sf3);
+  border:1px solid var(--bd);color:var(--txd);padding:3px 8px;border-radius:5px;
+  cursor:pointer;font-size:11px;margin-top:4px;transition:all .13s}
+.ulbl:hover{border-color:var(--ac);color:var(--tx)}
+.ulbl input{display:none}
+
+/* PIN */
+#pin-ov{position:fixed;inset:0;background:var(--bg);z-index:9999;
+  display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+#pin-ov.show{display:flex}
+#pin-in{font-size:20px;letter-spacing:6px;text-align:center;background:var(--sf2);
+  border:1px solid var(--bd);color:var(--tx);padding:10px 16px;border-radius:8px;width:180px}
+#pin-err{color:var(--rd);font-size:12px;min-height:16px}
+
+/* TOAST */
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+  background:var(--sf3);border:1px solid var(--bd);color:var(--tx);
+  padding:6px 16px;border-radius:18px;font-size:12px;z-index:9999;
+  opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+#toast.show{opacity:1}
+
+/* MISC */
+.empty{text-align:center;color:var(--txd);padding:22px 12px;font-size:12px}
+.eic{font-size:26px;margin-bottom:7px}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+</style>
+</head>
+<body>
+
+<div id="pin-ov">
+  <div style="font-size:20px;font-weight:800;color:var(--ac)">🎵 AltarLyrics</div>
+  <div style="font-size:12px;color:var(--txd)">Remote — Enter PIN</div>
+  <input type="password" id="pin-in" maxlength="6" placeholder="••••" autofocus>
+  <div id="pin-err"></div>
+  <button class="btn btn-ac" onclick="checkPin()">Enter</button>
+</div>
+<div id="toast"></div>
+
+<!-- ═══════════════ CONTROLLER ═══════════════ -->
+<div id="ctrl-mode" style="display:none;flex-direction:column;height:100vh">
+  <header id="ctrl-hdr">
+    <div class="brand">🎵 AltarLyrics</div>
+    <div class="sl-row">
+      <select id="sl-sel" onchange="loadSetlist(this.value)"><option value="">— No Setlist —</option></select>
+      <button class="btn btn-sm" onclick="newSetlist()">+ New</button>
+      <button class="btn btn-sm" onclick="saveSetlist()">Save</button>
+    </div>
+    <div class="hdr-r">
+      <div class="syn"><span class="sdot" id="sdot"></span><span id="slbl">Local</span></div>
+      <button class="btn btn-sm" onclick="exportData()" title="Export library &amp; settings">📤 Export</button>
+      <label class="btn btn-sm" style="cursor:pointer" title="Import library &amp; settings">📥 Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+    </div>
+  </header>
+
+  <div id="ctrl-body">
+    <!-- LEFT -->
+    <aside id="lib-pnl">
+      <div class="ph">
+        <div class="plbl">Song Library</div>
+        <input type="text" id="lib-srch" placeholder="Search songs…" oninput="filterLib(this.value)">
+      </div>
+      <div id="songs-lst"><div class="empty"><div class="eic">🎵</div>No songs yet.</div></div>
+      <div style="padding:7px 9px;border-top:1px solid var(--bd);flex-shrink:0">
+        <button class="btn btn-ac" style="width:100%;font-size:12px" onclick="openEd(null)">+ Add Song</button>
+      </div>
+      <div id="lib-bot" style="display:flex">
+        <div style="border-top:1px solid var(--bd);padding-top:7px">
+          <div class="plbl">Today's Setlist</div>
+          <div id="sl-inner"><div class="empty" style="padding:10px"><div style="font-size:16px">📋</div>Empty</div></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER -->
+    <main id="grid-pnl">
+      <div id="grid-hdr">
+        <div id="grid-title">Select a song</div>
+        <div class="lps-grp">
+          <span class="lps-lbl">Lines:</span>
+          <div class="g3" id="lps-btns">
+            <button class="btn btn-sm" onclick="setLPS(1)">1</button>
+            <button class="btn btn-sm on" onclick="setLPS(2)">2</button>
+            <button class="btn btn-sm" onclick="setLPS(4)">4</button>
+          </div>
+        </div>
+        <div id="slide-ctr">—</div>
+      </div>
+      <div id="slide-grid"><div class="empty" style="padding-top:44px"><div class="eic">🎵</div>Click a song to load slides</div></div>
+    </main>
+
+    <!-- RIGHT -->
+    <aside id="ctrl-pnl">
+      <div class="cps">
+        <div class="pvbox">
+          <div class="pvlbl">● LIVE</div>
+          <div class="pvtxt" id="ltxt" style="color:var(--txd)">—</div>
+          <div class="pvsc" id="lsec"></div>
+        </div>
+        <div class="nav-row"><button class="btn btn-bl" id="blank-btn" onclick="toggleBlank()">BLANK</button></div>
+        <div class="nav-row">
+          <button class="btn" id="prev-btn" onclick="goPrev()">◀ PREV</button>
+          <button class="btn btn-ac" id="next-btn" onclick="goNext()">NEXT ▶</button>
+        </div>
+      </div>
+
+      <div class="cps">
+        <div class="tabs">
+          <button class="tbtn on" onclick="swTab('theme')">Theme</button>
+          <button class="tbtn" onclick="swTab('text')">Text</button>
+          <button class="tbtn" onclick="swTab('pos')">Pos</button>
+          <button class="tbtn" onclick="swTab('more')">More</button>
+        </div>
+
+        <!-- THEME -->
+        <div class="tpane on" id="tp-theme">
+          <div class="clbl">Themes</div>
+          <div class="g3" id="thm-grid" style="margin-bottom:8px"></div>
+          <div class="crow">
+            <div class="clbl">Background</div>
+            <select id="bg-type" onchange="onBGchange()">
+              <option value="transparent">Transparent</option>
+              <option value="solid">Solid</option>
+              <option value="gradient">Gradient</option>
+              <option value="image">Image Upload</option>
+            </select>
+          </div>
+          <div id="bgs-row" class="crow" style="display:none">
+            <div class="clbl">BG Color</div>
+            <div class="crow-row">
+              <input type="color" id="bgc1" onchange="SC()">
+              <input type="text" class="cinp" id="bgc1h" oninput="syncHex('bgc1')">
+            </div>
+          </div>
+          <div id="bgg-row" class="crow" style="display:none">
+            <div class="clbl">Gradient Colors</div>
+            <div class="crow-row">
+              <input type="color" id="bgc1g" onchange="SC()">
+              <input type="color" id="bgc2g" onchange="SC()">
+            </div>
+          </div>
+          <div id="bgi-row" class="crow" style="display:none">
+            <div class="clbl">BG Image</div>
+            <label class="ulbl">📁 Upload Image<input type="file" accept="image/*" onchange="hBgImg(event)"></label>
+          </div>
+          <div id="bgo-row" class="crow">
+            <div class="clbl">BG Opacity: <span id="bgo-v">75</span>%</div>
+            <input type="range" id="bg-op" min="0" max="100" value="75" oninput="SC()">
+          </div>
+        </div>
+
+        <!-- TEXT -->
+        <div class="tpane" id="tp-text">
+          <div class="crow">
+            <div class="clbl">Font</div>
+            <div id="fnt-grid"></div>
+          </div>
+          <div class="crow">
+            <div class="clbl">Size: <span id="fsz-v">48</span>px</div>
+            <input type="range" id="font-sz" min="16" max="120" value="48" oninput="SC()">
+          </div>
+          <div class="crow">
+            <div class="clbl">Text Color</div>
+            <div class="crow-row">
+              <input type="color" id="txc" value="#ffffff" onchange="SC()">
+              <input type="text" class="cinp" id="txch" value="#ffffff" oninput="syncHex('txc')">
+            </div>
+          </div>
+          <div class="crow">
+            <div class="clbl">Alignment</div>
+            <div class="g3" id="aln-btns">
+              <button class="btn btn-sm" onclick="setAlign('left')">Left</button>
+              <button class="btn btn-sm on" onclick="setAlign('center')">Center</button>
+              <button class="btn btn-sm" onclick="setAlign('right')">Right</button>
+            </div>
+          </div>
+          <div class="tglrow">
+            <span class="tgllbl">Text Outline</span>
+            <label class="tgl"><input type="checkbox" id="otgl" onchange="onOutlineChange()"><span class="tgls"></span></label>
+          </div>
+          <div id="oc-row" class="crow" style="display:none">
+            <div class="clbl">Outline Color</div>
+            <input type="color" id="out-col" value="#000000" onchange="SC()">
+          </div>
+          <div class="crow">
+            <div class="clbl">Line Spacing</div>
+            <select id="lnsp" onchange="SC()">
+              <option value="1.2">Tight</option>
+              <option value="1.5" selected>Normal</option>
+              <option value="1.9">Relaxed</option>
+              <option value="2.4">Loose</option>
+            </select>
+          </div>
+          <div class="crow">
+            <div class="clbl">Padding</div>
+            <div class="g3" id="pad-btns">
+              <button class="btn btn-sm" onclick="setPad('S')">S</button>
+              <button class="btn btn-sm on" onclick="setPad('M')">M</button>
+              <button class="btn btn-sm" onclick="setPad('L')">L</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- POSITION -->
+        <div class="tpane" id="tp-pos">
+          <div class="crow">
+            <div class="clbl">Horizontal: <span id="ph-v">50</span>%</div>
+            <input type="range" id="pos-h" min="0" max="100" value="50" oninput="SC()">
+          </div>
+          <div class="crow">
+            <div class="clbl">Vertical: <span id="pv-v">85</span>%</div>
+            <input type="range" id="pos-v" min="0" max="100" value="85" oninput="SC()">
+          </div>
+          <div class="crow">
+            <div class="clbl">Block Width: <span id="bw-v">80</span>%</div>
+            <input type="range" id="blk-w" min="20" max="100" value="80" oninput="SC()">
+          </div>
+          <div class="crow">
+            <div class="clbl">Animation</div>
+            <div class="g3" id="ani-btns">
+              <button class="btn btn-sm" onclick="setAnim('cut')">Cut</button>
+              <button class="btn btn-sm on" onclick="setAnim('fade')">Fade</button>
+              <button class="btn btn-sm" onclick="setAnim('slide')">Slide</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MORE -->
+        <div class="tpane" id="tp-more">
+          <div class="tglrow">
+            <span class="tgllbl">Show Song Title</span>
+            <label class="tgl"><input type="checkbox" id="sttgl" onchange="SC()"><span class="tgls"></span></label>
+          </div>
+          <div id="ttl-opts" class="crow" style="display:none">
+            <div class="clbl">Title Position</div>
+            <select id="ttl-pos" onchange="SC()">
+              <option value="top-left">Top Left</option>
+              <option value="top-center">Top Center</option>
+              <option value="top-right">Top Right</option>
+              <option value="bottom-left">Bottom Left</option>
+              <option value="bottom-center" selected>Bottom Center</option>
+              <option value="bottom-right">Bottom Right</option>
+            </select>
+          </div>
+          <div class="tglrow">
+            <span class="tgllbl">Show Artist Name</span>
+            <label class="tgl"><input type="checkbox" id="artgl" onchange="SC()"><span class="tgls"></span></label>
+          </div>
+          <div class="crow">
+            <div class="clbl">Output Resolution</div>
+            <select id="res-sel" onchange="SC()">
+              <option value="1920x1080">1920×1080 (HD)</option>
+              <option value="3840x2160">3840×2160 (4K)</option>
+              <option value="1280x720">1280×720 (720p)</option>
+              <option value="1080x1920">1080×1920 (Vertical)</option>
+            </select>
+          </div>
+          <div class="sep">
+            <div class="seplbl">Remote PIN</div>
+            <div class="tglrow">
+              <span class="tgllbl">Enable PIN</span>
+              <label class="tgl"><input type="checkbox" id="pintgl" onchange="SC()"><span class="tgls"></span></label>
+            </div>
+            <div id="pin-row" style="display:none" class="crow">
+              <input type="text" class="cinp" id="pin-val" placeholder="4–6 digit PIN" maxlength="6" oninput="SC()">
+            </div>
+            <div class="tglrow">
+              <span class="tgllbl">Swipe Gestures</span>
+              <label class="tgl"><input type="checkbox" id="swptgl" checked onchange="SC()"><span class="tgls"></span></label>
+            </div>
+          </div>
+          <div class="sep">
+            <div class="seplbl">Firebase Sync</div>
+            <div class="g2" style="margin-bottom:6px">
+              <div class="crow">
+                <div class="clbl">API Key</div>
+                <input type="text" class="cinp" id="fb-ak" placeholder="AIza…" oninput="saveFBfields()">
+              </div>
+              <div class="crow">
+                <div class="clbl">Auth Domain</div>
+                <input type="text" class="cinp" id="fb-ad" placeholder="project.firebaseapp.com" oninput="saveFBfields()">
+              </div>
+              <div class="crow">
+                <div class="clbl">Database URL</div>
+                <input type="text" class="cinp" id="fb-du" placeholder="https://…firebaseio.com" oninput="saveFBfields()">
+              </div>
+              <div class="crow">
+                <div class="clbl">Project ID</div>
+                <input type="text" class="cinp" id="fb-pi" placeholder="my-project-id" oninput="saveFBfields()">
+              </div>
+            </div>
+            <button class="btn btn-sm" onclick="tryFirebase()">Connect Firebase</button>
+            <div id="fb-status" style="font-size:10px;color:var(--txd);margin-top:4px"></div>
+            <div id="qr-wrap" style="display:none;margin-top:10px">
+              <div class="clbl">Scan to open Remote</div>
+              <div id="qr-box" style="background:#fff;padding:6px;border-radius:6px;display:inline-block;margin-top:4px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:8px;font-size:9px;color:var(--txd);text-align:center;border-top:1px solid var(--bd);margin-top:auto">
+        AltarLyrics v1.1 · Altar Suite
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ═══════════════ DISPLAY ═══════════════ -->
+<div id="disp-mode">
+  <div id="bg-lyr"></div>
+  <!-- Independent title anchor -->
+  <div id="ttl-anchor">
+    <div id="ttl-disp"></div>
+    <div id="artist-disp"></div>
+  </div>
+  <!-- Lyrics block -->
+  <div id="lyr-blk">
+    <div id="lyr-bg"></div>
+    <div id="lyr-in">
+      <div id="lyr-txt">
+        <div id="pri-lines"></div>
+        <div id="sec-lines"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ REMOTE ═══════════════ -->
+<div id="rem-mode">
+  <header id="rem-hdr">
+    <div id="rem-sname">AltarLyrics Remote</div>
+    <button id="rem-blk" onclick="rBlank()">BLANK</button>
+  </header>
+  <div id="rem-view-tgl">
+    <button class="btn btn-sm on" id="vt-mob" onclick="setRView('mobile')">📱 Mobile</button>
+    <button class="btn btn-sm" id="vt-pc" onclick="setRView('pc')">🖥 PC</button>
+  </div>
+  <div id="rem-secs"></div>
+  <div id="rem-grid"></div>
+  <div id="rem-nav">
+    <button id="rp" onclick="rPrev()">◀ PREV</button>
+    <button id="rn" onclick="rNext()">NEXT ▶</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SONG EDITOR ═══════════════ -->
+<div class="mov" id="ed-modal">
+  <div class="mod">
+    <div class="mhdr">
+      <div class="mtit" id="ed-mtit">Add Song</div>
+      <button class="mx" onclick="closeEd()">✕</button>
+    </div>
+    <div class="mbdy">
+      <div class="fr">
+        <label class="fl">Song Title *</label>
+        <input type="text" class="fi" id="ed-title" placeholder="e.g. Baba Wa O, Praise the Lord…">
+      </div>
+      <div class="fr">
+        <label class="fl">Artist / Composer</label>
+        <input type="text" class="fi" id="ed-artist" placeholder="e.g. Sinach, Nathaniel Bassey…">
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap">
+        <div class="tglrow" style="margin:0;gap:8px">
+          <span class="fl" style="margin:0">Dual Language</span>
+          <label class="tgl"><input type="checkbox" id="ed-dual" onchange="togDual()"><span class="tgls"></span></label>
+        </div>
+      </div>
+
+      <div id="s-col">
+        <div class="fr">
+          <label class="fl">Lyrics <span style="font-weight:400;color:var(--txd)">(use [Verse 1], [Chorus], [Bridge] for sections)</span></label>
+          <label class="ulbl">📁 Upload TXT / DOCX / PDF / SRT<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'pri')"></label>
+          <textarea class="fi" id="ed-pri" style="margin-top:5px" placeholder="[Verse 1]&#10;Line one&#10;Line two&#10;&#10;[Chorus]&#10;Chorus line one&#10;Chorus line two&#10;&#10;[Bridge]&#10;Bridge line…"></textarea>
+        </div>
+      </div>
+
+      <div id="d-col" style="display:none">
+        <div class="dcols">
+          <div>
+            <label class="fl">Primary Lyrics</label>
+            <label class="ulbl">📁 Upload<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'pri')"></label>
+            <textarea class="fi" id="ed-prid" style="margin-top:5px" placeholder="[Verse 1]&#10;Primary line 1&#10;Primary line 2"></textarea>
+          </div>
+          <div>
+            <label class="fl">Translation</label>
+            <label class="ulbl">📁 Upload<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'sec')"></label>
+            <textarea class="fi" id="ed-sec" style="margin-top:5px" placeholder="[Verse 1]&#10;Translation line 1&#10;Translation line 2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--bd);margin-top:12px;padding-top:12px">
+        <div class="tglrow">
+          <span class="fl" style="margin:0">Per-Song Style Override</span>
+          <label class="tgl"><input type="checkbox" id="ed-cs" onchange="togCS()"><span class="tgls"></span></label>
+        </div>
+        <div id="cs-pnl" style="display:none;margin-top:8px">
+          <div class="g2">
+            <div class="crow">
+              <div class="clbl">Font</div>
+              <select id="ed-fn" class="fi">
+                <option value="">— Global —</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Lato">Lato</option>
+                <option value="Oswald">Oswald</option>
+                <option value="Raleway">Raleway</option>
+                <option value="Playfair Display">Playfair Display</option>
+              </select>
+            </div>
+            <div class="crow">
+              <div class="clbl">Text Color</div>
+              <input type="color" id="ed-tc" value="#ffffff" class="fi" style="height:30px">
+            </div>
+            <div class="crow">
+              <div class="clbl">Background</div>
+              <select id="ed-bt" class="fi">
+                <option value="">— Global —</option>
+                <option value="transparent">Transparent</option>
+                <option value="solid">Solid</option>
+              </select>
+            </div>
+            <div class="crow">
+              <div class="clbl">BG Color</div>
+              <input type="color" id="ed-bc" value="#000000" class="fi" style="height:30px">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mft">
+      <button class="btn" onclick="closeEd()">Cancel</button>
+      <button class="btn btn-ac" onclick="saveSong()">Save Song</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  ALTARLYRICS v1.1
+// ═══════════════════════════════════════════════════════
+const VER='1.1';
+const LSK={cfg:'al-cfg',lib:'al-lib',sls:'al-sls',live:'al-live',slid:'al-slid'};
+const MODE=new URLSearchParams(location.search).get('mode')||'controller';
+const CH='altarlyrics';
+
+// ── DEFAULTS ──
+const DEFS={
+  lps:2,
+  theme:'classic-white',font:'Montserrat',fontSize:48,
+  textColor:'#ffffff',textAlign:'center',
+  outline:false,outlineColor:'#000000',
+  bgType:'solid',bgC1:'#000000',bgC2:'#1a1a2e',bgOpacity:75,bgImg:null,
+  posH:50,posV:85,blockW:80,
+  animation:'fade',lineSpacing:'1.5',padding:'M',
+  showTitle:false,titlePos:'bottom-center',showArtist:false,
+  resolution:'1920x1080',
+  pinEnabled:false,pinValue:'',swipeEnabled:true,
+  fb:{apiKey:'',authDomain:'',databaseURL:'',projectId:''}
+};
+
+const THEMES={
+  'classic-white':{n:'Classic White',bgType:'solid',bgC1:'#000000',bgC2:'#000000',bgOp:72,tc:'#ffffff',font:'Montserrat',outline:false},
+  'gold-black':   {n:'Gold & Black', bgType:'solid',bgC1:'#1a1200',bgC2:'#1a1200',bgOp:85,tc:'#FFD700',font:'Oswald',    outline:false},
+  'midnight-blue':{n:'Midnight Blue',bgType:'gradient',bgC1:'#0a1628',bgC2:'#1a2e4a',bgOp:88,tc:'#ddeeff',font:'Raleway',outline:false},
+  'pure-clear':   {n:'Pure Clear',   bgType:'transparent',bgC1:'#000',bgC2:'#000',bgOp:0,tc:'#ffffff',font:'Montserrat',outline:true},
+  'soft-cream':   {n:'Soft Cream',   bgType:'solid',bgC1:'#fffaee',bgC2:'#fffaee',bgOp:90,tc:'#3d2b1f',font:'Playfair Display',outline:false},
+  'bold-red':     {n:'Bold Red',     bgType:'solid',bgC1:'#5c0000',bgC2:'#5c0000',bgOp:88,tc:'#ffffff',font:'Oswald',    outline:false}
+};
+
+const FONTS=[
+  {v:'Montserrat',l:'Montserrat'},
+  {v:'Lato',l:'Lato'},
+  {v:'Oswald',l:'Oswald'},
+  {v:'Raleway',l:'Raleway'},
+  {v:'Playfair Display',l:'Playfair Display'}
+];
+
+// ── STATE ──
+let cfg={...DEFS};
+let lib=[];
+let sls=[];
+let live={songId:null,idx:-1,blank:false};
+let activeSLid=null;
+let gridSong=null;
+let edSongId=null;
+let bc=null,fbDB=null,fbRef=null;
+let dispCur=null;
+let remLive={song:null,idx:-1,blank:false};
+let remView='mobile';
+
+// ── UTILS ──
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).substr(2,5);
+const $=id=>document.getElementById(id);
+const gv=id=>{const e=$(id);return e?e.value:null};
+const gc=id=>{const e=$(id);return e?e.checked:false};
+const gn=id=>{const e=$(id);return e?+e.value:0};
+function toast(m,d=2300){const e=$('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),d)}
+function songById(id){return lib.find(s=>s.id===id)}
+function flatSlides(song){
+  if(!song||!song.sections)return[];
+  return song.sections.flatMap(sec=>sec.slides.map(sl=>({...sl,section:sec.name})));
+}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+// ── STORAGE ──
+function saveAll(){
+  try{
+    localStorage.setItem(LSK.cfg,JSON.stringify(cfg));
+    localStorage.setItem(LSK.lib,JSON.stringify(lib));
+    localStorage.setItem(LSK.sls,JSON.stringify(sls));
+    localStorage.setItem(LSK.live,JSON.stringify(live));
+    if(activeSLid) localStorage.setItem(LSK.slid,activeSLid);
+    else localStorage.removeItem(LSK.slid);
+  }catch(e){}
+}
+
+function loadAll(){
+  try{
+    const c=localStorage.getItem(LSK.cfg);  if(c) cfg={...DEFS,...JSON.parse(c)};
+    const l=localStorage.getItem(LSK.lib);  if(l) lib=JSON.parse(l);
+    const s=localStorage.getItem(LSK.sls);  if(s) sls=JSON.parse(s);
+    const lv=localStorage.getItem(LSK.live);if(lv) live={...live,...JSON.parse(lv)};
+    const sid=localStorage.getItem(LSK.slid);if(sid) activeSLid=sid;
+  }catch(e){}
+}
+
+// ── LYRICS PARSER ──
+function parseLyrics(text,lps){
+  lps=lps||cfg.lps||2;
+  const lines=text.replace(/\r/g,'').split('\n');
+  const secs=[];let cur=null,buf=[];
+  const fsl=()=>{if(buf.length&&cur){cur.slides.push({id:uid(),primary:[...buf],secondary:[]});buf=[];}};
+  const fsc=()=>{fsl();if(cur&&cur.slides.length)secs.push(cur);};
+  for(const line of lines){
+    const t=line.trim();
+    const m=t.match(/^\[(.+)\]$/);
+    if(m){fsc();cur={name:m[1],slides:[]};buf=[];}
+    else if(t===''){fsl();}
+    else{
+      if(!cur)cur={name:'Verse 1',slides:[]};
+      buf.push(t);
+      if(buf.length>=lps)fsl();
+    }
+  }
+  fsc();
+  if(!secs.length){
+    const fb=text.trim();
+    secs.push({name:'Verse 1',slides:[{id:uid(),primary:fb?[fb]:['(empty)'],secondary:[]}]});
+  }
+  return secs;
+}
+
+function parseSRT(text,lps){
+  const c=text.replace(/\r/g,'')
+    .replace(/\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n/g,'')
+    .replace(/\n{2,}/g,'\n').trim();
+  return parseLyrics(c,lps);
+}
+
+function mergeSec(priSecs,secTxt,lps){
+  if(!secTxt.trim())return priSecs;
+  const ss=parseLyrics(secTxt,lps);
+  return priSecs.map((sec,i)=>{
+    const s2=ss[i];
+    return{...sec,slides:sec.slides.map((sl,j)=>({
+      ...sl,secondary:s2&&s2.slides[j]?s2.slides[j].primary:[]
+    }))};
+  });
+}
+
+// Re-parse active song with new LPS
+function setLPS(n){
+  cfg.lps=n;
+  // Update buttons
+  document.querySelectorAll('#lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===n));
+  if(gridSong&&gridSong.priRaw){
+    let secs=parseLyrics(gridSong.priRaw,n);
+    if(gridSong.dual&&gridSong.secRaw)secs=mergeSec(secs,gridSong.secRaw,n);
+    gridSong.sections=secs;
+    // Update in library too
+    const li=lib.findIndex(s=>s.id===gridSong.id);
+    if(li>=0)lib[li].sections=secs;
+    const tot=flatSlides(gridSong).length;
+    if(live.idx>=tot)live.idx=Math.max(0,tot-1);
+    renderGrid(gridSong);
+    updateLive();
+    pushLive();
+  }
+  saveAll();
+}
+
+// ── FILE UPLOAD ──
+async function hUpload(ev,tgt){
+  const file=ev.target.files[0];if(!file)return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  let text='';
+  try{
+    if(ext==='txt'){text=await file.text();}
+    else if(ext==='srt'){
+      text=await file.text();
+      text=text.replace(/\r/g,'').replace(/\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n/g,'').replace(/\n{2,}/g,'\n').trim();
+    }
+    else if(ext==='docx'){
+      if(typeof mammoth==='undefined'){toast('mammoth.js not loaded');return;}
+      const ab=await file.arrayBuffer();
+      const r=await mammoth.extractRawText({arrayBuffer:ab});
+      text=r.value;
+    }
+    else if(ext==='pdf'){
+      if(typeof pdfjsLib==='undefined'){toast('pdf.js not loaded');return;}
+      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      const ab=await file.arrayBuffer();
+      const pdf=await pdfjsLib.getDocument({data:ab}).promise;
+      const pages=[];
+      for(let i=1;i<=pdf.numPages;i++){
+        const pg=await pdf.getPage(i);
+        const ct=await pg.getTextContent();
+        pages.push(ct.items.map(it=>it.str).join('\n'));
+      }
+      text=pages.join('\n');
+    }else{toast('Unsupported: .'+ext);return;}
+    const isDual=gc('ed-dual');
+    if(tgt==='pri'){$(isDual?'ed-prid':'ed-pri').value=text;}
+    else{$('ed-sec').value=text;}
+    toast('Loaded: '+file.name);
+  }catch(err){toast('Upload error: '+err.message);}
+}
+
+async function hBgImg(ev){
+  const file=ev.target.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{cfg.bgImg=e.target.result;cfg.bgType='image';
+    $('bg-type').value='image';updateBGui();saveAll();pushLive();};
+  r.readAsDataURL(file);
+}
+
+// ── SYNC ──
+function initBC(){
+  try{
+    bc=new BroadcastChannel(CH);
+    bc.onmessage=e=>{
+      if(!e.data||e.data.type!=='live')return;
+      if(MODE==='controller'){
+        const st=e.data.state;
+        if(st.songId===live.songId){
+          live.idx=st.idx;live.blank=st.blank;
+          renderGrid(gridSong);updateLive();blankUI();
+        }
+      }else{applyLU(e.data.state);}
+    };
+  }catch(e){}
+}
+
+function pushLive(){
+  const song=songById(live.songId);
+  const state={...live,song,cfg};
+  if(bc)bc.postMessage({type:'live',state});
+  if(fbRef)fbRef.set(state).catch(()=>{});
+  localStorage.setItem(LSK.live,JSON.stringify(live));
+}
+
+function saveFBfields(){
+  cfg.fb={
+    apiKey:gv('fb-ak')||'',
+    authDomain:gv('fb-ad')||'',
+    databaseURL:gv('fb-du')||'',
+    projectId:gv('fb-pi')||''
+  };
+  saveAll();
+}
+
+function tryFirebase(){
+  const fc=cfg.fb;
+  if(!fc.apiKey||!fc.databaseURL){
+    $('fb-status').textContent='⚠ Fill in API Key and Database URL at minimum';
+    $('fb-status').style.color='var(--bl)';
+    return;
+  }
+  try{
+    if(typeof firebase==='undefined'){
+      $('fb-status').textContent='Firebase SDK not loaded (check internet)';return;
+    }
+    const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(fc);
+    fbDB=firebase.database(app);
+    fbRef=fbDB.ref('altarlyrics/live');
+    fbRef.on('value',snap=>{
+      const d=snap.val();if(!d)return;
+      if(MODE==='controller'){
+        if(d.songId===live.songId){
+          live.idx=d.idx??live.idx;live.blank=d.blank??live.blank;
+          renderGrid(gridSong);updateLive();blankUI();
+        }
+      }else{applyLU(d);}
+    });
+    $('sdot').classList.add('on');$('slbl').textContent='Firebase';
+    $('fb-status').textContent='✓ Connected';$('fb-status').style.color='var(--gn)';
+    saveAll();
+    // Generate QR code for remote URL
+    const isLocal=location.protocol==='file:';
+    const qrWrap=$('qr-wrap');
+    if(qrWrap){
+      qrWrap.style.display='block';
+      $('qr-box').innerHTML='';
+      if(isLocal){
+        $('qr-box').innerHTML='<div style="font-size:11px;color:var(--bl);padding:8px;max-width:200px;line-height:1.5">⚠ File is running locally.<br>Host it online (e.g. GitHub Pages) for the QR remote to work on other devices.</div>';
+      }else{
+        const remUrl=location.href.split('?')[0]+'?mode=remote';
+        try{new QRCode($('qr-box'),{text:remUrl,width:120,height:120,colorDark:'#000',colorLight:'#fff'});}catch(e){}
+        const urlEl=document.createElement('div');
+        urlEl.style.cssText='font-size:10px;color:var(--txd);margin-top:5px;word-break:break-all;max-width:200px';
+        urlEl.textContent=remUrl;
+        $('qr-box').appendChild(urlEl);
+      }
+    }
+    toast('Firebase connected ✓');
+  }catch(err){
+    $('fb-status').textContent='Error: '+err.message;
+    $('fb-status').style.color='var(--rd)';
+    toast('Firebase error: '+err.message);
+  }
+}
+
+// ── CONTROLLER ──
+function initCtrl(){
+  $('ctrl-mode').style.display='flex';
+  buildThemes();buildFonts();
+  loadCfgUI();
+  renderLib();
+  renderSLsel();
+  // Restore active setlist
+  if(activeSLid){
+    $('sl-sel').value=activeSLid;
+    renderSLpanel();
+  }else{
+    renderSLpanel();
+  }
+  // Restore active song
+  if(live.songId){const s=songById(live.songId);if(s)loadSong(s,true);}
+  // Restore Firebase fields
+  if(cfg.fb&&cfg.fb.apiKey){
+    const f=cfg.fb;
+    if($('fb-ak'))$('fb-ak').value=f.apiKey||'';
+    if($('fb-ad'))$('fb-ad').value=f.authDomain||'';
+    if($('fb-du'))$('fb-du').value=f.databaseURL||'';
+    if($('fb-pi'))$('fb-pi').value=f.projectId||'';
+    // Auto-reconnect
+    if(f.databaseURL) tryFirebase();
+  }
+}
+
+function buildThemes(){
+  const g=$('thm-grid');if(!g)return;
+  g.innerHTML=Object.entries(THEMES).map(([k,t])=>
+    `<button class="thmbtn${cfg.theme===k?' on':''}" onclick="applyTheme('${k}')">${t.n}</button>`
+  ).join('');
+}
+
+function buildFonts(){
+  const g=$('fnt-grid');if(!g)return;
+  g.innerHTML=FONTS.map(f=>
+    `<button class="fbtn${cfg.font===f.v?' on':''}" style="font-family:'${f.v}'" onclick="setFont('${f.v}')">${f.l}</button>`
+  ).join('');
+}
+
+function loadCfgUI(){
+  const sv=(id,v)=>{const e=$(id);if(e)e.value=v};
+  const sc=(id,v)=>{const e=$(id);if(e)e.checked=v};
+  sv('bg-type',cfg.bgType);sv('bgc1',cfg.bgC1);sv('bgc1h',cfg.bgC1);
+  sv('bgc1g',cfg.bgC1);sv('bgc2g',cfg.bgC2);
+  sv('bg-op',cfg.bgOpacity);$('bgo-v').textContent=cfg.bgOpacity;
+  sv('font-sz',cfg.fontSize);$('fsz-v').textContent=cfg.fontSize;
+  sv('txc',cfg.textColor);sv('txch',cfg.textColor);
+  sc('otgl',cfg.outline);
+  sv('out-col',cfg.outlineColor);
+  sv('lnsp',cfg.lineSpacing);
+  sv('pos-h',cfg.posH);$('ph-v').textContent=cfg.posH;
+  sv('pos-v',cfg.posV);$('pv-v').textContent=cfg.posV;
+  sv('blk-w',cfg.blockW);$('bw-v').textContent=cfg.blockW;
+  sc('sttgl',cfg.showTitle);sv('ttl-pos',cfg.titlePos||'bottom-center');
+  sc('artgl',cfg.showArtist);
+  sv('res-sel',cfg.resolution);
+  sc('pintgl',cfg.pinEnabled);sv('pin-val',cfg.pinValue);
+  sc('swptgl',cfg.swipeEnabled);
+  // LPS buttons
+  document.querySelectorAll('#lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
+  updateBGui();updateOCrow();updatePinRow();updateTitleOpts();
+  selBtns('aln-btns',['left','center','right'],cfg.textAlign);
+  selBtns('pad-btns',['S','M','L'],cfg.padding);
+  selBtns('ani-btns',['cut','fade','slide'],cfg.animation);
+  buildThemes();buildFonts();
+}
+
+function selBtns(parentId,vals,active){
+  const btns=document.querySelectorAll('#'+parentId+' .btn-sm');
+  btns.forEach((b,i)=>b.classList.toggle('on',vals[i]===active));
+}
+
+function updateBGui(){
+  const t=cfg.bgType;
+  $('bgs-row').style.display=t==='solid'?'':'none';
+  $('bgg-row').style.display=t==='gradient'?'':'none';
+  $('bgi-row').style.display=t==='image'?'':'none';
+  $('bgo-row').style.display=t==='transparent'?'none':'';
+}
+function onBGchange(){cfg.bgType=gv('bg-type');updateBGui();SC();}
+function updateOCrow(){$('oc-row').style.display=cfg.outline?'':'none';}
+function onOutlineChange(){cfg.outline=gc('otgl');updateOCrow();SC();}
+function updatePinRow(){const r=$('pin-row');if(r)r.style.display=cfg.pinEnabled?'':'none';}
+function updateTitleOpts(){
+  const o=$('ttl-opts');if(o)o.style.display=cfg.showTitle?'':'none';
+}
+
+function SC(){
+  cfg.bgC1=gv('bgc1')||gv('bgc1g')||cfg.bgC1;
+  cfg.bgC2=gv('bgc2g')||cfg.bgC2;
+  cfg.bgOpacity=gn('bg-op');
+  cfg.fontSize=gn('font-sz')||cfg.fontSize;
+  cfg.textColor=gv('txc')||cfg.textColor;
+  cfg.outlineColor=gv('out-col')||cfg.outlineColor;
+  cfg.lineSpacing=gv('lnsp')||cfg.lineSpacing;
+  cfg.posH=gn('pos-h');cfg.posV=gn('pos-v');cfg.blockW=gn('blk-w');
+  cfg.showTitle=gc('sttgl');cfg.titlePos=gv('ttl-pos')||'bottom-center';
+  cfg.showArtist=gc('artgl');
+  cfg.resolution=gv('res-sel')||cfg.resolution;
+  cfg.pinEnabled=gc('pintgl');cfg.pinValue=gv('pin-val')||'';
+  cfg.swipeEnabled=gc('swptgl');
+  $('bgo-v').textContent=cfg.bgOpacity;
+  $('fsz-v').textContent=cfg.fontSize;
+  $('ph-v').textContent=cfg.posH;
+  $('pv-v').textContent=cfg.posV;
+  $('bw-v').textContent=cfg.blockW;
+  updateTitleOpts();updatePinRow();
+  saveAll();pushLive();
+}
+
+function syncHex(id){
+  const h=gv(id+'h');
+  if(h&&/^#[0-9a-fA-F]{6}$/.test(h)){const e=$(id);if(e){e.value=h;SC();}}
+}
+
+function applyTheme(k){
+  const t=THEMES[k];if(!t)return;
+  cfg.theme=k;cfg.bgType=t.bgType;cfg.bgC1=t.bgC1;cfg.bgC2=t.bgC2;
+  cfg.bgOpacity=t.bgOp;cfg.textColor=t.tc;cfg.font=t.font;cfg.outline=t.outline;
+  loadCfgUI();saveAll();pushLive();
+}
+
+function setFont(f){cfg.font=f;buildFonts();saveAll();pushLive();}
+function setAlign(a){cfg.textAlign=a;selBtns('aln-btns',['left','center','right'],a);saveAll();pushLive();}
+function setPad(p){cfg.padding=p;selBtns('pad-btns',['S','M','L'],p);saveAll();pushLive();}
+function setAnim(a){cfg.animation=a;selBtns('ani-btns',['cut','fade','slide'],a);saveAll();pushLive();}
+
+function swTab(n){
+  const ns=['theme','text','pos','more'];
+  document.querySelectorAll('.tbtn').forEach((b,i)=>b.classList.toggle('on',ns[i]===n));
+  document.querySelectorAll('.tpane').forEach(p=>{
+    const active=p.id==='tp-'+n;
+    p.classList.toggle('on',active);
+    p.style.display=active?'block':'none';
+  });
+}
+
+// ── LIBRARY ──
+function renderLib(filter){
+  const el=$('songs-lst');if(!el)return;
+  const items=filter?lib.filter(s=>(s.title+' '+(s.artist||'')).toLowerCase().includes(filter.toLowerCase())):lib;
+  if(!items.length){el.innerHTML='<div class="empty"><div class="eic">🎵</div>No songs yet.</div>';return;}
+  el.innerHTML=items.map(s=>`
+    <div class="si${live.songId===s.id?' on':''}" onclick="loadSong(songById('${s.id}'))">
+      <span style="flex:1;min-width:0">
+        <div class="si-ttl">${esc(s.title)}</div>
+        ${s.artist?`<div class="si-art">${esc(s.artist)}</div>`:''}
+      </span>
+      <span class="si-acts">
+        <button class="bic" onclick="event.stopPropagation();openEd('${s.id}')" title="Edit">✏️</button>
+        <button class="bic" onclick="event.stopPropagation();addToSL('${s.id}')" title="Add to setlist">➕</button>
+        <button class="bic" onclick="event.stopPropagation();delSong('${s.id}')" title="Delete">🗑</button>
+      </span>
+    </div>`).join('');
+}
+
+function filterLib(v){renderLib(v);}
+
+function delSong(id){
+  if(!confirm('Delete this song?'))return;
+  lib=lib.filter(s=>s.id!==id);
+  sls.forEach(sl=>{sl.songIds=sl.songIds.filter(sid=>sid!==id);});
+  if(live.songId===id){live.songId=null;live.idx=-1;}
+  if(gridSong?.id===id){gridSong=null;renderGrid(null);}
+  saveAll();renderLib();renderSLpanel();
+}
+
+// ── SETLIST ──
+function renderSLsel(){
+  const sel=$('sl-sel');if(!sel)return;
+  sel.innerHTML='<option value="">— No Setlist —</option>'+
+    sls.map(s=>`<option value="${s.id}"${activeSLid===s.id?' selected':''}>${esc(s.name)}</option>`).join('');
+}
+
+function newSetlist(){
+  const nm=prompt('Setlist name:','Sunday AM');if(!nm)return;
+  const sl={id:uid(),name:nm,songIds:[]};
+  sls.push(sl);activeSLid=sl.id;saveAll();renderSLsel();renderSLpanel();
+}
+
+function loadSetlist(id){
+  activeSLid=id||null;
+  saveAll();
+  renderSLpanel();
+}
+
+function saveSetlist(){
+  if(!activeSLid){toast('No setlist selected');return;}
+  saveAll();toast('Setlist saved ✓');
+}
+
+function activeSL(){return sls.find(s=>s.id===activeSLid);}
+
+function addToSL(songId){
+  if(!activeSLid){toast('Create or select a setlist first');return;}
+  const sl=activeSL();if(!sl)return;
+  if(sl.songIds.includes(songId)){toast('Already in setlist');return;}
+  sl.songIds.push(songId);saveAll();renderSLpanel();toast('Added to setlist');
+}
+
+function remFromSL(songId){
+  const sl=activeSL();if(!sl)return;
+  sl.songIds=sl.songIds.filter(id=>id!==songId);saveAll();renderSLpanel();
+}
+
+function renderSLpanel(){
+  const p=$('sl-inner');if(!p)return;
+  const sl=activeSL();
+  if(!sl||!sl.songIds.length){
+    p.innerHTML='<div class="empty" style="padding:10px"><div style="font-size:16px">📋</div>Empty</div>';return;
+  }
+  const rows=sl.songIds.map((sid,idx)=>{
+    const s=songById(sid);if(!s)return'';
+    return`<div class="sli${live.songId===sid?' on':''}"
+      draggable="true"
+      ondragstart="dgs(event,${idx})" ondragover="dgo(event,${idx})" ondrop="dgd(event,${idx})"
+      onclick="loadSong(songById('${sid}'))" data-i="${idx}">
+      <span class="dh">⠿</span>
+      <span class="slitl">${esc(s.title)}</span>
+      <button class="slirm" onclick="event.stopPropagation();remFromSL('${sid}')">✕</button>
+    </div>`;
+  }).filter(r=>r!=='');
+  p.innerHTML=rows.length?rows.join(''):'<div class="empty" style="padding:10px"><div style="font-size:16px">📋</div>Songs not found in library</div>';
+}
+
+let dgSrc=null;
+function dgs(e,i){dgSrc=i;e.dataTransfer.effectAllowed='move';}
+function dgo(e,i){e.preventDefault();document.querySelectorAll('.sli').forEach((el,j)=>el.classList.toggle('dov',j===i));}
+function dgd(e,i){
+  e.preventDefault();
+  document.querySelectorAll('.sli').forEach(el=>el.classList.remove('dov'));
+  if(dgSrc===null||dgSrc===i)return;
+  const sl=activeSL();if(!sl)return;
+  const m=sl.songIds.splice(dgSrc,1)[0];sl.songIds.splice(i,0,m);
+  saveAll();renderSLpanel();dgSrc=null;
+}
+
+// ── GRID ──
+function loadSong(song,silent=false){
+  if(!song)return;
+  gridSong=song;live.songId=song.id;
+  const fs=flatSlides(song);
+  if(live.idx<0||live.idx>=fs.length)live.idx=0;
+  renderGrid(song);renderLib();renderSLpanel();updateLive();
+  if(!silent)pushLive();
+}
+
+function renderGrid(song){
+  const grid=$('slide-grid');
+  const title=$('grid-title');
+  const ctr=$('slide-ctr');
+  if(!grid)return;
+  if(!song){
+    title.textContent='Select a song';title.style.color='var(--txd)';ctr.textContent='—';
+    grid.innerHTML='<div class="empty" style="padding-top:40px"><div class="eic">🎵</div>Click a song to load slides</div>';return;
+  }
+  title.textContent=song.title+(song.artist?' — '+song.artist:'');
+  title.style.color='var(--tx)';
+  const fs=flatSlides(song);
+  ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`— / ${fs.length}`;
+  let html='';let gi=0;
+  song.sections.forEach(sec=>{
+    html+=`<div class="slbl">${esc(sec.name)}</div><div class="srow">`;
+    sec.slides.forEach(sl=>{
+      const gIdx=gi++;
+      html+=`<div class="sc${live.idx===gIdx?' on':''}" onclick="goTo(${gIdx})">
+        <div class="scn">${gIdx+1}</div>
+        <div class="sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>
+        ${sl.secondary.length?`<div class="scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
+      </div>`;
+    });
+    html+='</div>';
+  });
+  grid.innerHTML=html;
+  const ac=grid.querySelector('.sc.on');
+  if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+
+// ── NAVIGATION ──
+function goTo(idx){
+  const song=gridSong;if(!song)return;
+  const fs=flatSlides(song);
+  if(idx<0||idx>=fs.length)return;
+  live.idx=idx;live.blank=false;
+  updateLive();renderGrid(song);blankUI();pushLive();
+}
+function goNext(){const s=gridSong;if(!s)return;const f=flatSlides(s);if(live.idx<f.length-1)goTo(live.idx+1);}
+function goPrev(){if(live.idx>0)goTo(live.idx-1);}
+function toggleBlank(){live.blank=!live.blank;blankUI();pushLive();}
+
+function blankUI(){
+  const b=$('blank-btn');if(!b)return;
+  const on=live.blank;
+  b.textContent=on?'SHOW':'BLANK';
+  b.style.background=on?'var(--livebg)':'var(--blbg)';
+  b.style.borderColor=on?'var(--live)':'var(--bl)';
+  b.style.color=on?'var(--live)':'var(--bl)';
+}
+
+function updateLive(){
+  const song=gridSong;
+  const fs=song?flatSlides(song):[];
+  const cur=fs[live.idx];
+  const lt=$('ltxt'),ls=$('lsec');
+  if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'—';lt.style.color=cur?'var(--tx)':'var(--txd)';}
+  if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';
+}
+
+// ── SONG EDITOR ──
+function openEd(songId){
+  edSongId=songId;
+  const song=songId?songById(songId):null;
+  $('ed-mtit').textContent=song?'Edit Song':'Add Song';
+  $('ed-title').value=song?song.title:'';
+  $('ed-artist').value=song?song.artist||'':'';
+  $('ed-dual').checked=song?song.dual:false;
+  if(song){
+    // Convert sections back to raw text
+    const toRaw=secs=>secs.map(s=>`[${s.name}]\n${s.slides.map(sl=>sl.primary.join('\n')).join('\n\n')}`).join('\n\n');
+    const toRawSec=secs=>secs.map(s=>`[${s.name}]\n${s.slides.map(sl=>sl.secondary.join('\n')).join('\n\n')}`).join('\n\n');
+    const priRaw=song.priRaw||toRaw(song.sections);
+    const secRaw=song.secRaw||(song.dual?toRawSec(song.sections):'');
+    $('ed-pri').value=priRaw;$('ed-prid').value=priRaw;$('ed-sec').value=secRaw;
+    $('ed-cs').checked=song.cs?.enabled||false;
+    if(song.cs?.enabled){
+      $('ed-fn').value=song.cs.font||'';$('ed-tc').value=song.cs.tc||'#ffffff';
+      $('ed-bt').value=song.cs.bgt||'';$('ed-bc').value=song.cs.bgc||'#000000';
+    }else{$('ed-cs').checked=false;}
+  }else{
+    $('ed-pri').value='';$('ed-prid').value='';$('ed-sec').value='';
+    $('ed-cs').checked=false;
+  }
+  togDual();togCS();
+  $('ed-modal').classList.add('open');
+  setTimeout(()=>$('ed-title').focus(),80);
+}
+
+function closeEd(){$('ed-modal').classList.remove('open');}
+function togDual(){const d=gc('ed-dual');$('s-col').style.display=d?'none':'';$('d-col').style.display=d?'':'none';}
+function togCS(){$('cs-pnl').style.display=gc('ed-cs')?'':'none';}
+
+function saveSong(){
+  const title=(gv('ed-title')||'').trim();
+  if(!title){toast('Please enter a song title');return;}
+  const artist=(gv('ed-artist')||'').trim();
+  const isDual=gc('ed-dual');
+  const priRaw=isDual?($('ed-prid').value||''):($('ed-pri').value||'');
+  const secRaw=isDual?($('ed-sec').value||''):'';
+  let sections=parseLyrics(priRaw,cfg.lps);
+  if(isDual&&secRaw.trim())sections=mergeSec(sections,secRaw,cfg.lps);
+  const csOn=gc('ed-cs');
+  const cs=csOn?{enabled:true,font:gv('ed-fn'),tc:gv('ed-tc'),bgt:gv('ed-bt'),bgc:gv('ed-bc')}:{enabled:false};
+  const song={id:edSongId||uid(),title,artist,dual:isDual,priRaw,secRaw,sections,cs};
+  if(edSongId){const i=lib.findIndex(s=>s.id===edSongId);if(i>=0)lib[i]=song;}
+  else{lib.push(song);}
+  saveAll();closeEd();renderLib();
+  if(gridSong?.id===song.id)loadSong(song);
+  toast('Song saved ✓');
+}
+
+// ── EXPORT / IMPORT ──
+function exportData(){
+  const data={ver:VER,cfg,lib,sls,at:new Date().toISOString()};
+  const json=JSON.stringify(data,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.style.display='none';
+  a.href=url;
+  a.download='AltarLyrics-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},1000);
+  toast('Export downloaded — check your Downloads folder ✓');
+}
+
+function importData(ev){
+  const file=ev.target.files[0];if(!file)return;
+  ev.target.value='';// reset so same file can be re-selected
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const d=JSON.parse(e.target.result);
+      if(d.lib)lib=d.lib;
+      if(d.sls)sls=d.sls;
+      if(d.cfg)cfg={...DEFS,...d.cfg};
+      // Re-parse songs with current LPS if priRaw available
+      lib.forEach(s=>{
+        if(s.priRaw){
+          let secs=parseLyrics(s.priRaw,cfg.lps);
+          if(s.dual&&s.secRaw)secs=mergeSec(secs,s.secRaw,cfg.lps);
+          s.sections=secs;
+        }
+      });
+      saveAll();renderLib();renderSLsel();renderSLpanel();loadCfgUI();
+      // Restore Firebase fields
+      if(cfg.fb&&cfg.fb.apiKey){
+        $('fb-ak').value=cfg.fb.apiKey||'';
+        $('fb-ad').value=cfg.fb.authDomain||'';
+        $('fb-du').value=cfg.fb.databaseURL||'';
+        $('fb-pi').value=cfg.fb.projectId||'';
+      }
+      toast('Import successful ✓');
+    }catch(err){toast('Import failed: '+err.message);}
+  };
+  r.readAsText(file);
+}
+
+// ── DISPLAY ──
+function initDisp(){
+  document.body.style.background='transparent';
+  document.documentElement.style.background='transparent';
+  $('disp-mode').style.display='block';
+  initBC();
+  // Firebase from stored config
+  if(cfg.fb&&cfg.fb.databaseURL){
+    try{
+      if(typeof firebase!=='undefined'){
+        const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);
+        fbDB=firebase.database(app);
+        fbRef=fbDB.ref('altarlyrics/live');
+        fbRef.on('value',snap=>{if(snap.val())applyLU(snap.val());});
+      }
+    }catch(e){}
+  }
+  // Crash recovery
+  try{
+    const lv=JSON.parse(localStorage.getItem(LSK.live)||'{}');
+    if(lv.song)applyLU(lv);
+  }catch(e){}
+}
+
+function applyLU(state){
+  if(!state)return;
+  if(MODE==='display'){
+    if(state.blank){clrDisp(state.cfg||state.settings);return;}
+    if(state.song&&state.idx>=0){
+      const slides=flatSlides(state.song);
+      const slide=slides[state.idx];
+      if(slide)showSlide(slide,state.song,state.cfg||state.settings||{});
+    }
+  }
+  if(MODE==='remote')remApply(state);
+}
+
+function showSlide(slide,song,c){
+  const blk=$('lyr-blk'),bgEl=$('lyr-bg'),inEl=$('lyr-in');
+  const txEl=$('lyr-txt'),priEl=$('pri-lines'),secEl=$('sec-lines');
+  if(!blk||!priEl)return;
+  const res=(c.resolution||'1920x1080').split('x');
+  const W=+res[0]||1920,H=+res[1]||1080;
+  const sc=Math.min(window.innerWidth/W,window.innerHeight/H);
+  const bw=(c.blockW||80)/100*W;
+  const px=(c.posH||50)/100*W;
+  const py=(c.posV||85)/100*H;
+  blk.style.cssText=`width:${bw}px;left:${px-bw/2}px;top:${py}px;transform:scale(${sc});transform-origin:top left;display:block;position:absolute;`;
+  // Background — no animation
+  const op=(c.bgOpacity||75)/100;
+  const bt=(song?.cs?.enabled&&song.cs.bgt)||c.bgType||'transparent';
+  const bc1=(song?.cs?.enabled&&song.cs.bgc)||c.bgC1||'#000';
+  if(bt==='transparent')      bgEl.style.cssText='position:absolute;inset:0;z-index:1;border-radius:4px';
+  else if(bt==='solid')       bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:${bc1};opacity:${op}`;
+  else if(bt==='gradient')    bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:linear-gradient(135deg,${c.bgC1||'#000'},${c.bgC2||'#222'});opacity:${op}`;
+  else if(bt==='image'&&c.bgImg) bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:url(${c.bgImg}) center/cover;opacity:${op}`;
+  const padM={S:'6px 10px',M:'12px 18px',L:'20px 28px'};
+  inEl.style.padding=padM[c.padding||'M']||padM['M'];
+  const font=`'${(song?.cs?.enabled&&song.cs.font)||c.font||'Montserrat'}'`;
+  const tc=(song?.cs?.enabled&&song.cs.tc)||c.textColor||'#fff';
+  const fsz=(c.fontSize||48)+'px';
+  const ta=c.textAlign||'center';
+  const ls=c.lineSpacing||'1.5';
+  const sh=c.outline?`1px 1px 0 ${c.outlineColor||'#000'},-1px -1px 0 ${c.outlineColor||'#000'},1px -1px 0 ${c.outlineColor||'#000'},-1px 1px 0 ${c.outlineColor||'#000'}`:'';
+  // Song title — independent anchor
+  const ta2=$('ttl-anchor');
+  if(ta2){
+    if(c.showTitle&&song?.title){
+      ta2.style.display='block';
+      // Position
+      const pos=c.titlePos||'bottom-center';
+      const posMap={
+        'top-left':   'top:0;left:0;right:auto;bottom:auto;text-align:left',
+        'top-center': 'top:0;left:0;right:0;bottom:auto;text-align:center',
+        'top-right':  'top:0;right:0;left:auto;bottom:auto;text-align:right',
+        'bottom-left':'bottom:0;left:0;right:auto;top:auto;text-align:left',
+        'bottom-center':'bottom:0;left:0;right:0;top:auto;text-align:center',
+        'bottom-right':'bottom:0;right:0;left:auto;top:auto;text-align:right'
+      };
+      ta2.style.cssText=`position:absolute;z-index:3;pointer-events:none;padding:10px 16px;display:block;${posMap[pos]||posMap['bottom-center']}`;
+      const tsz=Math.max(14,(c.fontSize||48)*.55)+'px';
+      $('ttl-disp').style.cssText=`font-family:${font};font-size:${tsz};color:${tc};text-shadow:${sh};display:block`;
+      $('ttl-disp').textContent=song.title;
+      if(c.showArtist&&song.artist){
+        $('artist-disp').style.cssText=`font-family:${font};font-size:${Math.max(12,(c.fontSize||48)*.42)+'px'};color:${tc};opacity:.75;text-shadow:${sh};display:block`;
+        $('artist-disp').textContent=song.artist;
+      }else{$('artist-disp').style.display='none';}
+    }else{ta2.style.display='none';}
+  }
+  const anim=c.animation||'fade';
+  function setContent(){
+    priEl.innerHTML=slide.primary.map(l=>`<span class="dl">${l}</span>`).join('');
+    Object.assign(priEl.style,{fontFamily:font,fontSize:fsz,color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block'});
+    if(slide.secondary&&slide.secondary.length){
+      secEl.innerHTML=slide.secondary.map(l=>`<span class="dl">${l}</span>`).join('');
+      Object.assign(secEl.style,{fontFamily:font,fontSize:Math.max(14,(c.fontSize||48)*.7)+'px',color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block',marginTop:'5px',opacity:'.88'});
+    }else{secEl.style.display='none';}
+  }
+  if(anim==='cut'||!dispCur){
+    txEl.className='';setContent();
+  }else{
+    txEl.classList.remove('afi','asi');
+    txEl.classList.add(anim==='slide'?'aso':'afo');
+    setTimeout(()=>{setContent();txEl.classList.remove('afo','aso');txEl.classList.add(anim==='slide'?'asi':'afi');},210);
+  }
+  dispCur=slide;
+}
+
+function clrDisp(c){
+  const blk=$('lyr-blk');if(!blk)return;
+  const anim=c?.animation||'fade';
+  const t=$('lyr-txt');
+  if(anim!=='cut'){t.classList.add(anim==='slide'?'aso':'afo');setTimeout(()=>{blk.style.display='none';dispCur=null;},280);}
+  else{blk.style.display='none';dispCur=null;}
+  const ta=$('ttl-anchor');if(ta)ta.style.display='none';
+}
+
+// ── REMOTE ──
+function initRemote(){
+  $('rem-mode').style.display='flex';
+  loadAll();
+  // Check for Firebase config in URL (from QR)
+  const params=new URLSearchParams(location.search);
+  const fbc=params.get('fbc');
+  if(fbc){try{const fc=JSON.parse(atob(fbc));cfg.fb=fc;saveAll();}catch(e){}}
+  if(cfg.pinEnabled&&cfg.pinValue){$('pin-ov').classList.add('show');return;}
+  startRemote();
+}
+
+function checkPin(){
+  if($('pin-in').value===cfg.pinValue){$('pin-ov').classList.remove('show');startRemote();}
+  else{$('pin-err').textContent='Incorrect PIN — try again';$('pin-in').value='';}
+}
+
+function startRemote(){
+  if('wakeLock' in navigator)navigator.wakeLock.request('screen').catch(()=>{});
+  initBC();
+  if(cfg.fb&&cfg.fb.databaseURL){
+    try{
+      if(typeof firebase!=='undefined'){
+        const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);
+        fbDB=firebase.database(app);
+        fbRef=fbDB.ref('altarlyrics/live');
+        fbRef.on('value',snap=>{if(snap.val())applyLU(snap.val());});
+      }
+    }catch(e){}
+  }
+  if(cfg.swipeEnabled)initSwipe();
+  try{
+    const st=JSON.parse(localStorage.getItem(LSK.live)||'{}');
+    if(st.songId){st.song=lib.find(s=>s.id===st.songId)||st.song;applyLU(st);}
+  }catch(e){}
+}
+
+function setRView(v){
+  remView=v;
+  $('rem-mode').classList.toggle('pc-view',v==='pc');
+  $('vt-mob').classList.toggle('on',v==='mobile');
+  $('vt-pc').classList.toggle('on',v==='pc');
+}
+
+function remApply(state){
+  if(!state)return;
+  remLive=state;
+  const song=state.song;
+  $('rem-sname').textContent=song?(song.title+(song.artist?' — '+song.artist:'')):'AltarLyrics Remote';
+  const isBlk=state.blank||false;
+  const rb=$('rem-blk');
+  if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';
+    rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
+  if(!song)return;
+  const fs=flatSlides(song);
+  const sb=$('rem-secs');
+  if(sb){
+    let off=0;
+    sb.innerHTML=song.sections.map((sec,i)=>{
+      const si=off;off+=sec.slides.length;
+      const isOn=(state.idx||0)>=si&&(state.idx||0)<si+sec.slides.length;
+      return`<button class="rsb${isOn?' on':''}" onclick="rGoTo(${si})">${esc(sec.name)}</button>`;
+    }).join('');
+  }
+  const grid=$('rem-grid');if(!grid)return;
+  let html='';let gi=0;
+  song.sections.forEach(sec=>{
+    sec.slides.forEach(sl=>{
+      const gIdx=gi++;const isOn=(state.idx||0)===gIdx;
+      html+=`<div class="rc${isOn?' on':''}" onclick="rGoTo(${gIdx})">
+        <div class="rcs">${esc(sec.name)}</div>
+        ${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}
+        ${sl.secondary&&sl.secondary.length?`<div class="rcsec">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
+      </div>`;
+    });
+  });
+  grid.innerHTML=html;
+  const ac=grid.querySelector('.rc.on');
+  if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+
+function rBlank(){
+  const nb=!remLive.blank;
+  const upd={...remLive,blank:nb};
+  if(bc)bc.postMessage({type:'live',state:upd});
+  if(fbRef)fbRef.update({blank:nb});
+  remApply(upd);
+}
+
+function rPrev(){const ni=(remLive.idx||0)-1;if(ni>=0)rGoTo(ni);}
+function rNext(){
+  const song=remLive.song;if(!song)return;
+  const ni=(remLive.idx||0)+1;
+  if(ni<flatSlides(song).length)rGoTo(ni);
+}
+function rGoTo(idx){
+  const upd={...remLive,idx,blank:false};
+  if(bc)bc.postMessage({type:'live',state:upd});
+  if(fbRef)fbRef.update({idx,blank:false});
+  remApply(upd);
+}
+
+function initSwipe(){
+  let sx=0,sy=0;
+  const el=$('rem-grid');if(!el)return;
+  el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  el.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){dx<0?rNext():rPrev();}
+  },{passive:true});
+}
+
+document.addEventListener('keydown',e=>{
+  if(MODE!=='controller')return;
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
+  if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();goNext();}
+  if(e.code==='ArrowLeft'){e.preventDefault();goPrev();}
+  if(e.code==='Escape'){e.preventDefault();toggleBlank();}
+});
+
+function init(){
+  loadAll();
+  if(MODE==='display'){initDisp();}
+  else if(MODE==='remote'){initRemote();}
+  else{initBC();initCtrl();swTab('theme');}
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const pi=$('pin-in');
+  if(pi)pi.addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});
+  init();
+});
+</script>
+</body>
+</html>
