@@ -290,7 +290,7 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
 ::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
 
 /* ── PC REMOTE ── */
-#rem-content{flex:1;overflow:hidden;position:relative;display:flex}
+#rem-content{flex:1;overflow:hidden;position:relative;display:flex;min-height:0}
 #rem-pc{position:absolute;inset:0;display:none;flex-direction:row}
 #rem-pc.show{display:flex}
 #rpc-lib{width:var(--lw);background:var(--sf);border-right:1px solid var(--bd);
@@ -683,7 +683,7 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
   </div>
 
   <!-- MAIN (shown once connected) -->
-  <div id="rem-main" style="display:none;flex-direction:column;height:100%;overflow:hidden">
+  <div id="rem-main" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden">
 
     <!-- Shared header: song name + BLANK -->
     <header id="rem-hdr">
@@ -769,10 +769,6 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
 
       <!-- MOBILE VIEW: fixed flex column, nav always visible -->
       <div id="rem-mob">
-        <div id="rmob-hdr">
-          <div id="rmob-sname">Waiting for song…</div>
-          <button id="rmob-blk" onclick="rBlank()">BLANK</button>
-        </div>
         <div id="rmob-toolbar">
           <button class="tbbtn" id="tb-srch-btn" onclick="toggleMobSearch()">🔍 Search</button>
           <button class="tbbtn" id="tb-sl-btn" onclick="openMobSL()">📋 Setlist</button>
@@ -1198,6 +1194,11 @@ function tryFirebase(){
         urlEl.textContent=remUrl;
         $('qr-box').appendChild(urlEl);
       }
+    }
+    // Controller: set up data channel and push library/setlists
+    if(MODE==='controller'){
+      fbDataRef=fbDB.ref('altarlyrics/data');
+      setTimeout(()=>pushData(),800); // Push after connection settles
     }
     toast('Firebase connected ✓');
   }catch(err){
@@ -1682,10 +1683,17 @@ function initDisp(){
   }catch(e){}
 }
 
+let _cfgSynced=false;
 function applyLU(state){
   if(!state)return;
-  // Sync lps from controller so future re-parses (loadSong etc.) use correct value
-  if(state.cfg&&state.cfg.lps) cfg.lps=state.cfg.lps;
+  // On first receive in remote mode, sync full cfg from controller
+  if(MODE==='remote'&&!_cfgSynced&&state.cfg){
+    cfg={...DEFS,...state.cfg};_cfgSynced=true;
+    ['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});
+    document.querySelectorAll('#rpc-lps-btns .btn-sm,#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
+  }else if(state.cfg&&state.cfg.lps){
+    cfg.lps=state.cfg.lps;
+  }
   // Use song sections exactly as sent by controller — already correctly parsed there
   // Do NOT re-parse here; re-parsing with a possibly-stale local cfg.lps causes wrong line count
   if(MODE==='display'){
@@ -1960,11 +1968,16 @@ function initSwipe(){
 }
 
 document.addEventListener('keydown',e=>{
-  if(MODE!=='controller')return;
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
-  if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();goNext();}
-  if(e.code==='ArrowLeft'){e.preventDefault();goPrev();}
-  if(e.code==='Escape'){e.preventDefault();toggleBlank();}
+  if(MODE==='controller'){
+    if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();goNext();}
+    if(e.code==='ArrowLeft'){e.preventDefault();goPrev();}
+    if(e.code==='Escape'){e.preventDefault();toggleBlank();}
+  }else if(MODE==='remote'&&remView==='pc'){
+    if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();rNext();}
+    if(e.code==='ArrowLeft'){e.preventDefault();rPrev();}
+    if(e.code==='Escape'){e.preventDefault();rBlank();}
+  }
 });
 
 function init(){
@@ -2433,7 +2446,42 @@ function renderMobRemote(state){
 }
 
 function filterMobGrid(v){
-  if(remLive)renderMobRemote(remLive);
+  // Search mode: filter library songs
+  renderMobLibSearch(v);
+}
+
+function renderMobLibSearch(query){
+  const grid=document.getElementById('rmob-grid');if(!grid)return;
+  const q=(query||'').toLowerCase();
+  const items=q?lib.filter(s=>(s.title+' '+(s.artist||'')).toLowerCase().includes(q)):lib;
+  const secBar=document.getElementById('rmob-secs');
+  if(secBar)secBar.style.display='none';
+  if(!items.length){
+    grid.innerHTML='<div class="empty"><div class="eic">🎵</div>No songs found</div>';return;
+  }
+  grid.innerHTML=items.map(s=>`
+    <div class="rc" onclick="mobLoadSong('${s.id}')">
+      <div class="rcs">Song</div>
+      <div style="font-weight:600;font-size:15px">${esc(s.title)}</div>
+      ${s.artist?`<div style="font-size:12px;color:var(--txd);margin-top:2px">${esc(s.artist)}</div>`:''}
+    </div>`).join('');
+}
+
+function mobLoadSong(id){
+  const song=lib.find(s=>s.id===id);if(!song)return;
+  const fresh=freshSong(song);
+  live.songId=id;live.idx=0;live.blank=false;
+  const state={...live,song:fresh,cfg};
+  remLive=state;
+  if(bc)bc.postMessage({type:'live',state});
+  if(fbRef)fbRef.set(state).catch(()=>{});
+  // Close search, restore section bar, show slide grid
+  mobSearchActive=false;
+  const bar=document.getElementById('rmob-srch-bar');if(bar)bar.classList.remove('show');
+  const btn=document.getElementById('tb-srch-btn');if(btn)btn.classList.remove('on');
+  const inp=document.getElementById('rmob-srch');if(inp)inp.value='';
+  const secBar=document.getElementById('rmob-secs');if(secBar)secBar.style.display='';
+  renderMobRemote(state);
 }
 
 function toggleMobSearch(){
@@ -2442,12 +2490,15 @@ function toggleMobSearch(){
   if(bar)bar.classList.toggle('show',mobSearchActive);
   const btn=document.getElementById('tb-srch-btn');
   if(btn)btn.classList.toggle('on',mobSearchActive);
+  const secBar=document.getElementById('rmob-secs');
   if(mobSearchActive){
+    if(secBar)secBar.style.display='none';
     const inp=document.getElementById('rmob-srch');
     if(inp){inp.value='';inp.focus();}
+    renderMobLibSearch('');
   }else{
-    const inp=document.getElementById('rmob-srch');
-    if(inp)inp.value='';
+    if(secBar)secBar.style.display='';
+    const inp=document.getElementById('rmob-srch');if(inp)inp.value='';
     if(remLive)renderMobRemote(remLive);
   }
 }
