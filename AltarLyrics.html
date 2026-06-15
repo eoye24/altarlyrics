@@ -266,6 +266,19 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
 /* MISC */
 .empty{text-align:center;color:var(--txd);padding:22px 12px;font-size:12px}
 .eic{font-size:26px;margin-bottom:7px}
+/* PC remote grid — mirrors controller layout */
+.pc-slbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ac);
+  font-weight:700;margin:9px 0 4px;padding:0 2px}
+.pc-slbl:first-child{margin-top:0}
+.pc-srow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.pc-sc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:7px;
+  padding:7px 9px;cursor:pointer;min-width:110px;max-width:190px;flex:1;
+  transition:all .13s}
+.pc-sc:hover{border-color:var(--ac);background:var(--sf3)}
+.pc-sc.on{border-color:var(--sabo);background:var(--sab);box-shadow:0 0 0 2px var(--acg)}
+.pc-scn{font-size:9px;color:var(--txd);margin-bottom:3px}
+.pc-sct{font-size:11px;line-height:1.4;color:var(--tx)}
+.pc-scs{font-size:10px;color:var(--txd);line-height:1.3;margin-top:2px;font-style:italic}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
@@ -536,6 +549,11 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
             </div>
             <button class="btn btn-sm" onclick="tryFirebase()">Connect Firebase</button>
             <div id="fb-status" style="font-size:10px;color:var(--txd);margin-top:4px"></div>
+            <div class="crow" style="margin-top:8px">
+              <div class="clbl">GitHub Pages URL (for Remote QR)</div>
+              <input type="text" class="cinp" id="gh-url" placeholder="https://username.github.io/AltarLyrics/" oninput="saveFBfields()">
+              <div style="font-size:10px;color:var(--txd);margin-top:3px">Paste your hosted URL so the QR code works on phones</div>
+            </div>
             <div id="qr-wrap" style="display:none;margin-top:10px">
               <div class="clbl">Scan to open Remote</div>
               <div id="qr-box" style="background:#fff;padding:6px;border-radius:6px;display:inline-block;margin-top:4px"></div>
@@ -912,6 +930,7 @@ function saveFBfields(){
     databaseURL:gv('fb-du')||'',
     projectId:gv('fb-pi')||''
   };
+  cfg.ghUrl=gv('gh-url')||'';
   saveAll();
 }
 
@@ -942,15 +961,18 @@ function tryFirebase(){
     $('fb-status').textContent='✓ Connected';$('fb-status').style.color='var(--gn)';
     saveAll();
     // Generate QR code for remote URL
-    const isLocal=location.protocol==='file:';
+    const ghUrl=(cfg.ghUrl||'').trim().replace(/\/$/,'');
+    const baseUrl=ghUrl||location.href.split('?')[0];
+    const isLocal=!ghUrl&&location.protocol==='file:';
     const qrWrap=$('qr-wrap');
     if(qrWrap){
       qrWrap.style.display='block';
       $('qr-box').innerHTML='';
       if(isLocal){
-        $('qr-box').innerHTML='<div style="font-size:11px;color:var(--bl);padding:8px;max-width:200px;line-height:1.5">⚠ File is running locally.<br>Host it online (e.g. GitHub Pages) for the QR remote to work on other devices.</div>';
+        $('qr-box').innerHTML='<div style="font-size:11px;color:var(--bl);padding:8px;max-width:200px;line-height:1.5">⚠ Paste your GitHub Pages URL above to generate a working QR code for phones.</div>';
       }else{
-        const remUrl=location.href.split('?')[0]+'?mode=remote';
+        const fbParam=(cfg.fb&&cfg.fb.apiKey)?'&fbc='+btoa(JSON.stringify(cfg.fb)):'';
+        const remUrl=baseUrl+'?mode=remote'+fbParam;
         try{new QRCode($('qr-box'),{text:remUrl,width:120,height:120,colorDark:'#000',colorLight:'#fff'});}catch(e){}
         const urlEl=document.createElement('div');
         urlEl.style.cssText='font-size:10px;color:var(--txd);margin-top:5px;word-break:break-all;max-width:200px';
@@ -989,6 +1011,7 @@ function initCtrl(){
     if($('fb-ad'))$('fb-ad').value=f.authDomain||'';
     if($('fb-du'))$('fb-du').value=f.databaseURL||'';
     if($('fb-pi'))$('fb-pi').value=f.projectId||'';
+    if($('gh-url'))$('gh-url').value=cfg.ghUrl||'';
     // Auto-reconnect
     if(f.databaseURL) tryFirebase();
   }
@@ -1333,16 +1356,43 @@ function saveSong(){
 function exportData(){
   const data={ver:VER,cfg,lib,sls,at:new Date().toISOString()};
   const json=JSON.stringify(data,null,2);
-  const blob=new Blob([json],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.style.display='none';
-  a.href=url;
-  a.download='AltarLyrics-backup-'+new Date().toISOString().slice(0,10)+'.json';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},1000);
-  toast('Export downloaded — check your Downloads folder ✓');
+  const fname='AltarLyrics-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  // Try standard download
+  try{
+    const blob=new Blob([json],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.style.display='none';a.href=url;a.download=fname;
+    document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},2000);
+    toast('Downloading — check your Downloads folder ✓');
+  }catch(e){}
+  // Always show fallback modal with copyable JSON
+  showExportModal(json,fname);
+}
+
+function showExportModal(json,fname){
+  // Remove existing modal if any
+  const old=$('export-modal');if(old)old.remove();
+  const m=document.createElement('div');
+  m.id='export-modal';
+  m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px';
+  m.innerHTML=`
+    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;width:100%;max-width:560px;display:flex;flex-direction:column;max-height:85vh;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bd)">
+        <span style="font-weight:700;font-size:14px">📤 Export — ${fname}</span>
+        <button onclick="document.getElementById('export-modal').remove()" style="background:none;border:none;color:var(--txd);font-size:18px;cursor:pointer">✕</button>
+      </div>
+      <div style="padding:12px 16px;font-size:11px;color:var(--txd);border-bottom:1px solid var(--bd)">
+        If the file didn't download automatically, copy the text below and save it as <strong style="color:var(--tx)">${fname}</strong>
+      </div>
+      <textarea readonly style="flex:1;margin:12px 16px;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:8px;border-radius:6px;font-size:10px;font-family:monospace;resize:none;min-height:200px" onclick="this.select()">${json}</textarea>
+      <div style="padding:10px 16px;display:flex;gap:8px;border-top:1px solid var(--bd)">
+        <button class="btn btn-ac" style="flex:1" onclick="navigator.clipboard.writeText(document.querySelector('#export-modal textarea').value).then(()=>toast('Copied to clipboard ✓'))">📋 Copy to Clipboard</button>
+        <button class="btn" onclick="document.getElementById('export-modal').remove()">Close</button>
+      </div>
+    </div>`;
+  document.body.appendChild(m);
 }
 
 function importData(ev){
@@ -1444,9 +1494,9 @@ function showSlide(slide,song,c){
   // Song title — independent anchor
   const ta2=$('ttl-anchor');
   if(ta2){
-    if(c.showTitle&&song?.title){
+    const needAnchor=(c.showTitle&&song?.title)||(c.showArtist&&song?.artist);
+    if(needAnchor){
       ta2.style.display='block';
-      // Position
       const pos=c.titlePos||'bottom-center';
       const posMap={
         'top-left':   'top:0;left:0;right:auto;bottom:auto;text-align:left',
@@ -1458,10 +1508,15 @@ function showSlide(slide,song,c){
       };
       ta2.style.cssText=`position:absolute;z-index:3;pointer-events:none;padding:10px 16px;display:block;${posMap[pos]||posMap['bottom-center']}`;
       const tsz=Math.max(14,(c.fontSize||48)*.55)+'px';
-      $('ttl-disp').style.cssText=`font-family:${font};font-size:${tsz};color:${tc};text-shadow:${sh};display:block`;
-      $('ttl-disp').textContent=song.title;
-      if(c.showArtist&&song.artist){
-        $('artist-disp').style.cssText=`font-family:${font};font-size:${Math.max(12,(c.fontSize||48)*.42)+'px'};color:${tc};opacity:.75;text-shadow:${sh};display:block`;
+      const asz=Math.max(12,(c.fontSize||48)*.42)+'px';
+      // Title line
+      if(c.showTitle&&song?.title){
+        $('ttl-disp').style.cssText=`font-family:${font};font-size:${tsz};color:${tc};text-shadow:${sh};display:block`;
+        $('ttl-disp').textContent=song.title;
+      }else{$('ttl-disp').style.display='none';}
+      // Artist line
+      if(c.showArtist&&song?.artist){
+        $('artist-disp').style.cssText=`font-family:${font};font-size:${asz};color:${tc};opacity:.75;text-shadow:${sh};display:block`;
         $('artist-disp').textContent=song.artist;
       }else{$('artist-disp').style.display='none';}
     }else{ta2.style.display='none';}
@@ -1536,45 +1591,61 @@ function setRView(v){
   $('rem-mode').classList.toggle('pc-view',v==='pc');
   $('vt-mob').classList.toggle('on',v==='mobile');
   $('vt-pc').classList.toggle('on',v==='pc');
+  // Re-render grid in new layout
+  if(remLive&&remLive.song) remApply(remLive);
 }
 
 function remApply(state){
   if(!state)return;
   remLive=state;
   const song=state.song;
+  const curIdx=state.idx||0;
   $('rem-sname').textContent=song?(song.title+(song.artist?' — '+song.artist:'')):'AltarLyrics Remote';
   const isBlk=state.blank||false;
   const rb=$('rem-blk');
   if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';
     rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
   if(!song)return;
-  const fs=flatSlides(song);
   const sb=$('rem-secs');
   if(sb){
     let off=0;
-    sb.innerHTML=song.sections.map((sec,i)=>{
+    sb.innerHTML=song.sections.map(sec=>{
       const si=off;off+=sec.slides.length;
-      const isOn=(state.idx||0)>=si&&(state.idx||0)<si+sec.slides.length;
+      const isOn=curIdx>=si&&curIdx<si+sec.slides.length;
       return`<button class="rsb${isOn?' on':''}" onclick="rGoTo(${si})">${esc(sec.name)}</button>`;
     }).join('');
   }
   const grid=$('rem-grid');if(!grid)return;
   let html='';let gi=0;
-  song.sections.forEach(sec=>{
-    sec.slides.forEach(sl=>{
-      const gIdx=gi++;const isOn=(state.idx||0)===gIdx;
-      html+=`<div class="rc${isOn?' on':''}" onclick="rGoTo(${gIdx})">
-        <div class="rcs">${esc(sec.name)}</div>
-        ${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}
-        ${sl.secondary&&sl.secondary.length?`<div class="rcsec">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
-      </div>`;
+  if(remView==='pc'){
+    song.sections.forEach(sec=>{
+      html+=`<div class="pc-slbl">${esc(sec.name)}</div><div class="pc-srow">`;
+      sec.slides.forEach(sl=>{
+        const gIdx=gi++;const isOn=curIdx===gIdx;
+        html+=`<div class="pc-sc${isOn?' on':''}" onclick="rGoTo(${gIdx})">
+          <div class="pc-scn">${gIdx+1}</div>
+          <div class="pc-sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>
+          ${sl.secondary&&sl.secondary.length?`<div class="pc-scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
+        </div>`;
+      });
+      html+='</div>';
     });
-  });
+  }else{
+    song.sections.forEach(sec=>{
+      sec.slides.forEach(sl=>{
+        const gIdx=gi++;const isOn=curIdx===gIdx;
+        html+=`<div class="rc${isOn?' on':''}" onclick="rGoTo(${gIdx})">
+          <div class="rcs">${esc(sec.name)}</div>
+          ${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}
+          ${sl.secondary&&sl.secondary.length?`<div class="rcsec">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
+        </div>`;
+      });
+    });
+  }
   grid.innerHTML=html;
-  const ac=grid.querySelector('.rc.on');
+  const ac=grid.querySelector('.pc-sc.on,.rc.on');
   if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
-
 function rBlank(){
   const nb=!remLive.blank;
   const upd={...remLive,blank:nb};
