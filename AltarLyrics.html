@@ -1135,7 +1135,8 @@ function initBC(){
 }
 
 function pushLive(){
-  const song=songById(live.songId);
+  // Use gridSong/rpcGridSong (freshly parsed) not songById (may have stale sections)
+  const song = gridSong || rpcGridSong || songById(live.songId);
   const state={...live,song,cfg};
   if(bc)bc.postMessage({type:'live',state});
   if(fbRef)fbRef.set(state).catch(()=>{});
@@ -1683,8 +1684,10 @@ function initDisp(){
 
 function applyLU(state){
   if(!state)return;
-  // Re-parse the incoming song with current LPS so display always matches
-  if(state.song) state = {...state, song: freshSong(state.song)};
+  // Sync lps from controller before re-parsing — display window may have stale local lps
+  if(state.cfg&&state.cfg.lps) cfg.lps=state.cfg.lps;
+  // Re-parse the incoming song with the now-correct lps
+  if(state.song) state={...state,song:freshSong(state.song)};
   if(MODE==='display'){
     if(state.blank){clrDisp(state.cfg||state.settings);return;}
     if(state.song&&state.idx>=0){
