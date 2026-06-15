@@ -266,7 +266,13 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
 /* MISC */
 .empty{text-align:center;color:var(--txd);padding:22px 12px;font-size:12px}
 .eic{font-size:26px;margin-bottom:7px}
-/* PC remote grid — mirrors controller layout */
+/* REMOTE SETUP SCREEN */
+#rem-setup{display:none;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;padding:30px 20px;text-align:center}
+.rs-in{width:100%;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);
+  padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:8px;display:block}
+.rs-in:focus{outline:none;border-color:var(--ac)}
+#rem-main{display:none;flex-direction:column;height:100%;overflow:hidden}
 .pc-slbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ac);
   font-weight:700;margin:9px 0 4px;padding:0 2px}
 .pc-slbl:first-child{margin-top:0}
@@ -591,19 +597,45 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
 
 <!-- ═══════════════ REMOTE ═══════════════ -->
 <div id="rem-mode">
-  <header id="rem-hdr">
-    <div id="rem-sname">AltarLyrics Remote</div>
-    <button id="rem-blk" onclick="rBlank()">BLANK</button>
-  </header>
-  <div id="rem-view-tgl">
-    <button class="btn btn-sm on" id="vt-mob" onclick="setRView('mobile')">📱 Mobile</button>
-    <button class="btn btn-sm" id="vt-pc" onclick="setRView('pc')">🖥 PC</button>
+
+  <!-- SETUP SCREEN -->
+  <div id="rem-setup">
+    <div style="font-size:22px;font-weight:800;color:var(--ac);margin-bottom:6px">🎵 AltarLyrics</div>
+    <div style="font-size:13px;color:var(--txd);margin-bottom:24px">Remote Control</div>
+    <div style="width:100%;max-width:320px">
+      <div style="font-size:11px;color:var(--txd);margin-bottom:12px;text-align:center">Enter your Firebase details to connect</div>
+      <input type="text" class="rs-in" id="rs-ak" placeholder="API Key">
+      <input type="text" class="rs-in" id="rs-ad" placeholder="Auth Domain (project.firebaseapp.com)">
+      <input type="text" class="rs-in" id="rs-du" placeholder="Database URL (https://…firebaseio.com)">
+      <input type="text" class="rs-in" id="rs-pi" placeholder="Project ID">
+      <button class="btn btn-ac" style="width:100%;padding:11px;font-size:14px;margin-top:4px" onclick="remSetupConnect()">Connect →</button>
+      <div id="rs-status" style="font-size:12px;text-align:center;margin-top:10px;min-height:18px"></div>
+    </div>
+    <div style="font-size:10px;color:var(--txd);margin-top:20px;text-align:center">These are saved on this device after first use</div>
   </div>
-  <div id="rem-secs"></div>
-  <div id="rem-grid"></div>
-  <div id="rem-nav">
-    <button id="rp" onclick="rPrev()">◀ PREV</button>
-    <button id="rn" onclick="rNext()">NEXT ▶</button>
+
+  <!-- MAIN REMOTE (hidden until connected) -->
+  <div id="rem-main" style="display:none;flex-direction:column;height:100%;overflow:hidden">
+    <header id="rem-hdr">
+      <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0">
+        <span class="sdot on" id="rem-dot"></span>
+        <div id="rem-sname" style="font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Waiting for song…</div>
+      </div>
+      <button id="rem-blk" onclick="rBlank()">BLANK</button>
+    </header>
+    <div id="rem-view-tgl">
+      <button class="btn btn-sm on" id="vt-mob" onclick="setRView('mobile')">📱 Mobile</button>
+      <button class="btn btn-sm" id="vt-pc" onclick="setRView('pc')">🖥 PC</button>
+      <button class="btn btn-sm" style="margin-left:auto;font-size:10px;color:var(--txd)" onclick="remDisconnect()">Disconnect</button>
+    </div>
+    <div id="rem-secs"></div>
+    <div id="rem-grid" style="flex:1;overflow-y:auto;padding:8px">
+      <div class="empty" style="padding-top:40px"><div class="eic">📡</div>Connected — waiting for controller to push a song</div>
+    </div>
+    <div id="rem-nav">
+      <button id="rp" onclick="rPrev()">◀ PREV</button>
+      <button id="rn" onclick="rNext()">NEXT ▶</button>
+    </div>
   </div>
 </div>
 
@@ -971,8 +1003,7 @@ function tryFirebase(){
       if(isLocal){
         $('qr-box').innerHTML='<div style="font-size:11px;color:var(--bl);padding:8px;max-width:200px;line-height:1.5">⚠ Paste your GitHub Pages URL above to generate a working QR code for phones.</div>';
       }else{
-        const fbParam=(cfg.fb&&cfg.fb.apiKey)?'&fbc='+btoa(JSON.stringify(cfg.fb)):'';
-        const remUrl=baseUrl+'?mode=remote'+fbParam;
+        const remUrl=baseUrl+'?mode=remote';
         try{new QRCode($('qr-box'),{text:remUrl,width:120,height:120,colorDark:'#000',colorLight:'#fff'});}catch(e){}
         const urlEl=document.createElement('div');
         urlEl.style.cssText='font-size:10px;color:var(--txd);margin-top:5px;word-break:break-all;max-width:200px';
@@ -1551,40 +1582,87 @@ function clrDisp(c){
 
 // ── REMOTE ──
 function initRemote(){
-  $('rem-mode').style.display='flex';
+  const rm=$('rem-mode');if(rm)rm.style.display='flex';
   loadAll();
-  // Check for Firebase config in URL (from QR)
-  const params=new URLSearchParams(location.search);
-  const fbc=params.get('fbc');
-  if(fbc){try{const fc=JSON.parse(atob(fbc));cfg.fb=fc;saveAll();}catch(e){}}
-  if(cfg.pinEnabled&&cfg.pinValue){$('pin-ov').classList.add('show');return;}
-  startRemote();
+  // Try to connect using stored config
+  if(cfg.fb&&cfg.fb.databaseURL){
+    startRemote();
+  }else{
+    showRemoteSetup();
+  }
 }
 
-function checkPin(){
-  if($('pin-in').value===cfg.pinValue){$('pin-ov').classList.remove('show');startRemote();}
-  else{$('pin-err').textContent='Incorrect PIN — try again';$('pin-in').value='';}
+function showRemoteSetup(){
+  const s=$('rem-setup'),m=$('rem-main');
+  if(s){s.style.display='flex';}
+  if(m){m.style.display='none';}
 }
 
-function startRemote(){
+function showRemoteMain(){
+  const s=$('rem-setup'),m=$('rem-main');
+  if(s){s.style.display='none';}
+  if(m){m.style.display='flex';}
+  if(cfg.swipeEnabled)initSwipe();
+  // Load last state from localStorage
+  try{
+    const st=JSON.parse(localStorage.getItem(LSK.live)||'{}');
+    if(st.song)applyLU(st);
+  }catch(e){}
+}
+
+function remSetupConnect(){
+  const ak=(gv('rs-ak')||'').trim();
+  const ad=(gv('rs-ad')||'').trim();
+  const du=(gv('rs-du')||'').trim();
+  const pi=(gv('rs-pi')||'').trim();
+  const st=$('rs-status');
+  if(!ak||!du){if(st){st.textContent='⚠ API Key and Database URL are required';st.style.color='var(--bl)';}return;}
+  cfg.fb={apiKey:ak,authDomain:ad,databaseURL:du,projectId:pi};
+  saveAll();
+  if(st){st.textContent='Connecting…';st.style.color='var(--txd)';}
+  startRemote(st);
+}
+
+function remDisconnect(){
+  cfg.fb={apiKey:'',authDomain:'',databaseURL:'',projectId:''};
+  saveAll();
+  if(fbRef){try{fbRef.off();}catch(e){}}
+  fbRef=null;fbDB=null;
+  showRemoteSetup();
+}
+
+function startRemote(statusEl){
   if('wakeLock' in navigator)navigator.wakeLock.request('screen').catch(()=>{});
   initBC();
   if(cfg.fb&&cfg.fb.databaseURL){
     try{
-      if(typeof firebase!=='undefined'){
-        const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);
-        fbDB=firebase.database(app);
-        fbRef=fbDB.ref('altarlyrics/live');
-        fbRef.on('value',snap=>{if(snap.val())applyLU(snap.val());});
+      if(typeof firebase==='undefined'){
+        if(statusEl){statusEl.textContent='Firebase SDK not loaded';statusEl.style.color='var(--rd)';}
+        return;
       }
-    }catch(e){}
+      // Clear existing app if config changed
+      if(firebase.apps.length){
+        // Reuse existing
+      }
+      const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);
+      fbDB=firebase.database(app);
+      fbRef=fbDB.ref('altarlyrics/live');
+      fbRef.on('value',snap=>{
+        if(snap.val())applyLU(snap.val());
+      });
+      // Show main remote on first successful connection
+      if(statusEl){statusEl.textContent='✓ Connected!';statusEl.style.color='var(--gn)';}
+      setTimeout(()=>showRemoteMain(),600);
+    }catch(err){
+      if(statusEl){statusEl.textContent='Error: '+err.message;statusEl.style.color='var(--rd)';}
+      return;
+    }
+  }else{
+    // No Firebase — still show main for BroadcastChannel use
+    showRemoteMain();
   }
-  if(cfg.swipeEnabled)initSwipe();
-  try{
-    const st=JSON.parse(localStorage.getItem(LSK.live)||'{}');
-    if(st.songId){st.song=lib.find(s=>s.id===st.songId)||st.song;applyLU(st);}
-  }catch(e){}
 }
+
 
 function setRView(v){
   remView=v;
