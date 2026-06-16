@@ -220,10 +220,13 @@ select:focus,.cinp:focus{outline:none;border-color:var(--ac)}
   flex-shrink:0;transition:all .13s}
 .rsb:hover,.rsb.on{background:var(--ac);border-color:var(--ac);color:#fff}
 .rc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:9px;
-  padding:11px 13px;margin-bottom:6px;cursor:pointer;transition:all .13s;
-  font-size:14px;line-height:1.6}
-.rc:active{transform:scale(.98)}
+  padding:11px 13px;margin-bottom:6px;cursor:pointer;
+  transition:border-color .13s,background .13s,transform .1s;
+  font-size:14px;line-height:1.6;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;user-select:none}
+.rc:active,.rc.tapping{transform:scale(.97);opacity:.85}
 .rc.on{border-color:var(--ac);background:var(--sab)}
+.rc.on.tapping{transform:scale(.97)}
 .rcs{font-size:9px;color:var(--ac);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-weight:700}
 .rcsec{font-size:12px;color:var(--txd);margin-top:3px;font-style:italic}
 .pc-slbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ac);
@@ -1240,22 +1243,57 @@ function rpcBlankUI(){const b=$('rpc-blank-btn');if(!b)return;const on=live.blan
 
 
 // MOBILE REMOTE
+// Track which song is currently rendered in the mobile grid
+let _mobGridSongId=null,_mobGridSlideCount=0;
+
 function renderMobRemote(state){
   if(!state)return;
   const song=state.song;const curIdx=typeof state.idx==='number'?state.idx:0;const isBlk=state.blank||false;
+
+  // Always update header elements
   const sn=$('rem-sname');if(sn)sn.textContent=song?(song.title+(song.artist?' — '+song.artist:'')):'Waiting for song…';
   const rb=$('rem-blk');if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
   document.querySelectorAll('#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
   if(!song)return;
+
+  const grid=$('rmob-grid');if(!grid)return;
+  if(mobSetlistMode)return;
+  if(mobSearchActive){renderMobLibSearch(($('rmob-srch')?.value||'').toLowerCase());return;}
+
+  const fs=flatSlides(song);
+  const sameSong=(_mobGridSongId===song.id && _mobGridSlideCount===fs.length);
+
+  if(sameSong){
+    // ── FAST PATH: song unchanged — only update active class, preserve DOM for animations ──
+    const cards=grid.querySelectorAll('.rc');
+    cards.forEach((el,i)=>{
+      const wasOn=el.classList.contains('on');
+      const isOn=(i===curIdx);
+      if(wasOn!==isOn)el.classList.toggle('on',isOn);
+    });
+    // Update section bar active state
+    const sb=$('rmob-secs');
+    if(sb&&!mobSetlistMode){
+      let off=0;
+      song.sections.forEach((sec,si)=>{
+        const btn=sb.querySelectorAll('button')[si];
+        if(btn){const isOn=curIdx>=off&&curIdx<off+sec.slides.length;btn.classList.toggle('on',isOn);}
+        off+=sec.slides.length;
+      });
+    }
+    const ac=grid.querySelector('.rc.on');if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
+    return;
+  }
+
+  // ── FULL REBUILD: new song or slide count changed ──
   const sb=$('rmob-secs');
   if(sb&&!mobSetlistMode){let off=0;sb.innerHTML=song.sections.map(sec=>{const si=off;off+=sec.slides.length;const isOn=curIdx>=si&&curIdx<si+sec.slides.length;return`<button class="rsb${isOn?' on':''}" onclick="rGoTo(${si})">${esc(sec.name)}</button>`;}).join('');}
-  const grid=$('rmob-grid');if(!grid)return;
-  if(mobSetlistMode)return; // keep setlist song list visible; don't overwrite it
-  const srchVal=mobSearchActive?(($('rmob-srch')?.value||'')).toLowerCase():'';
-  if(mobSearchActive){renderMobLibSearch(srchVal);return;}
+
   let html='';let gi=0;
-  song.sections.forEach(sec=>{sec.slides.forEach(sl=>{const gIdx=gi++;const isOn=curIdx===gIdx;html+=`<div class="rc${isOn?' on':''}" onclick="rGoTo(${gIdx})"><div class="rcs">${esc(sec.name)}</div>${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}${sl.secondary&&sl.secondary.length?`<div class="rcsec">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});});
+  song.sections.forEach(sec=>{sec.slides.forEach(sl=>{const gIdx=gi++;const isOn=curIdx===gIdx;html+=`<div class="rc${isOn?' on':''}" onclick="rGoTo(${gIdx})"><div class="rcs">${esc(sec.name)}</div>${esc((sl.primary||[]).join('\n')).replace(/\n/g,'<br>')}${sl.secondary&&sl.secondary.length?`<div class="rcsec">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});});
   grid.innerHTML=html||'<div class="empty">No slides</div>';
+  _mobGridSongId=song.id;
+  _mobGridSlideCount=fs.length;
   const ac=grid.querySelector('.rc.on');if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
 
@@ -1490,7 +1528,21 @@ function startRemote(statusEl){
   }else{showRemoteMain();}
 }
 function checkPin(){if($('pin-in').value===cfg.pinValue){$('pin-ov').classList.remove('show');startRemote();}else{$('pin-err').textContent='Incorrect PIN';$('pin-in').value='';}}
-function initSwipe(){let sx=0,sy=0;const el=$('rmob-grid');if(!el)return;el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});el.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){dx<0?rNext():rPrev();}},{passive:true});}
+function initSwipe(){
+  let sx=0,sy=0;
+  const el=$('rmob-grid');if(!el)return;
+  // Swipe detection
+  el.addEventListener('touchstart',e=>{
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;
+    // Tap feedback: add .tapping to touched .rc card
+    const card=e.target.closest('.rc');
+    if(card){card.classList.add('tapping');setTimeout(()=>card.classList.remove('tapping'),180);}
+  },{passive:true});
+  el.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){dx<0?rNext():rPrev();}
+  },{passive:true});
+}
 
 // CUSTOM DIALOG (replaces confirm/prompt for cross-browser compat)
 let _alDlgCb=null,_alDlgIsPrompt=false;
