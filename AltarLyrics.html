@@ -833,7 +833,29 @@ function tryFirebase(){
     fbRef=fbDB.ref('altarlyrics/live');
     fbRef.on('value',snap=>{
       const d=snap.val();if(!d)return;
-      if(MODE==='controller'){if(d.songId===live.songId){live.idx=d.idx??live.idx;live.blank=d.blank??live.blank;renderGrid(gridSong);updateLive();blankUI();}}
+      if(MODE==='controller'){
+        // Sync slide index and blank from any device
+        live.idx=typeof d.idx==='number'?d.idx:live.idx;
+        live.blank=d.blank??false;
+        // Sync LPS if remote changed it
+        if(d.cfg&&typeof d.cfg.lps==='number'&&d.cfg.lps!==cfg.lps){
+          cfg.lps=d.cfg.lps;
+          document.querySelectorAll('#lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
+          if(gridSong&&gridSong.priRaw){
+            gridSong=freshSong(gridSong);
+            const tot=flatSlides(gridSong).length;
+            if(live.idx>=tot)live.idx=Math.max(0,tot-1);
+          }
+        }
+        // Sync song if remote loaded a different one
+        if(d.songId&&d.songId!==live.songId&&d.song){
+          const ns=normalizeSong(d.song);
+          gridSong=freshSong(ns);
+          live.songId=d.songId;
+          renderLib();renderSLpanel();
+        }
+        renderGrid(gridSong);updateLive();blankUI();
+      }
       else{applyLU(d);}
     });
     // BIDIRECTIONAL data channel
@@ -1005,7 +1027,17 @@ function goNext(){const s=gridSong;if(!s)return;const f=flatSlides(s);if(live.id
 function goPrev(){if(live.idx>0)goTo(live.idx-1);}
 function toggleBlank(){live.blank=!live.blank;blankUI();pushLive();}
 function blankUI(){const b=$('blank-btn');if(!b)return;const on=live.blank;b.textContent=on?'SHOW':'BLANK';b.style.background=on?'var(--livebg)':'var(--blbg)';b.style.borderColor=on?'var(--live)':'var(--bl)';b.style.color=on?'var(--live)':'var(--bl)';}
-function updateLive(){const song=gridSong;const fs=song?flatSlides(song):[];const cur=fs[live.idx];const lt=$('ltxt'),ls=$('lsec');if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'—';lt.style.color=cur?'var(--tx)':'var(--txd)';}if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';}
+function updateLive(){
+  const song=gridSong||songById(live.songId);
+  const fs=song?flatSlides(song):[];
+  const cur=fs[live.idx];
+  const lt=$('ltxt'),ls=$('lsec');
+  if(lt){lt.innerHTML=cur?esc((cur.primary||[]).join('\n')).replace(/\n/g,'<br>'):'—';lt.style.color=cur?'var(--tx)':'var(--txd)';}
+  if(ls)ls.innerHTML=cur&&cur.secondary&&cur.secondary.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';
+  // Keep slide counter in sync
+  const sc=$('slide-ctr');
+  if(sc)sc.textContent=cur&&fs.length?`${live.idx+1} / ${fs.length}`:'—';
+}
 
 // SONG EDITOR
 function openEd(songId){
@@ -1461,7 +1493,11 @@ function applyLU(state){
   // Normalize song data (Firebase can corrupt empty arrays)
   if(state.song)state={...state,song:normalizeSong(state.song)};
   if(MODE==='remote'&&!_cfgSynced&&state.cfg){cfg={...DEFS,...state.cfg};_cfgSynced=true;['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});document.querySelectorAll('#rpc-lps-btns .btn-sm,#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));}
-  else if(state.cfg&&state.cfg.lps){cfg.lps=state.cfg.lps;}
+  else if(state.cfg&&typeof state.cfg.lps==='number'){
+    cfg.lps=state.cfg.lps;
+    // Keep remote LPS buttons in sync when controller changes LPS
+    document.querySelectorAll('#rpc-lps-btns .btn-sm,#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
+  }
   if(MODE==='display'){
     if(state.blank){clrDisp(state.cfg||state.settings);return;}
     if(state.song&&state.idx>=0){const slides=flatSlides(state.song);const slide=slides[state.idx];if(slide)showSlide(slide,state.song,state.cfg||state.settings||{});}
