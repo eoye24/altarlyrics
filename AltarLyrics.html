@@ -691,7 +691,7 @@ let cfg={...DEFS},lib=[],sls=[],live={songId:null,idx:-1,blank:false};
 let activeSLid=null,gridSong=null,edSongId=null;
 let bc=null,fbDB=null,fbRef=null,fbDataRef=null;
 let dispCur=null,remLive={song:null,idx:-1,blank:false},remView='mobile';
-let rpcActiveSLid=null,rpcGridSong=null,mobSearchActive=false;
+let rpcActiveSLid=null,rpcGridSong=null,mobSearchActive=false,mobSetlistMode=false;
 const DEVICE_ID='d'+Math.random().toString(36).substr(2,8);
 let _dataPushing=false;
 
@@ -1248,8 +1248,9 @@ function renderMobRemote(state){
   document.querySelectorAll('#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
   if(!song)return;
   const sb=$('rmob-secs');
-  if(sb){let off=0;sb.innerHTML=song.sections.map(sec=>{const si=off;off+=sec.slides.length;const isOn=curIdx>=si&&curIdx<si+sec.slides.length;return`<button class="rsb${isOn?' on':''}" onclick="rGoTo(${si})">${esc(sec.name)}</button>`;}).join('');}
+  if(sb&&!mobSetlistMode){let off=0;sb.innerHTML=song.sections.map(sec=>{const si=off;off+=sec.slides.length;const isOn=curIdx>=si&&curIdx<si+sec.slides.length;return`<button class="rsb${isOn?' on':''}" onclick="rGoTo(${si})">${esc(sec.name)}</button>`;}).join('');}
   const grid=$('rmob-grid');if(!grid)return;
+  if(mobSetlistMode)return; // keep setlist song list visible; don't overwrite it
   const srchVal=mobSearchActive?(($('rmob-srch')?.value||'')).toLowerCase():'';
   if(mobSearchActive){renderMobLibSearch(srchVal);return;}
   let html='';let gi=0;
@@ -1273,6 +1274,7 @@ function mobLoadSong(id){
   const song=lib.find(s=>s.id===id);
   if(!song){toast('Song not found - library may still be loading');return;}
   const fresh=freshSong(song);if(!fresh)return;
+  mobSetlistMode=false; // leaving setlist-song-list mode
   live.songId=id;live.idx=0;live.blank=false;
   const state={...live,song:fresh,cfg};remLive=state;
   if(bc)bc.postMessage({type:'live',state});if(fbRef)fbRef.set(state).catch(()=>{});
@@ -1318,9 +1320,43 @@ function mobDeleteSetlist(id){
   },'Delete');
 }
 function mobLoadSetlist(id){
-  const sl=sls.find(s=>s.id===id);if(!sl||!sl.songIds.length){closeMobSL();toast('Setlist is empty');return;}
-  const firstSong=songById(sl.songIds[0]);if(!firstSong){closeMobSL();toast('Songs not loaded yet');return;}
-  closeMobSL();mobLoadSong(sl.songIds[0]);toast('Loaded: '+sl.name);
+  const sl=sls.find(s=>s.id===id);
+  if(!sl){closeMobSL();return;}
+  if(!sl.songIds.length){closeMobSL();toast('Setlist is empty');return;}
+  closeMobSL();
+  mobShowSetlistSongs(id);
+}
+
+// Show all songs in a setlist inside the mobile grid
+function mobShowSetlistSongs(id){
+  const sl=sls.find(s=>s.id===id);if(!sl)return;
+  const grid=$('rmob-grid');const sb=$('rmob-secs');if(!grid)return;
+
+  // Section bar: show setlist context with back button
+  if(sb){
+    sb.innerHTML=
+      `<button class="rsb on" onclick="openMobSL()">&#9664; Setlists</button>`+
+      `<span style="font-size:11px;color:var(--txd);padding:2px 6px;white-space:nowrap">${esc(sl.name)}</span>`;
+  }
+
+  // Build song cards
+  const songs=sl.songIds.map(sid=>songById(sid)).filter(Boolean);
+  if(!songs.length){
+    grid.innerHTML='<div class="empty"><div class="eic">&#127925;</div>Songs not in library yet.<div style="font-size:11px;color:var(--txd);margin-top:6px">Add songs to the library on the OBS laptop first.</div></div>';
+    return;
+  }
+  grid.innerHTML=
+    `<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--ac);font-weight:700;padding:2px 4px 10px">`+
+      `${esc(sl.name)} &mdash; ${songs.length} song${songs.length!==1?'s':''}`+
+    `</div>`+
+    songs.map((s,i)=>`
+      <div class="rc" onclick="mobLoadSong('${s.id}')">
+        <div class="rcs">Song ${i+1}</div>
+        <div style="font-weight:700;font-size:15px">${esc(s.title)}</div>
+        ${s.artist?`<div style="font-size:12px;color:var(--txd);margin-top:3px">${esc(s.artist)}</div>`:''}
+      </div>`).join('');
+  grid.scrollTop=0;
+  mobSetlistMode=true;
 }
 
 // REMOTE APPLY — live.idx ALWAYS set before any render
