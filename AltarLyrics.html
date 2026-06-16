@@ -1068,39 +1068,59 @@ function exportData(){
   const fname='AltarLyrics-backup-'+new Date().toISOString().slice(0,10)+'.json';
   showExportModal(json,fname);
 }
-function _exportDownload(json,fname){
+// Store export payload in module vars so onclick attrs never embed raw JSON
+let _expJson='',_expFname='';
+
+function _exportDownload(){
   try{
-    const blob=new Blob([json],{type:'application/json'});
+    const blob=new Blob([_expJson],{type:'application/json'});
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
-    a.href=url;a.download=fname;a.style.display='none';
+    a.href=url;a.download=_expFname;a.style.display='none';
     document.body.appendChild(a);a.click();
     setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},2000);
-    toast('Downloaded: '+fname);
+    toast('Downloaded: '+_expFname);
   }catch(e){toast('Download failed — use Copy instead');}
 }
+function _exportCopy(){
+  const ta=document.querySelector('#export-modal textarea');
+  if(ta)navigator.clipboard.writeText(ta.value).then(()=>toast('Copied!')).catch(()=>{ta.select();document.execCommand('copy');toast('Copied!');});
+}
 function showExportModal(json,fname){
+  _expJson=json;_expFname=fname;
   const old=$('export-modal');if(old)old.remove();
   const m=document.createElement('div');
   m.id='export-modal';
   m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px';
-  m.innerHTML=`
-    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;width:100%;max-width:540px;display:flex;flex-direction:column;max-height:85vh;overflow:hidden">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bd)">
-        <span style="font-weight:700;font-size:14px">&#128228; Export</span>
-        <button onclick="document.getElementById('export-modal').remove()" style="background:none;border:none;color:var(--txd);font-size:18px;cursor:pointer">&#10005;</button>
-      </div>
-      <div style="padding:8px 16px;font-size:11px;color:var(--txd);border-bottom:1px solid var(--bd)">
-        File: <strong style="color:var(--tx)">${fname}</strong>
-      </div>
-      <textarea readonly style="flex:1;margin:12px 16px;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:8px;border-radius:6px;font-size:10px;font-family:monospace;resize:none;min-height:160px" onclick="this.select()">${json}</textarea>
-      <div style="padding:10px 16px;display:flex;gap:8px;border-top:1px solid var(--bd)">
-        <button class="btn btn-ac" style="flex:1" onclick="_exportDownload(${JSON.stringify(json)},${JSON.stringify(fname)})">&#11015; Download</button>
-        <button class="btn" style="flex:1" onclick="navigator.clipboard.writeText(document.querySelector('#export-modal textarea').value).then(()=>toast('Copied!'))">&#128203; Copy</button>
-        <button class="btn" onclick="document.getElementById('export-modal').remove()">Cancel</button>
-      </div>
+  const ta=document.createElement('textarea');
+  ta.readOnly=true;
+  ta.value=json;
+  ta.style.cssText='flex:1;margin:12px 16px;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:8px;border-radius:6px;font-size:10px;font-family:monospace;resize:none;min-height:160px;cursor:text';
+  ta.onclick=()=>ta.select();
+  const shell=document.createElement('div');
+  shell.style.cssText='background:var(--sf);border:1px solid var(--bd);border-radius:10px;width:100%;max-width:540px;display:flex;flex-direction:column;max-height:85vh;overflow:hidden';
+  shell.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bd)">
+      <span style="font-weight:700;font-size:14px">&#128228; Export</span>
+      <button id="exp-x" style="background:none;border:none;color:var(--txd);font-size:18px;cursor:pointer">&#10005;</button>
+    </div>
+    <div style="padding:8px 16px;font-size:11px;color:var(--txd);border-bottom:1px solid var(--bd)">
+      File: <strong style="color:var(--tx)">${fname}</strong>
+    </div>
+    <div id="exp-ta-slot"></div>
+    <div style="padding:10px 16px;display:flex;gap:8px;border-top:1px solid var(--bd)">
+      <button id="exp-dl" class="btn btn-ac" style="flex:1">&#11015; Download</button>
+      <button id="exp-cp" class="btn" style="flex:1">&#128203; Copy</button>
+      <button id="exp-cl" class="btn">Cancel</button>
     </div>`;
+  shell.querySelector('#exp-ta-slot').appendChild(ta);
+  m.appendChild(shell);
   document.body.appendChild(m);
+  // Wire buttons after insertion (no inline onclick so no quoting issues)
+  shell.querySelector('#exp-x').onclick=()=>m.remove();
+  shell.querySelector('#exp-dl').onclick=()=>_exportDownload();
+  shell.querySelector('#exp-cp').onclick=()=>_exportCopy();
+  shell.querySelector('#exp-cl').onclick=()=>m.remove();
 }
 function importData(ev){const file=ev.target.files[0];if(!file)return;ev.target.value='';const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.lib)lib=d.lib;if(d.sls)sls=d.sls;if(d.cfg)cfg={...DEFS,...d.cfg};saveAll();pushData();renderLib();renderPCLib();renderSLsel();renderPCSLsel();renderSLpanel();renderPCSLpanel();loadCfgUI();if(cfg.fb&&cfg.fb.apiKey){$('fb-ak').value=cfg.fb.apiKey||'';$('fb-ad').value=cfg.fb.authDomain||'';$('fb-du').value=cfg.fb.databaseURL||'';$('fb-pi').value=cfg.fb.projectId||'';}toast('Import successful');}catch(err){toast('Import failed: '+err.message);}};r.readAsText(file);}
 
