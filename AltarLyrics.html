@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>AltarLyrics v1.1</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>AltarLyrics v1.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Lato:wght@300;400;700&family=Oswald:wght@400;500;600&family=Raleway:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -26,8 +26,6 @@
 }
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
   font-family:system-ui,-apple-system,sans-serif;font-size:13px}
-
-/* BUTTONS */
 .btn{background:var(--sf2);border:1px solid var(--bd);color:var(--tx);
   padding:5px 11px;border-radius:6px;cursor:pointer;font-size:12px;
   transition:all .14s;white-space:nowrap;line-height:1.4}
@@ -40,8 +38,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
 .bic{background:none;border:none;color:var(--txd);cursor:pointer;
   padding:2px 4px;font-size:13px;border-radius:4px}
 .bic:hover{color:var(--tx);background:var(--sf3)}
-
-/* HEADER */
 #ctrl-hdr{height:var(--hdr);background:var(--sf);border-bottom:1px solid var(--bd);
   display:flex;align-items:center;padding:0 9px;gap:8px;flex-shrink:0}
 .brand{font-size:14px;font-weight:800;color:var(--ac);letter-spacing:.4px;white-space:nowrap}
@@ -52,11 +48,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
 .sdot{width:6px;height:6px;border-radius:50%;background:var(--txd);flex-shrink:0}
 .sdot.on{background:var(--gn)}
 .syn{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--txd)}
-
-/* BODY */
 #ctrl-body{display:flex;height:calc(100vh - var(--hdr));overflow:hidden}
-
-/* LIBRARY */
 #lib-pnl{width:var(--lw);background:var(--sf);border-right:1px solid var(--bd);
   display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
 .ph{padding:7px 9px;border-bottom:1px solid var(--bd);flex-shrink:0}
@@ -87,8 +79,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
 .slitl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .slirm{background:none;border:none;color:var(--txd);cursor:pointer;font-size:10px}
 .slirm:hover{color:var(--rd)}
-
-/* GRID */
 #grid-pnl{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
 #grid-hdr{display:flex;align-items:center;padding:7px 12px;border-bottom:1px solid var(--bd);
   flex-shrink:0;gap:8px}
@@ -99,7 +89,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
 #slide-ctr{font-size:11px;color:var(--txd);white-space:nowrap;flex-shrink:0}
 #slide-grid{flex:1;overflow-y:auto;padding:10px}
 .slbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ac);
-  font-weight:700;margin:9px 0 4px;padding:0 1px}
+  font-weight:700;margin:9px 0 4px;padding:0 2px}
 .slbl:first-child{margin-top:0}
 .srow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:3px}
 .sc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:7px;
@@ -110,24 +100,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
 .scn{font-size:9px;color:var(--txd);margin-bottom:3px}
 .sct{font-size:11px;line-height:1.5;color:var(--tx)}
 .scs{font-size:10px;color:var(--txd);line-height:1.4;margin-top:2px;font-style:italic}
-
-/* CONTROLS PANEL */
 #ctrl-pnl{width:var(--rw);background:var(--sf);border-left:1px solid var(--bd);
   display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
 .cps{padding:9px;border-bottom:1px solid var(--bd)}
-
-/* Live preview only */
 .pvbox{background:var(--sf2);border:1px solid var(--bd);border-radius:7px;
   padding:6px 8px;min-height:46px;margin-bottom:7px}
 .pvlbl{font-size:8px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:4px;color:var(--live)}
 .pvtxt{font-size:11px;line-height:1.5}
 .pvsc{font-size:10px;color:var(--txd);margin-top:2px;font-style:italic}
-
 .nav-row{display:flex;gap:5px;margin-bottom:5px}
 #blank-btn{width:100%;padding:8px;font-size:12px;font-weight:700}
 #prev-btn,#next-btn{flex:1;padding:8px;font-size:12px;font-weight:700}
-
-/* TABS */
 .tabs{display:flex;gap:2px;margin-bottom:8px}
 .tbtn{flex:1;padding:4px 3px;background:var(--sf2);border:1px solid var(--bd);
   color:var(--txd);cursor:pointer;font-size:10px;border-radius:5px;transition:all .13s}
@@ -165,8 +148,6 @@ select:focus,.cinp:focus{outline:none;border-color:var(--ac)}
 .sep{border-top:1px solid var(--bd);padding-top:8px;margin-top:4px}
 .seplbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--txd);
   font-weight:700;margin-bottom:7px}
-
-/* DISPLAY */
 #disp-mode{position:fixed;inset:0;background:transparent;overflow:hidden;display:none}
 #bg-lyr{position:absolute;inset:0;z-index:1;pointer-events:none}
 #lyr-blk{position:absolute;z-index:2;pointer-events:none;display:none}
@@ -184,112 +165,20 @@ select:focus,.cinp:focus{outline:none;border-color:var(--ac)}
 .afo{animation:FO .2s ease forwards}
 .asi{animation:SI .28s ease forwards}
 .aso{animation:SO .2s ease forwards}
-
-/* SONG TITLE ON DISPLAY */
 #ttl-anchor{position:absolute;z-index:3;pointer-events:none;display:none;padding:10px 14px}
-
-/* REMOTE */
 #rem-mode{height:100vh;display:none;flex-direction:column;background:var(--bg);overflow:hidden}
-#rem-hdr{display:flex;align-items:center;padding:10px 12px;background:var(--sf);
-  border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px}
-#rem-sname{font-size:13px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#rem-blk{background:var(--blbg);border:2px solid var(--bl);color:var(--bl);
-  padding:7px 14px;border-radius:7px;font-weight:700;font-size:12px;cursor:pointer;flex-shrink:0}
-#rem-view-tgl{display:flex;gap:4px;padding:6px 9px;border-bottom:1px solid var(--bd);flex-shrink:0}
-#rem-secs{display:flex;gap:4px;padding:6px 9px;overflow-x:auto;
-  border-bottom:1px solid var(--bd);flex-shrink:0;scrollbar-width:none}
-#rem-secs::-webkit-scrollbar{display:none}
-.rsb{background:var(--sf2);border:1px solid var(--bd);color:var(--txd);
-  padding:4px 10px;border-radius:18px;font-size:11px;cursor:pointer;white-space:nowrap;
-  flex-shrink:0;transition:all .13s}
-.rsb:hover,.rsb.on{background:var(--ac);border-color:var(--ac);color:#fff}
-#rem-grid{flex:1;overflow-y:auto;padding:8px}
-.rc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:9px;
-  padding:11px 13px;margin-bottom:6px;cursor:pointer;transition:all .13s;
-  font-size:14px;line-height:1.6}
-.rc:active{transform:scale(.98)}
-.rc.on{border-color:var(--ac);background:var(--sab)}
-.rcs{font-size:9px;color:var(--ac);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-weight:700}
-.rcsec{font-size:12px;color:var(--txd);margin-top:3px;font-style:italic}
-/* PC view for remote */
-.pc-view .rc{font-size:11px;padding:6px 9px;line-height:1.4}
-.pc-view #rem-grid{padding:5px}
-#rem-nav{display:flex;gap:6px;padding:10px;background:var(--sf);
-  border-top:1px solid var(--bd);flex-shrink:0}
-#rp,#rn{flex:1;padding:13px;border-radius:9px;font-size:15px;font-weight:700;
-  cursor:pointer;border:1.5px solid var(--bd);background:var(--sf2);color:var(--tx);transition:all .13s}
-#rn{background:var(--ac);border-color:var(--ac);color:#fff}
-.pc-view #rp,.pc-view #rn{padding:8px;font-size:13px}
-#rp:active,#rn:active{transform:scale(.97)}
-
-/* MODALS */
-.mov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;
-  display:none;align-items:center;justify-content:center;padding:18px}
-.mov.open{display:flex}
-.mod{background:var(--sf);border:1px solid var(--bd);border-radius:11px;
-  width:100%;max-width:840px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
-.mhdr{display:flex;align-items:center;justify-content:space-between;
-  padding:11px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
-.mtit{font-size:14px;font-weight:700}
-.mx{background:none;border:none;color:var(--txd);font-size:19px;cursor:pointer}
-.mbdy{flex:1;overflow-y:auto;padding:16px}
-.mft{padding:10px 16px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:6px;flex-shrink:0}
-.fr{margin-bottom:12px}
-.fl{display:block;font-size:11px;color:var(--txd);margin-bottom:4px;font-weight:600}
-.fi{width:100%;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);
-  padding:6px 8px;border-radius:6px;font-size:12px}
-.fi:focus{outline:none;border-color:var(--ac)}
-textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100px}
-.dcols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.dcols textarea.fi{min-height:180px}
-.ulbl{display:inline-flex;align-items:center;gap:4px;background:var(--sf3);
-  border:1px solid var(--bd);color:var(--txd);padding:3px 8px;border-radius:5px;
-  cursor:pointer;font-size:11px;margin-top:4px;transition:all .13s}
-.ulbl:hover{border-color:var(--ac);color:var(--tx)}
-.ulbl input{display:none}
-
-/* PIN */
-#pin-ov{position:fixed;inset:0;background:var(--bg);z-index:9999;
-  display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px}
-#pin-ov.show{display:flex}
-#pin-in{font-size:20px;letter-spacing:6px;text-align:center;background:var(--sf2);
-  border:1px solid var(--bd);color:var(--tx);padding:10px 16px;border-radius:8px;width:180px}
-#pin-err{color:var(--rd);font-size:12px;min-height:16px}
-
-/* TOAST */
-#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
-  background:var(--sf3);border:1px solid var(--bd);color:var(--tx);
-  padding:6px 16px;border-radius:18px;font-size:12px;z-index:9999;
-  opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
-#toast.show{opacity:1}
-
-/* MISC */
-.empty{text-align:center;color:var(--txd);padding:22px 12px;font-size:12px}
-.eic{font-size:26px;margin-bottom:7px}
-/* REMOTE SETUP SCREEN */
 #rem-setup{display:none;flex-direction:column;align-items:center;justify-content:center;
   height:100%;padding:30px 20px;text-align:center}
 .rs-in{width:100%;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);
   padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:8px;display:block}
 .rs-in:focus{outline:none;border-color:var(--ac)}
-#rem-main{display:none;flex-direction:column;height:100%;overflow:hidden}
-.pc-slbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ac);
-  font-weight:700;margin:9px 0 4px;padding:0 2px}
-.pc-slbl:first-child{margin-top:0}
-.pc-srow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
-.pc-sc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:7px;
-  padding:7px 9px;cursor:pointer;min-width:110px;max-width:190px;flex:1;
-  transition:all .13s}
-.pc-sc:hover{border-color:var(--ac);background:var(--sf3)}
-.pc-sc.on{border-color:var(--sabo);background:var(--sab);box-shadow:0 0 0 2px var(--acg)}
-.pc-scn{font-size:9px;color:var(--txd);margin-bottom:3px}
-.pc-sct{font-size:11px;line-height:1.4;color:var(--tx)}
-.pc-scs{font-size:10px;color:var(--txd);line-height:1.3;margin-top:2px;font-style:italic}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
-
-/* ── PC REMOTE ── */
+#rem-main{flex:1;display:none;flex-direction:column;min-height:0;overflow:hidden}
+#rem-hdr{display:flex;align-items:center;padding:10px 12px;background:var(--sf);
+  border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px}
+#rem-sname{font-size:13px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#rem-blk{background:var(--blbg);border:2px solid var(--bl);color:var(--bl);
+  padding:7px 14px;border-radius:7px;font-weight:700;font-size:12px;cursor:pointer;flex-shrink:0}
+#rem-view-tgl{display:flex;gap:4px;padding:6px 9px;border-bottom:1px solid var(--bd);flex-shrink:0;align-items:center}
 #rem-content{flex:1;overflow:hidden;position:relative;display:flex;min-height:0}
 #rem-pc{position:absolute;inset:0;display:none;flex-direction:row}
 #rem-pc.show{display:flex}
@@ -298,15 +187,8 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
 #rpc-grid-pnl{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
 #rpc-ctrl{width:var(--rw);background:var(--sf);border-left:1px solid var(--bd);
   display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
-
-/* ── MOBILE REMOTE (fixed layout) ── */
 #rem-mob{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
 #rem-mob.show{display:flex}
-#rmob-hdr{display:flex;align-items:center;padding:10px 12px;background:var(--sf);
-  border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px;min-height:0}
-#rmob-sname{font-size:13px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#rmob-blk{background:var(--blbg);border:2px solid var(--bl);color:var(--bl);
-  padding:7px 14px;border-radius:7px;font-weight:700;font-size:12px;cursor:pointer;flex-shrink:0}
 #rmob-toolbar{display:flex;align-items:center;gap:5px;padding:6px 10px;
   background:var(--sf2);border-bottom:1px solid var(--bd);flex-shrink:0;min-height:0;overflow-x:auto;scrollbar-width:none}
 #rmob-toolbar::-webkit-scrollbar{display:none}
@@ -324,88 +206,124 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
 #rmob-secs{display:flex;gap:4px;padding:6px 9px;overflow-x:auto;
   border-bottom:1px solid var(--bd);flex-shrink:0;scrollbar-width:none;min-height:0}
 #rmob-secs::-webkit-scrollbar{display:none}
-#rmob-grid{flex:1;overflow-y:auto;padding:8px;-webkit-overflow-scrolling:touch;min-height:0}
+#rmob-grid{flex:1;min-height:0;overflow-y:auto;padding:8px;-webkit-overflow-scrolling:touch}
 #rmob-nav{display:flex;gap:7px;padding:10px 12px;background:var(--sf);
-  border-top:1px solid var(--bd);flex-shrink:0;min-height:0}
+  border-top:1px solid var(--bd);flex-shrink:0;
+  padding-bottom:max(10px,env(safe-area-inset-bottom))}
 #rmob-nav button{flex:1;padding:15px;border-radius:10px;font-size:17px;font-weight:700;
   cursor:pointer;border:1.5px solid var(--bd);background:var(--sf2);color:var(--tx)}
 #rmob-nav #rmob-next{background:var(--ac);border-color:var(--ac);color:#fff}
-
-/* ── MOBILE OVERLAYS ── */
-.mob-ov{position:fixed;inset:0;background:var(--bg);z-index:500;
-  display:none;flex-direction:column;overflow:hidden}
+.rsb{background:var(--sf2);border:1px solid var(--bd);color:var(--txd);
+  padding:4px 10px;border-radius:18px;font-size:11px;cursor:pointer;white-space:nowrap;
+  flex-shrink:0;transition:all .13s}
+.rsb:hover,.rsb.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.rc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:9px;
+  padding:11px 13px;margin-bottom:6px;cursor:pointer;transition:all .13s;
+  font-size:14px;line-height:1.6}
+.rc:active{transform:scale(.98)}
+.rc.on{border-color:var(--ac);background:var(--sab)}
+.rcs{font-size:9px;color:var(--ac);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-weight:700}
+.rcsec{font-size:12px;color:var(--txd);margin-top:3px;font-style:italic}
+.pc-slbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--ac);
+  font-weight:700;margin:9px 0 4px;padding:0 2px}
+.pc-slbl:first-child{margin-top:0}
+.pc-srow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.pc-sc{background:var(--sf2);border:1.5px solid var(--bd);border-radius:7px;
+  padding:7px 9px;cursor:pointer;min-width:110px;max-width:190px;flex:1;transition:all .13s}
+.pc-sc:hover{border-color:var(--ac);background:var(--sf3)}
+.pc-sc.on{border-color:var(--sabo);background:var(--sab);box-shadow:0 0 0 2px var(--acg)}
+.pc-scn{font-size:9px;color:var(--txd);margin-bottom:3px}
+.pc-sct{font-size:11px;line-height:1.4;color:var(--tx)}
+.pc-scs{font-size:10px;color:var(--txd);line-height:1.3;margin-top:2px;font-style:italic}
+.mob-ov{position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;overflow:hidden}
 .mob-ov.show{display:flex}
-.mob-ov-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;
-  background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0}
-.mob-ov-back{background:none;border:none;color:var(--ac);font-size:13px;
-  cursor:pointer;padding:4px 6px;border-radius:5px}
+.mob-ov-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0}
+.mob-ov-back{background:none;border:none;color:var(--ac);font-size:13px;cursor:pointer;padding:4px 6px;border-radius:5px}
 .mob-ov-title{font-size:14px;font-weight:700;flex:1}
 .mob-ov-body{flex:1;overflow-y:auto;padding:12px}
-#mob-sl-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:400;
-  display:none;align-items:flex-end}
+#mob-sl-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:400;display:none;align-items:flex-end}
 #mob-sl-bg.show{display:flex}
-#mob-sl-sheet{background:var(--sf);border-radius:14px 14px 0 0;width:100%;
-  max-height:75vh;display:flex;flex-direction:column;overflow:hidden}
-.slsh-hdr{display:flex;align-items:center;padding:13px 16px 10px;
-  border-bottom:1px solid var(--bd)}
+#mob-sl-sheet{background:var(--sf);border-radius:14px 14px 0 0;width:100%;max-height:75vh;display:flex;flex-direction:column;overflow:hidden}
+.slsh-hdr{display:flex;align-items:center;padding:13px 16px 10px;border-bottom:1px solid var(--bd)}
 .slsh-hdr span{flex:1;font-size:14px;font-weight:700}
 .slsh-body{flex:1;overflow-y:auto;padding:10px}
-.sl-big{padding:11px 14px;border-radius:8px;cursor:pointer;
-  font-size:13px;transition:all .13s;border:1.5px solid var(--bd);margin-bottom:6px;
-  display:flex;align-items:center;justify-content:space-between}
+.sl-big{padding:11px 14px;border-radius:8px;cursor:pointer;font-size:13px;transition:all .13s;border:1.5px solid var(--bd);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
 .sl-big:hover{background:var(--sf2)}
 .sl-big.on{border-color:var(--ac);background:var(--sab)}
 .sl-big-name{font-weight:600}
 .sl-big-cnt{font-size:11px;color:var(--txd)}
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;align-items:center;justify-content:center;padding:18px}
+.mov.open{display:flex}
+.mod{background:var(--sf);border:1px solid var(--bd);border-radius:11px;width:100%;max-width:840px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
+.mhdr{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.mtit{font-size:14px;font-weight:700}
+.mx{background:none;border:none;color:var(--txd);font-size:19px;cursor:pointer}
+.mbdy{flex:1;overflow-y:auto;padding:16px}
+.mft{padding:10px 16px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end;gap:6px;flex-shrink:0}
+.fr{margin-bottom:12px}
+.fl{display:block;font-size:11px;color:var(--txd);margin-bottom:4px;font-weight:600}
+.fi{width:100%;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:6px 8px;border-radius:6px;font-size:12px}
+.fi:focus{outline:none;border-color:var(--ac)}
+textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100px}
+.dcols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dcols textarea.fi{min-height:180px}
+.ulbl{display:inline-flex;align-items:center;gap:4px;background:var(--sf3);border:1px solid var(--bd);color:var(--txd);padding:3px 8px;border-radius:5px;cursor:pointer;font-size:11px;margin-top:4px;transition:all .13s}
+.ulbl:hover{border-color:var(--ac);color:var(--tx)}
+.ulbl input{display:none}
+#pin-ov{position:fixed;inset:0;background:var(--bg);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+#pin-ov.show{display:flex}
+#pin-in{font-size:20px;letter-spacing:6px;text-align:center;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:10px 16px;border-radius:8px;width:180px}
+#pin-err{color:var(--rd);font-size:12px;min-height:16px}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--sf3);border:1px solid var(--bd);color:var(--tx);padding:6px 16px;border-radius:18px;font-size:12px;z-index:9999;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+#toast.show{opacity:1}
+.empty{text-align:center;color:var(--txd);padding:22px 12px;font-size:12px}
+.eic{font-size:26px;margin-bottom:7px}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
 </style>
 </head>
 <body>
 
 <div id="pin-ov">
-  <div style="font-size:20px;font-weight:800;color:var(--ac)">🎵 AltarLyrics</div>
-  <div style="font-size:12px;color:var(--txd)">Remote — Enter PIN</div>
-  <input type="password" id="pin-in" maxlength="6" placeholder="••••" autofocus>
+  <div style="font-size:20px;font-weight:800;color:var(--ac)">&#127925; AltarLyrics</div>
+  <div style="font-size:12px;color:var(--txd)">Remote &#8212; Enter PIN</div>
+  <input type="password" id="pin-in" maxlength="6" placeholder="&#8226;&#8226;&#8226;&#8226;" autofocus>
   <div id="pin-err"></div>
   <button class="btn btn-ac" onclick="checkPin()">Enter</button>
 </div>
 <div id="toast"></div>
 
-<!-- ═══════════════ CONTROLLER ═══════════════ -->
+<!-- CONTROLLER -->
 <div id="ctrl-mode" style="display:none;flex-direction:column;height:100vh">
   <header id="ctrl-hdr">
-    <div class="brand">🎵 AltarLyrics</div>
+    <div class="brand">&#127925; AltarLyrics</div>
     <div class="sl-row">
-      <select id="sl-sel" onchange="loadSetlist(this.value)"><option value="">— No Setlist —</option></select>
+      <select id="sl-sel" onchange="loadSetlist(this.value)"><option value="">&#8212; No Setlist &#8212;</option></select>
       <button class="btn btn-sm" onclick="newSetlist()">+ New</button>
       <button class="btn btn-sm" onclick="saveSetlist()">Save</button>
     </div>
     <div class="hdr-r">
       <div class="syn"><span class="sdot" id="sdot"></span><span id="slbl">Local</span></div>
-      <button class="btn btn-sm" onclick="exportData()" title="Export library &amp; settings">📤 Export</button>
-      <label class="btn btn-sm" style="cursor:pointer" title="Import library &amp; settings">📥 Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+      <button class="btn btn-sm" onclick="exportData()" title="Export library &amp; settings">&#128228; Export</button>
+      <label class="btn btn-sm" style="cursor:pointer" title="Import library &amp; settings">&#128229; Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
     </div>
   </header>
-
   <div id="ctrl-body">
-    <!-- LEFT -->
     <aside id="lib-pnl">
       <div class="ph">
         <div class="plbl">Song Library</div>
-        <input type="text" id="lib-srch" placeholder="Search songs…" oninput="filterLib(this.value)">
+        <input type="text" id="lib-srch" placeholder="Search songs&#8230;" oninput="filterLib(this.value)">
       </div>
-      <div id="songs-lst"><div class="empty"><div class="eic">🎵</div>No songs yet.</div></div>
-      <div style="padding:7px 9px;border-top:1px solid var(--bd);flex-shrink:0">
-        <button class="btn btn-ac" style="width:100%;font-size:12px" onclick="openEd(null)">+ Add Song</button>
-      </div>
+      <div id="songs-lst"><div class="empty"><div class="eic">&#127925;</div>No songs yet.</div></div>
       <div id="lib-bot" style="display:flex">
-        <div style="border-top:1px solid var(--bd);padding-top:7px">
-          <div class="plbl">Today's Setlist</div>
-          <div id="sl-inner"><div class="empty" style="padding:10px"><div style="font-size:16px">📋</div>Empty</div></div>
+        <button class="btn btn-ac" style="width:100%;font-size:12px" onclick="openEd(null)">+ Add Song</button>
+        <div style="border-top:1px solid var(--bd);padding-top:7px;margin-top:0">
+          <div class="plbl">Today&#39;s Setlist</div>
+          <div id="sl-inner"><div class="empty" style="padding:10px"><div style="font-size:16px">&#128203;</div>Empty</div></div>
         </div>
       </div>
     </aside>
-
-    <!-- CENTER -->
     <main id="grid-pnl">
       <div id="grid-hdr">
         <div id="grid-title">Select a song</div>
@@ -417,26 +335,23 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
             <button class="btn btn-sm" onclick="setLPS(4)">4</button>
           </div>
         </div>
-        <div id="slide-ctr">—</div>
+        <div id="slide-ctr">&#8212;</div>
       </div>
-      <div id="slide-grid"><div class="empty" style="padding-top:44px"><div class="eic">🎵</div>Click a song to load slides</div></div>
+      <div id="slide-grid"><div class="empty" style="padding-top:44px"><div class="eic">&#127925;</div>Click a song to load slides</div></div>
     </main>
-
-    <!-- RIGHT -->
     <aside id="ctrl-pnl">
       <div class="cps">
         <div class="pvbox">
-          <div class="pvlbl">● LIVE</div>
-          <div class="pvtxt" id="ltxt" style="color:var(--txd)">—</div>
+          <div class="pvlbl">&#9679; LIVE</div>
+          <div class="pvtxt" id="ltxt" style="color:var(--txd)">&#8212;</div>
           <div class="pvsc" id="lsec"></div>
         </div>
         <div class="nav-row"><button class="btn btn-bl" id="blank-btn" onclick="toggleBlank()">BLANK</button></div>
         <div class="nav-row">
-          <button class="btn" id="prev-btn" onclick="goPrev()">◀ PREV</button>
-          <button class="btn btn-ac" id="next-btn" onclick="goNext()">NEXT ▶</button>
+          <button class="btn" id="prev-btn" onclick="goPrev()">&#9664; PREV</button>
+          <button class="btn btn-ac" id="next-btn" onclick="goNext()">NEXT &#9654;</button>
         </div>
       </div>
-
       <div class="cps">
         <div class="tabs">
           <button class="tbtn on" onclick="swTab('theme')">Theme</button>
@@ -444,191 +359,103 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
           <button class="tbtn" onclick="swTab('pos')">Pos</button>
           <button class="tbtn" onclick="swTab('more')">More</button>
         </div>
-
-        <!-- THEME -->
         <div class="tpane on" id="tp-theme">
           <div class="clbl">Themes</div>
           <div class="g3" id="thm-grid" style="margin-bottom:8px"></div>
-          <div class="crow">
-            <div class="clbl">Background</div>
+          <div class="crow"><div class="clbl">Background</div>
             <select id="bg-type" onchange="onBGchange()">
-              <option value="transparent">Transparent</option>
-              <option value="solid">Solid</option>
-              <option value="gradient">Gradient</option>
-              <option value="image">Image Upload</option>
+              <option value="transparent">Transparent</option><option value="solid">Solid</option>
+              <option value="gradient">Gradient</option><option value="image">Image</option>
             </select>
           </div>
-          <div id="bgs-row" class="crow" style="display:none">
-            <div class="clbl">BG Color</div>
-            <div class="crow-row">
-              <input type="color" id="bgc1" onchange="SC()">
-              <input type="text" class="cinp" id="bgc1h" oninput="syncHex('bgc1')">
-            </div>
-          </div>
-          <div id="bgg-row" class="crow" style="display:none">
-            <div class="clbl">Gradient Colors</div>
-            <div class="crow-row">
-              <input type="color" id="bgc1g" onchange="SC()">
-              <input type="color" id="bgc2g" onchange="SC()">
-            </div>
-          </div>
-          <div id="bgi-row" class="crow" style="display:none">
-            <div class="clbl">BG Image</div>
-            <label class="ulbl">📁 Upload Image<input type="file" accept="image/*" onchange="hBgImg(event)"></label>
-          </div>
-          <div id="bgo-row" class="crow">
-            <div class="clbl">BG Opacity: <span id="bgo-v">75</span>%</div>
-            <input type="range" id="bg-op" min="0" max="100" value="75" oninput="SC()">
-          </div>
+          <div id="bgs-row" class="crow" style="display:none"><div class="clbl">BG Color</div>
+            <div class="crow-row"><input type="color" id="bgc1" onchange="SC()"><input type="text" class="cinp" id="bgc1h" oninput="syncHex('bgc1')"></div></div>
+          <div id="bgg-row" class="crow" style="display:none"><div class="clbl">Gradient</div>
+            <div class="crow-row"><input type="color" id="bgc1g" onchange="SC()"><input type="color" id="bgc2g" onchange="SC()"></div></div>
+          <div id="bgi-row" class="crow" style="display:none"><div class="clbl">BG Image</div>
+            <label class="ulbl">&#128193; Upload<input type="file" accept="image/*" onchange="hBgImg(event)"></label></div>
+          <div id="bgo-row" class="crow"><div class="clbl">BG Opacity: <span id="bgo-v">75</span>%</div>
+            <input type="range" id="bg-op" min="0" max="100" value="75" oninput="SC()"></div>
         </div>
-
-        <!-- TEXT -->
         <div class="tpane" id="tp-text">
-          <div class="crow">
-            <div class="clbl">Font</div>
-            <div id="fnt-grid"></div>
-          </div>
-          <div class="crow">
-            <div class="clbl">Size: <span id="fsz-v">48</span>px</div>
-            <input type="range" id="font-sz" min="16" max="120" value="48" oninput="SC()">
-          </div>
-          <div class="crow">
-            <div class="clbl">Text Color</div>
-            <div class="crow-row">
-              <input type="color" id="txc" value="#ffffff" onchange="SC()">
-              <input type="text" class="cinp" id="txch" value="#ffffff" oninput="syncHex('txc')">
-            </div>
-          </div>
-          <div class="crow">
-            <div class="clbl">Alignment</div>
+          <div class="crow"><div class="clbl">Font</div><div id="fnt-grid"></div></div>
+          <div class="crow"><div class="clbl">Size: <span id="fsz-v">48</span>px</div>
+            <input type="range" id="font-sz" min="16" max="120" value="48" oninput="SC()"></div>
+          <div class="crow"><div class="clbl">Text Color</div>
+            <div class="crow-row"><input type="color" id="txc" value="#ffffff" onchange="SC()">
+              <input type="text" class="cinp" id="txch" value="#ffffff" oninput="syncHex('txc')"></div></div>
+          <div class="crow"><div class="clbl">Alignment</div>
             <div class="g3" id="aln-btns">
               <button class="btn btn-sm" onclick="setAlign('left')">Left</button>
               <button class="btn btn-sm on" onclick="setAlign('center')">Center</button>
               <button class="btn btn-sm" onclick="setAlign('right')">Right</button>
-            </div>
-          </div>
-          <div class="tglrow">
-            <span class="tgllbl">Text Outline</span>
-            <label class="tgl"><input type="checkbox" id="otgl" onchange="onOutlineChange()"><span class="tgls"></span></label>
-          </div>
-          <div id="oc-row" class="crow" style="display:none">
-            <div class="clbl">Outline Color</div>
-            <input type="color" id="out-col" value="#000000" onchange="SC()">
-          </div>
-          <div class="crow">
-            <div class="clbl">Line Spacing</div>
+            </div></div>
+          <div class="tglrow"><span class="tgllbl">Text Outline</span>
+            <label class="tgl"><input type="checkbox" id="otgl" onchange="onOutlineChange()"><span class="tgls"></span></label></div>
+          <div id="oc-row" class="crow" style="display:none"><div class="clbl">Outline Color</div>
+            <input type="color" id="out-col" value="#000000" onchange="SC()"></div>
+          <div class="crow"><div class="clbl">Line Spacing</div>
             <select id="lnsp" onchange="SC()">
-              <option value="1.2">Tight</option>
-              <option value="1.5" selected>Normal</option>
-              <option value="1.9">Relaxed</option>
-              <option value="2.4">Loose</option>
-            </select>
-          </div>
-          <div class="crow">
-            <div class="clbl">Padding</div>
+              <option value="1.2">Tight</option><option value="1.5" selected>Normal</option>
+              <option value="1.9">Relaxed</option><option value="2.4">Loose</option>
+            </select></div>
+          <div class="crow"><div class="clbl">Padding</div>
             <div class="g3" id="pad-btns">
               <button class="btn btn-sm" onclick="setPad('S')">S</button>
               <button class="btn btn-sm on" onclick="setPad('M')">M</button>
               <button class="btn btn-sm" onclick="setPad('L')">L</button>
-            </div>
-          </div>
+            </div></div>
         </div>
-
-        <!-- POSITION -->
         <div class="tpane" id="tp-pos">
-          <div class="crow">
-            <div class="clbl">Horizontal: <span id="ph-v">50</span>%</div>
-            <input type="range" id="pos-h" min="0" max="100" value="50" oninput="SC()">
-          </div>
-          <div class="crow">
-            <div class="clbl">Vertical: <span id="pv-v">85</span>%</div>
-            <input type="range" id="pos-v" min="0" max="100" value="85" oninput="SC()">
-          </div>
-          <div class="crow">
-            <div class="clbl">Block Width: <span id="bw-v">80</span>%</div>
-            <input type="range" id="blk-w" min="20" max="100" value="80" oninput="SC()">
-          </div>
-          <div class="crow">
-            <div class="clbl">Animation</div>
+          <div class="crow"><div class="clbl">Horizontal: <span id="ph-v">50</span>%</div>
+            <input type="range" id="pos-h" min="0" max="100" value="50" oninput="SC()"></div>
+          <div class="crow"><div class="clbl">Vertical: <span id="pv-v">85</span>%</div>
+            <input type="range" id="pos-v" min="0" max="100" value="85" oninput="SC()"></div>
+          <div class="crow"><div class="clbl">Block Width: <span id="bw-v">80</span>%</div>
+            <input type="range" id="blk-w" min="20" max="100" value="80" oninput="SC()"></div>
+          <div class="crow"><div class="clbl">Animation</div>
             <div class="g3" id="ani-btns">
               <button class="btn btn-sm" onclick="setAnim('cut')">Cut</button>
               <button class="btn btn-sm on" onclick="setAnim('fade')">Fade</button>
               <button class="btn btn-sm" onclick="setAnim('slide')">Slide</button>
-            </div>
-          </div>
+            </div></div>
         </div>
-
-        <!-- MORE -->
         <div class="tpane" id="tp-more">
-          <div class="tglrow">
-            <span class="tgllbl">Show Song Title</span>
-            <label class="tgl"><input type="checkbox" id="sttgl" onchange="SC()"><span class="tgls"></span></label>
-          </div>
-          <div id="ttl-opts" class="crow" style="display:none">
-            <div class="clbl">Title Position</div>
+          <div class="tglrow"><span class="tgllbl">Show Song Title</span>
+            <label class="tgl"><input type="checkbox" id="sttgl" onchange="SC()"><span class="tgls"></span></label></div>
+          <div id="ttl-opts" class="crow" style="display:none"><div class="clbl">Title Position</div>
             <select id="ttl-pos" onchange="SC()">
-              <option value="top-left">Top Left</option>
-              <option value="top-center">Top Center</option>
-              <option value="top-right">Top Right</option>
-              <option value="bottom-left">Bottom Left</option>
-              <option value="bottom-center" selected>Bottom Center</option>
-              <option value="bottom-right">Bottom Right</option>
-            </select>
-          </div>
-          <div class="tglrow">
-            <span class="tgllbl">Show Artist Name</span>
-            <label class="tgl"><input type="checkbox" id="artgl" onchange="SC()"><span class="tgls"></span></label>
-          </div>
-          <div class="crow">
-            <div class="clbl">Output Resolution</div>
+              <option value="top-left">Top Left</option><option value="top-center">Top Center</option>
+              <option value="top-right">Top Right</option><option value="bottom-left">Bottom Left</option>
+              <option value="bottom-center" selected>Bottom Center</option><option value="bottom-right">Bottom Right</option>
+            </select></div>
+          <div class="tglrow"><span class="tgllbl">Show Artist Name</span>
+            <label class="tgl"><input type="checkbox" id="artgl" onchange="SC()"><span class="tgls"></span></label></div>
+          <div class="crow"><div class="clbl">Resolution</div>
             <select id="res-sel" onchange="SC()">
-              <option value="1920x1080">1920×1080 (HD)</option>
-              <option value="3840x2160">3840×2160 (4K)</option>
-              <option value="1280x720">1280×720 (720p)</option>
-              <option value="1080x1920">1080×1920 (Vertical)</option>
-            </select>
-          </div>
-          <div class="sep">
-            <div class="seplbl">Remote PIN</div>
-            <div class="tglrow">
-              <span class="tgllbl">Enable PIN</span>
-              <label class="tgl"><input type="checkbox" id="pintgl" onchange="SC()"><span class="tgls"></span></label>
-            </div>
+              <option value="1920x1080">1920x1080 (HD)</option><option value="3840x2160">3840x2160 (4K)</option>
+              <option value="1280x720">1280x720 (720p)</option><option value="1080x1920">1080x1920 (Vert)</option>
+            </select></div>
+          <div class="sep"><div class="seplbl">Remote PIN</div>
+            <div class="tglrow"><span class="tgllbl">Enable PIN</span>
+              <label class="tgl"><input type="checkbox" id="pintgl" onchange="SC()"><span class="tgls"></span></label></div>
             <div id="pin-row" style="display:none" class="crow">
-              <input type="text" class="cinp" id="pin-val" placeholder="4–6 digit PIN" maxlength="6" oninput="SC()">
-            </div>
-            <div class="tglrow">
-              <span class="tgllbl">Swipe Gestures</span>
-              <label class="tgl"><input type="checkbox" id="swptgl" checked onchange="SC()"><span class="tgls"></span></label>
-            </div>
+              <input type="text" class="cinp" id="pin-val" placeholder="4&#8211;6 digit PIN" maxlength="6" oninput="SC()"></div>
+            <div class="tglrow"><span class="tgllbl">Swipe Gestures</span>
+              <label class="tgl"><input type="checkbox" id="swptgl" checked onchange="SC()"><span class="tgls"></span></label></div>
           </div>
-          <div class="sep">
-            <div class="seplbl">Firebase Sync</div>
+          <div class="sep"><div class="seplbl">Firebase Sync</div>
             <div class="g2" style="margin-bottom:6px">
-              <div class="crow">
-                <div class="clbl">API Key</div>
-                <input type="text" class="cinp" id="fb-ak" placeholder="AIza…" oninput="saveFBfields()">
-              </div>
-              <div class="crow">
-                <div class="clbl">Auth Domain</div>
-                <input type="text" class="cinp" id="fb-ad" placeholder="project.firebaseapp.com" oninput="saveFBfields()">
-              </div>
-              <div class="crow">
-                <div class="clbl">Database URL</div>
-                <input type="text" class="cinp" id="fb-du" placeholder="https://…firebaseio.com" oninput="saveFBfields()">
-              </div>
-              <div class="crow">
-                <div class="clbl">Project ID</div>
-                <input type="text" class="cinp" id="fb-pi" placeholder="my-project-id" oninput="saveFBfields()">
-              </div>
+              <div class="crow"><div class="clbl">API Key</div><input type="text" class="cinp" id="fb-ak" placeholder="AIza&#8230;" oninput="saveFBfields()"></div>
+              <div class="crow"><div class="clbl">Auth Domain</div><input type="text" class="cinp" id="fb-ad" placeholder="project.firebaseapp.com" oninput="saveFBfields()"></div>
+              <div class="crow"><div class="clbl">Database URL</div><input type="text" class="cinp" id="fb-du" placeholder="https://&#8230;firebaseio.com" oninput="saveFBfields()"></div>
+              <div class="crow"><div class="clbl">Project ID</div><input type="text" class="cinp" id="fb-pi" placeholder="my-project-id" oninput="saveFBfields()"></div>
             </div>
+            <div class="crow"><div class="clbl">GitHub Pages URL (for Remote QR)</div>
+              <input type="text" class="cinp" id="gh-url" placeholder="https://user.github.io/AltarLyrics/" oninput="saveFBfields()">
+              <div style="font-size:10px;color:var(--txd);margin-top:3px">Paste hosted URL so QR works on phones</div></div>
             <button class="btn btn-sm" onclick="tryFirebase()">Connect Firebase</button>
             <div id="fb-status" style="font-size:10px;color:var(--txd);margin-top:4px"></div>
-            <div class="crow" style="margin-top:8px">
-              <div class="clbl">GitHub Pages URL (for Remote QR)</div>
-              <input type="text" class="cinp" id="gh-url" placeholder="https://username.github.io/AltarLyrics/" oninput="saveFBfields()">
-              <div style="font-size:10px;color:var(--txd);margin-top:3px">Paste your hosted URL so the QR code works on phones</div>
-            </div>
             <div id="qr-wrap" style="display:none;margin-top:10px">
               <div class="clbl">Scan to open Remote</div>
               <div id="qr-box" style="background:#fff;padding:6px;border-radius:6px;display:inline-block;margin-top:4px"></div>
@@ -636,269 +463,189 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
           </div>
         </div>
       </div>
-
-      <div style="padding:8px;font-size:9px;color:var(--txd);text-align:center;border-top:1px solid var(--bd);margin-top:auto">
-        AltarLyrics v1.1 · Altar Suite
-      </div>
+      <div style="padding:8px;font-size:9px;color:var(--txd);text-align:center;border-top:1px solid var(--bd);margin-top:auto">AltarLyrics v1.2 &#183; Altar Suite</div>
     </aside>
   </div>
 </div>
 
-<!-- ═══════════════ DISPLAY ═══════════════ -->
+<!-- DISPLAY -->
 <div id="disp-mode">
   <div id="bg-lyr"></div>
-  <!-- Independent title anchor -->
-  <div id="ttl-anchor">
-    <div id="ttl-disp"></div>
-    <div id="artist-disp"></div>
+  <div id="ttl-anchor"><div id="ttl-disp"></div><div id="artist-disp"></div></div>
+  <div id="lyr-blk"><div id="lyr-bg"></div>
+    <div id="lyr-in"><div id="lyr-txt"><div id="pri-lines"></div><div id="sec-lines"></div></div></div>
   </div>
-  <!-- Lyrics block -->
-  <div id="lyr-blk">
-    <div id="lyr-bg"></div>
-    <div id="lyr-in">
-      <div id="lyr-txt">
-        <div id="pri-lines"></div>
-        <div id="sec-lines"></div>
+</div>
+
+<!-- REMOTE -->
+<div id="rem-mode">
+  <div id="rem-setup">
+    <div style="font-size:22px;font-weight:800;color:var(--ac);margin-bottom:6px">&#127925; AltarLyrics</div>
+    <div style="font-size:13px;color:var(--txd);margin-bottom:24px">Remote Control</div>
+    <div style="width:100%;max-width:320px">
+      <div style="font-size:11px;color:var(--txd);margin-bottom:12px">Enter Firebase details &#8212; saved after first use</div>
+      <input type="text" class="rs-in" id="rs-ak" placeholder="API Key">
+      <input type="text" class="rs-in" id="rs-ad" placeholder="Auth Domain">
+      <input type="text" class="rs-in" id="rs-du" placeholder="Database URL">
+      <input type="text" class="rs-in" id="rs-pi" placeholder="Project ID">
+      <button class="btn btn-ac" style="width:100%;padding:11px;font-size:14px;margin-top:4px" onclick="remSetupConnect()">Connect &#8594;</button>
+      <div id="rs-status" style="font-size:12px;text-align:center;margin-top:10px;min-height:18px"></div>
+    </div>
+  </div>
+  <div id="rem-main">
+    <header id="rem-hdr">
+      <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0">
+        <span class="sdot on" id="rem-dot"></span>
+        <div id="rem-sname" style="font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Waiting&#8230;</div>
+      </div>
+      <button id="rem-blk" onclick="rBlank()">BLANK</button>
+    </header>
+    <div id="rem-view-tgl">
+      <button class="btn btn-sm on" id="vt-mob" onclick="setRView('mobile')">&#128242; Mobile</button>
+      <button class="btn btn-sm" id="vt-pc" onclick="setRView('pc')">&#128425; PC</button>
+      <button class="btn btn-sm" style="margin-left:auto;font-size:10px;color:var(--txd)" onclick="remDisconnect()">Disconnect</button>
+    </div>
+    <div id="rem-content">
+      <!-- PC VIEW -->
+      <div id="rem-pc">
+        <aside id="rpc-lib">
+          <div class="ph"><div class="plbl">Song Library</div>
+            <input type="text" id="rpc-srch" placeholder="Search&#8230;" oninput="filterRPCLib(this.value)"></div>
+          <div id="rpc-songs-lst" style="flex:1;overflow-y:auto;padding:4px">
+            <div class="empty"><div class="eic">&#128225;</div>Loading&#8230;</div></div>
+          <div style="padding:5px 9px;border-top:1px solid var(--bd);flex-shrink:0">
+            <button class="btn btn-ac" style="width:100%;font-size:11px;padding:5px" onclick="openEd(null)">+ Add Song</button></div>
+          <div style="padding:7px 9px;border-top:1px solid var(--bd);flex-shrink:0">
+            <div class="plbl" style="margin-bottom:5px">Setlist</div>
+            <div style="display:flex;gap:4px;margin-bottom:5px">
+              <select id="rpc-sl-sel" style="flex:1;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:4px 7px;border-radius:6px;font-size:11px" onchange="rpcLoadSetlist(this.value)"><option value="">&#8212; None &#8212;</option></select>
+              <button class="btn btn-sm" onclick="rpcNewSetlist()">+</button>
+              <button class="btn btn-sm" onclick="rpcSaveSetlist()">Save</button>
+            </div>
+            <div id="rpc-sl-inner" style="overflow-y:auto;max-height:160px">
+              <div class="empty" style="padding:8px"><div style="font-size:14px">&#128203;</div>Empty</div></div>
+          </div>
+        </aside>
+        <main id="rpc-grid-pnl">
+          <div id="rpc-grid-hdr" style="display:flex;align-items:center;padding:7px 12px;border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px">
+            <div id="rpc-song-title" style="font-size:13px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--txd)">Select a song</div>
+            <div class="lps-grp"><span class="lps-lbl">Lines:</span>
+              <div class="g3" id="rpc-lps-btns">
+                <button class="btn btn-sm" onclick="setLPS(1)">1</button>
+                <button class="btn btn-sm on" onclick="setLPS(2)">2</button>
+                <button class="btn btn-sm" onclick="setLPS(4)">4</button>
+              </div></div>
+            <div id="rpc-ctr" style="font-size:11px;color:var(--txd);white-space:nowrap">&#8212;</div>
+          </div>
+          <div id="rpc-grid" style="flex:1;overflow-y:auto;padding:10px">
+            <div class="empty" style="padding-top:40px"><div class="eic">&#128225;</div>Select a song</div></div>
+        </main>
+        <aside id="rpc-ctrl">
+          <div class="cps">
+            <div class="pvbox">
+              <div class="pvlbl">&#9679; LIVE</div>
+              <div class="pvtxt" id="rpc-ltxt" style="color:var(--txd)">&#8212;</div>
+              <div class="pvsc" id="rpc-lsec"></div>
+            </div>
+            <div class="nav-row"><button class="btn btn-bl" id="rpc-blank-btn" onclick="rBlank()">BLANK</button></div>
+            <div class="nav-row">
+              <button class="btn" onclick="rPrev()">&#9664; PREV</button>
+              <button class="btn btn-ac" onclick="rNext()">NEXT &#9654;</button>
+            </div>
+          </div>
+          <div class="cps" id="rpc-settings-slot"></div>
+          <div style="padding:8px;font-size:9px;color:var(--txd);text-align:center;border-top:1px solid var(--bd);margin-top:auto">AltarLyrics PC Remote</div>
+        </aside>
+      </div>
+      <!-- MOBILE VIEW -->
+      <div id="rem-mob">
+        <div id="rmob-toolbar">
+          <button class="tbbtn" id="tb-srch-btn" onclick="toggleMobSearch()">&#128269; Search</button>
+          <button class="tbbtn" id="tb-sl-btn" onclick="openMobSL()">&#128203; Setlist</button>
+          <div class="tb-lps"><span>Lines:</span>
+            <div class="g3" id="rmob-lps-btns" style="gap:3px">
+              <button class="btn btn-sm" onclick="setLPS(1)">1</button>
+              <button class="btn btn-sm on" onclick="setLPS(2)">2</button>
+              <button class="btn btn-sm" onclick="setLPS(4)">4</button>
+            </div></div>
+          <button class="tbbtn" style="margin-left:auto" onclick="openMobSettings()">&#9881; Settings</button>
+        </div>
+        <div id="rmob-srch-bar">
+          <input type="text" placeholder="Search songs&#8230;" id="rmob-srch" oninput="filterMobGrid(this.value)">
+        </div>
+        <div id="rmob-secs"></div>
+        <div id="rmob-grid"><div class="empty" style="padding-top:44px"><div class="eic">&#128225;</div>Connected &#8212; waiting for a song</div></div>
+        <div id="rmob-nav">
+          <button onclick="rPrev()">&#9664; PREV</button>
+          <button id="rmob-next" onclick="rNext()">NEXT &#9654;</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ REMOTE ═══════════════ -->
-<div id="rem-mode" style="height:100vh;display:none;flex-direction:column;background:var(--bg)">
-
-  <!-- SETUP SCREEN -->
-  <div id="rem-setup" style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:30px 20px;text-align:center">
-    <div style="font-size:22px;font-weight:800;color:var(--ac);margin-bottom:6px">🎵 AltarLyrics</div>
-    <div style="font-size:13px;color:var(--txd);margin-bottom:24px">Remote Control</div>
-    <div style="width:100%;max-width:320px">
-      <div style="font-size:11px;color:var(--txd);margin-bottom:12px">Enter your Firebase details once — saved for future visits</div>
-      <input type="text" class="rs-in" id="rs-ak" placeholder="API Key">
-      <input type="text" class="rs-in" id="rs-ad" placeholder="Auth Domain (project.firebaseapp.com)">
-      <input type="text" class="rs-in" id="rs-du" placeholder="Database URL (https://…firebaseio.com)">
-      <input type="text" class="rs-in" id="rs-pi" placeholder="Project ID">
-      <button class="btn btn-ac" style="width:100%;padding:11px;font-size:14px;margin-top:4px" onclick="remSetupConnect()">Connect →</button>
-      <div id="rs-status" style="font-size:12px;text-align:center;margin-top:10px;min-height:18px"></div>
-    </div>
-  </div>
-
-  <!-- MAIN (shown once connected) -->
-  <div id="rem-main" style="display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden">
-
-    <!-- Shared header: song name + BLANK -->
-    <header id="rem-hdr">
-      <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0">
-        <span class="sdot on" id="rem-dot"></span>
-        <div id="rem-sname" style="font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Waiting for song…</div>
-      </div>
-      <button id="rem-blk" onclick="rBlank()">BLANK</button>
-    </header>
-
-    <!-- View toggle -->
-    <div id="rem-view-tgl">
-      <button class="btn btn-sm on" id="vt-mob" onclick="setRView('mobile')">📱 Mobile</button>
-      <button class="btn btn-sm" id="vt-pc" onclick="setRView('pc')">🖥 PC</button>
-      <button class="btn btn-sm" style="margin-left:auto;font-size:10px;color:var(--txd)" onclick="remDisconnect()">Disconnect</button>
-    </div>
-
-    <!-- Content (PC or Mobile fills this) -->
-    <div id="rem-content">
-
-      <!-- PC VIEW: 3-column controller clone -->
-      <div id="rem-pc">
-        <aside id="rpc-lib">
-          <div class="ph">
-            <div class="plbl">Song Library</div>
-            <input type="text" id="rpc-srch" placeholder="Search songs…" oninput="filterRPCLib(this.value)">
-          </div>
-          <div id="rpc-songs-lst" style="flex:1;overflow-y:auto;padding:4px">
-            <div class="empty"><div class="eic">📡</div>Loading library…</div>
-          </div>
-          <div style="padding:7px 9px;border-top:1px solid var(--bd);flex-shrink:0">
-            <div class="plbl" style="margin-bottom:6px">Today's Setlist</div>
-            <div style="margin-bottom:6px;display:flex;gap:4px">
-              <select id="rpc-sl-sel" style="flex:1;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:4px 7px;border-radius:6px;font-size:11px" onchange="rpcLoadSetlist(this.value)">
-                <option value="">— No Setlist —</option>
-              </select>
-              <button class="btn btn-sm" onclick="rpcNewSetlist()">+</button>
-              <button class="btn btn-sm" onclick="rpcSaveSetlist()">Save</button>
-            </div>
-            <div id="rpc-sl-inner" style="overflow-y:auto;max-height:180px">
-              <div class="empty" style="padding:10px"><div style="font-size:16px">📋</div>Empty</div>
-            </div>
-          </div>
-        </aside>
-
-        <main id="rpc-grid-pnl">
-          <div id="rpc-grid-hdr" style="display:flex;align-items:center;padding:7px 12px;border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px">
-            <div id="rpc-song-title" style="font-size:13px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--txd)">Select a song</div>
-            <div class="lps-grp">
-              <span class="lps-lbl">Lines:</span>
-              <div class="g3" id="rpc-lps-btns">
-                <button class="btn btn-sm" onclick="setLPS(1)">1</button>
-                <button class="btn btn-sm on" onclick="setLPS(2)">2</button>
-                <button class="btn btn-sm" onclick="setLPS(4)">4</button>
-              </div>
-            </div>
-            <div id="rpc-ctr" style="font-size:11px;color:var(--txd);white-space:nowrap">—</div>
-          </div>
-          <div id="rpc-grid" style="flex:1;overflow-y:auto;padding:10px">
-            <div class="empty" style="padding-top:40px"><div class="eic">📡</div>Select a song from the library</div>
-          </div>
-        </main>
-
-        <aside id="rpc-ctrl">
-          <div class="cps">
-            <div class="pvbox">
-              <div class="pvlbl live">● LIVE</div>
-              <div class="pvtxt" id="rpc-ltxt" style="color:var(--txd)">—</div>
-              <div class="pvsc" id="rpc-lsec"></div>
-            </div>
-            <div class="nav-row"><button class="btn btn-bl" id="rpc-blank-btn" onclick="rBlank()">BLANK</button></div>
-            <div class="nav-row">
-              <button class="btn" onclick="rPrev()">◀ PREV</button>
-              <button class="btn btn-ac" onclick="rNext()">NEXT ▶</button>
-            </div>
-          </div>
-          <div class="cps" id="rpc-settings-slot"></div>
-          <div style="padding:8px;font-size:9px;color:var(--txd);text-align:center;border-top:1px solid var(--bd);margin-top:auto">
-            AltarLyrics v1.1 · Remote PC
-          </div>
-        </aside>
-      </div>
-
-      <!-- MOBILE VIEW: fixed flex column, nav always visible -->
-      <div id="rem-mob">
-        <div id="rmob-toolbar">
-          <button class="tbbtn" id="tb-srch-btn" onclick="toggleMobSearch()">🔍 Search</button>
-          <button class="tbbtn" id="tb-sl-btn" onclick="openMobSL()">📋 Setlist</button>
-          <div class="tb-lps">
-            <span>Lines:</span>
-            <div class="g3" id="rmob-lps-btns" style="gap:3px">
-              <button class="btn btn-sm" onclick="setLPS(1)">1</button>
-              <button class="btn btn-sm on" onclick="setLPS(2)">2</button>
-              <button class="btn btn-sm" onclick="setLPS(4)">4</button>
-            </div>
-          </div>
-          <button class="tbbtn" style="margin-left:auto" onclick="openMobSettings()">⚙ Settings</button>
-        </div>
-        <div id="rmob-srch-bar">
-          <input type="text" placeholder="Search slides…" id="rmob-srch" oninput="filterMobGrid(this.value)">
-        </div>
-        <div id="rmob-secs"></div>
-        <div id="rmob-grid">
-          <div class="empty" style="padding-top:44px"><div class="eic">📡</div>Connected — waiting for a song</div>
-        </div>
-        <div id="rmob-nav">
-          <button onclick="rPrev()">◀ PREV</button>
-          <button id="rmob-next" onclick="rNext()">NEXT ▶</button>
-        </div>
-      </div>
-
-    </div><!-- /rem-content -->
-  </div><!-- /rem-main -->
-</div><!-- /rem-mode -->
-
-<!-- MOBILE SETTINGS OVERLAY -->
+<!-- MOBILE SETTINGS -->
 <div id="mob-settings" class="mob-ov">
   <div class="mob-ov-hdr">
-    <button class="mob-ov-back" onclick="closeMobSettings()">← Back</button>
+    <button class="mob-ov-back" onclick="closeMobSettings()">&#8592; Back</button>
     <span class="mob-ov-title">Display Settings</span>
   </div>
   <div class="mob-ov-body" id="mob-settings-slot"></div>
 </div>
 
-<!-- MOBILE SETLIST SHEET -->
+<!-- MOBILE SETLIST -->
 <div id="mob-sl-bg">
   <div id="mob-sl-sheet">
-    <div class="slsh-hdr">
-      <span id="mob-sl-title">Setlists</span>
-      <button class="bic" onclick="closeMobSL()">✕</button>
-    </div>
+    <div class="slsh-hdr"><span>Setlists</span><button class="bic" onclick="closeMobSL()">&#10005;</button></div>
     <div class="slsh-body" id="mob-sl-body"></div>
   </div>
 </div>
 
-<!-- ═══════════════ SONG EDITOR ═══════════════ -->
+<!-- SONG EDITOR -->
 <div class="mov" id="ed-modal">
   <div class="mod">
-    <div class="mhdr">
-      <div class="mtit" id="ed-mtit">Add Song</div>
-      <button class="mx" onclick="closeEd()">✕</button>
-    </div>
+    <div class="mhdr"><div class="mtit" id="ed-mtit">Add Song</div><button class="mx" onclick="closeEd()">&#10005;</button></div>
     <div class="mbdy">
-      <div class="fr">
-        <label class="fl">Song Title *</label>
-        <input type="text" class="fi" id="ed-title" placeholder="e.g. Baba Wa O, Praise the Lord…">
-      </div>
-      <div class="fr">
-        <label class="fl">Artist / Composer</label>
-        <input type="text" class="fi" id="ed-artist" placeholder="e.g. Sinach, Nathaniel Bassey…">
-      </div>
+      <div class="fr"><label class="fl">Song Title *</label><input type="text" class="fi" id="ed-title" placeholder="e.g. Baba Wa O, Praise the Lord&#8230;"></div>
+      <div class="fr"><label class="fl">Artist / Composer</label><input type="text" class="fi" id="ed-artist" placeholder="e.g. Sinach, Nathaniel Bassey&#8230;"></div>
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;flex-wrap:wrap">
         <div class="tglrow" style="margin:0;gap:8px">
           <span class="fl" style="margin:0">Dual Language</span>
           <label class="tgl"><input type="checkbox" id="ed-dual" onchange="togDual()"><span class="tgls"></span></label>
         </div>
       </div>
-
       <div id="s-col">
         <div class="fr">
           <label class="fl">Lyrics <span style="font-weight:400;color:var(--txd)">(use [Verse 1], [Chorus], [Bridge] for sections)</span></label>
-          <label class="ulbl">📁 Upload TXT / DOCX / PDF / SRT<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'pri')"></label>
-          <textarea class="fi" id="ed-pri" style="margin-top:5px" placeholder="[Verse 1]&#10;Line one&#10;Line two&#10;&#10;[Chorus]&#10;Chorus line one&#10;Chorus line two&#10;&#10;[Bridge]&#10;Bridge line…"></textarea>
+          <label class="ulbl">&#128193; Upload TXT/DOCX/PDF/SRT<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'pri')"></label>
+          <textarea class="fi" id="ed-pri" style="margin-top:5px" placeholder="[Verse 1]&#10;Line one&#10;Line two&#10;&#10;[Chorus]&#10;Chorus line one&#10;Chorus line two"></textarea>
         </div>
       </div>
-
       <div id="d-col" style="display:none">
         <div class="dcols">
-          <div>
-            <label class="fl">Primary Lyrics</label>
-            <label class="ulbl">📁 Upload<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'pri')"></label>
-            <textarea class="fi" id="ed-prid" style="margin-top:5px" placeholder="[Verse 1]&#10;Primary line 1&#10;Primary line 2"></textarea>
-          </div>
-          <div>
-            <label class="fl">Translation</label>
-            <label class="ulbl">📁 Upload<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'sec')"></label>
-            <textarea class="fi" id="ed-sec" style="margin-top:5px" placeholder="[Verse 1]&#10;Translation line 1&#10;Translation line 2"></textarea>
-          </div>
+          <div><label class="fl">Primary Lyrics</label>
+            <label class="ulbl">&#128193; Upload<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'pri')"></label>
+            <textarea class="fi" id="ed-prid" style="margin-top:5px" placeholder="[Verse 1]&#10;Primary line 1&#10;Primary line 2"></textarea></div>
+          <div><label class="fl">Translation</label>
+            <label class="ulbl">&#128193; Upload<input type="file" accept=".txt,.docx,.pdf,.srt" onchange="hUpload(event,'sec')"></label>
+            <textarea class="fi" id="ed-sec" style="margin-top:5px" placeholder="[Verse 1]&#10;Translation line 1&#10;Translation line 2"></textarea></div>
         </div>
       </div>
-
       <div style="border-top:1px solid var(--bd);margin-top:12px;padding-top:12px">
-        <div class="tglrow">
-          <span class="fl" style="margin:0">Per-Song Style Override</span>
-          <label class="tgl"><input type="checkbox" id="ed-cs" onchange="togCS()"><span class="tgls"></span></label>
-        </div>
+        <div class="tglrow"><span class="fl" style="margin:0">Per-Song Style Override</span>
+          <label class="tgl"><input type="checkbox" id="ed-cs" onchange="togCS()"><span class="tgls"></span></label></div>
         <div id="cs-pnl" style="display:none;margin-top:8px">
           <div class="g2">
-            <div class="crow">
-              <div class="clbl">Font</div>
-              <select id="ed-fn" class="fi">
-                <option value="">— Global —</option>
-                <option value="Montserrat">Montserrat</option>
-                <option value="Lato">Lato</option>
-                <option value="Oswald">Oswald</option>
-                <option value="Raleway">Raleway</option>
-                <option value="Playfair Display">Playfair Display</option>
-              </select>
-            </div>
-            <div class="crow">
-              <div class="clbl">Text Color</div>
-              <input type="color" id="ed-tc" value="#ffffff" class="fi" style="height:30px">
-            </div>
-            <div class="crow">
-              <div class="clbl">Background</div>
-              <select id="ed-bt" class="fi">
-                <option value="">— Global —</option>
-                <option value="transparent">Transparent</option>
-                <option value="solid">Solid</option>
-              </select>
-            </div>
-            <div class="crow">
-              <div class="clbl">BG Color</div>
-              <input type="color" id="ed-bc" value="#000000" class="fi" style="height:30px">
-            </div>
+            <div class="crow"><div class="clbl">Font</div>
+              <select id="ed-fn" class="fi"><option value="">&#8212; Global &#8212;</option>
+                <option value="Montserrat">Montserrat</option><option value="Lato">Lato</option>
+                <option value="Oswald">Oswald</option><option value="Raleway">Raleway</option>
+                <option value="Playfair Display">Playfair Display</option></select></div>
+            <div class="crow"><div class="clbl">Text Color</div><input type="color" id="ed-tc" value="#ffffff" class="fi" style="height:30px"></div>
+            <div class="crow"><div class="clbl">Background</div>
+              <select id="ed-bt" class="fi"><option value="">&#8212; Global &#8212;</option>
+                <option value="transparent">Transparent</option><option value="solid">Solid</option></select></div>
+            <div class="crow"><div class="clbl">BG Color</div><input type="color" id="ed-bc" value="#000000" class="fi" style="height:30px"></div>
           </div>
         </div>
       </div>
@@ -911,60 +658,39 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-//  ALTARLYRICS v1.1
-// ═══════════════════════════════════════════════════════
-const VER='1.1';
+
+const VER='1.2';
 const LSK={cfg:'al-cfg',lib:'al-lib',sls:'al-sls',live:'al-live',slid:'al-slid'};
 const MODE=new URLSearchParams(location.search).get('mode')||'controller';
 const CH='altarlyrics';
-
-// ── DEFAULTS ──
-const DEFS={
-  lps:2,
-  theme:'classic-white',font:'Montserrat',fontSize:48,
-  textColor:'#ffffff',textAlign:'center',
-  outline:false,outlineColor:'#000000',
-  bgType:'solid',bgC1:'#000000',bgC2:'#1a1a2e',bgOpacity:75,bgImg:null,
-  posH:50,posV:85,blockW:80,
-  animation:'fade',lineSpacing:'1.5',padding:'M',
-  showTitle:false,titlePos:'bottom-center',showArtist:false,
-  resolution:'1920x1080',
-  pinEnabled:false,pinValue:'',swipeEnabled:true,
-  fb:{apiKey:'',authDomain:'',databaseURL:'',projectId:''}
-};
-
+const DEFS={lps:2,theme:'classic-white',font:'Montserrat',fontSize:48,textColor:'#ffffff',
+  textAlign:'center',outline:false,outlineColor:'#000000',bgType:'solid',bgC1:'#000000',
+  bgC2:'#1a1a2e',bgOpacity:75,bgImg:null,posH:50,posV:85,blockW:80,animation:'fade',
+  lineSpacing:'1.5',padding:'M',showTitle:false,titlePos:'bottom-center',showArtist:false,
+  resolution:'1920x1080',pinEnabled:false,pinValue:'',swipeEnabled:true,
+  fb:{apiKey:'',authDomain:'',databaseURL:'',projectId:''},ghUrl:''};
 const THEMES={
   'classic-white':{n:'Classic White',bgType:'solid',bgC1:'#000000',bgC2:'#000000',bgOp:72,tc:'#ffffff',font:'Montserrat',outline:false},
   'gold-black':   {n:'Gold & Black', bgType:'solid',bgC1:'#1a1200',bgC2:'#1a1200',bgOp:85,tc:'#FFD700',font:'Oswald',    outline:false},
   'midnight-blue':{n:'Midnight Blue',bgType:'gradient',bgC1:'#0a1628',bgC2:'#1a2e4a',bgOp:88,tc:'#ddeeff',font:'Raleway',outline:false},
   'pure-clear':   {n:'Pure Clear',   bgType:'transparent',bgC1:'#000',bgC2:'#000',bgOp:0,tc:'#ffffff',font:'Montserrat',outline:true},
   'soft-cream':   {n:'Soft Cream',   bgType:'solid',bgC1:'#fffaee',bgC2:'#fffaee',bgOp:90,tc:'#3d2b1f',font:'Playfair Display',outline:false},
-  'bold-red':     {n:'Bold Red',     bgType:'solid',bgC1:'#5c0000',bgC2:'#5c0000',bgOp:88,tc:'#ffffff',font:'Oswald',    outline:false}
+  'bold-red':     {n:'Bold Red',     bgType:'solid',bgC1:'#5c0000',bgC2:'#5c0000',bgOp:88,tc:'#ffffff',font:'Oswald',outline:false}
 };
-
 const FONTS=[
-  {v:'Montserrat',l:'Montserrat'},
-  {v:'Lato',l:'Lato'},
-  {v:'Oswald',l:'Oswald'},
-  {v:'Raleway',l:'Raleway'},
-  {v:'Playfair Display',l:'Playfair Display'}
+  {v:'Montserrat',l:'Montserrat'},{v:'Lato',l:'Lato'},{v:'Oswald',l:'Oswald'},
+  {v:'Raleway',l:'Raleway'},{v:'Playfair Display',l:'Playfair Display'}
 ];
 
-// ── STATE ──
-let cfg={...DEFS};
-let lib=[];
-let sls=[];
-let live={songId:null,idx:-1,blank:false};
-let activeSLid=null;
-let gridSong=null;
-let edSongId=null;
-let bc=null,fbDB=null,fbRef=null;
-let dispCur=null;
-let remLive={song:null,idx:-1,blank:false};
-let remView='mobile';
+// STATE
+let cfg={...DEFS},lib=[],sls=[],live={songId:null,idx:-1,blank:false};
+let activeSLid=null,gridSong=null,edSongId=null;
+let bc=null,fbDB=null,fbRef=null,fbDataRef=null;
+let dispCur=null,remLive={song:null,idx:-1,blank:false},remView='mobile';
+let rpcActiveSLid=null,rpcGridSong=null,mobSearchActive=false;
+let _dataPushing=false,_cfgSynced=false;
 
-// ── UTILS ──
+// UTILS
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).substr(2,5);
 const $=id=>document.getElementById(id);
 const gv=id=>{const e=$(id);return e?e.value:null};
@@ -972,35 +698,23 @@ const gc=id=>{const e=$(id);return e?e.checked:false};
 const gn=id=>{const e=$(id);return e?+e.value:0};
 function toast(m,d=2300){const e=$('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),d)}
 function songById(id){return lib.find(s=>s.id===id)}
-function flatSlides(song){
-  if(!song||!song.sections)return[];
-  return song.sections.flatMap(sec=>sec.slides.map(sl=>({...sl,section:sec.name})));
-}
+function flatSlides(song){if(!song||!song.sections)return[];return song.sections.flatMap(sec=>sec.slides.map(sl=>({...sl,section:sec.name})));}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
-// ── STORAGE ──
-function saveAll(){
-  try{
-    localStorage.setItem(LSK.cfg,JSON.stringify(cfg));
-    localStorage.setItem(LSK.lib,JSON.stringify(lib));
-    localStorage.setItem(LSK.sls,JSON.stringify(sls));
-    localStorage.setItem(LSK.live,JSON.stringify(live));
-    if(activeSLid) localStorage.setItem(LSK.slid,activeSLid);
-    else localStorage.removeItem(LSK.slid);
-  }catch(e){}
+// STORAGE
+function saveAll(){try{localStorage.setItem(LSK.cfg,JSON.stringify(cfg));localStorage.setItem(LSK.lib,JSON.stringify(lib));localStorage.setItem(LSK.sls,JSON.stringify(sls));localStorage.setItem(LSK.live,JSON.stringify(live));if(activeSLid)localStorage.setItem(LSK.slid,activeSLid);else localStorage.removeItem(LSK.slid);}catch(e){}}
+function loadAll(){try{const c=localStorage.getItem(LSK.cfg);if(c)cfg={...DEFS,...JSON.parse(c)};const l=localStorage.getItem(LSK.lib);if(l)lib=JSON.parse(l);const s=localStorage.getItem(LSK.sls);if(s)sls=JSON.parse(s);const lv=localStorage.getItem(LSK.live);if(lv)live={...live,...JSON.parse(lv)};const sid=localStorage.getItem(LSK.slid);if(sid)activeSLid=sid;}catch(e){}}
+
+// FRESH SONG — always re-parse from raw text with current LPS
+function freshSong(song){
+  if(!song)return song;
+  if(!song.priRaw)return song;
+  let secs=parseLyrics(song.priRaw,cfg.lps);
+  if(song.dual&&song.secRaw)secs=mergeSec(secs,song.secRaw,cfg.lps);
+  return{...song,sections:secs};
 }
 
-function loadAll(){
-  try{
-    const c=localStorage.getItem(LSK.cfg);  if(c) cfg={...DEFS,...JSON.parse(c)};
-    const l=localStorage.getItem(LSK.lib);  if(l) lib=JSON.parse(l);
-    const s=localStorage.getItem(LSK.sls);  if(s) sls=JSON.parse(s);
-    const lv=localStorage.getItem(LSK.live);if(lv) live={...live,...JSON.parse(lv)};
-    const sid=localStorage.getItem(LSK.slid);if(sid) activeSLid=sid;
-  }catch(e){}
-}
-
-// ── LYRICS PARSER ──
+// PARSER
 function parseLyrics(text,lps){
   lps=lps||cfg.lps||2;
   const lines=text.replace(/\r/g,'').split('\n');
@@ -1008,269 +722,151 @@ function parseLyrics(text,lps){
   const fsl=()=>{if(buf.length&&cur){cur.slides.push({id:uid(),primary:[...buf],secondary:[]});buf=[];}};
   const fsc=()=>{fsl();if(cur&&cur.slides.length)secs.push(cur);};
   for(const line of lines){
-    const t=line.trim();
-    const m=t.match(/^\[(.+)\]$/);
+    const t=line.trim();const m=t.match(/^\[(.+)\]$/);
     if(m){fsc();cur={name:m[1],slides:[]};buf=[];}
     else if(t===''){fsl();}
-    else{
-      if(!cur)cur={name:'Verse 1',slides:[]};
-      buf.push(t);
-      if(buf.length>=lps)fsl();
-    }
+    else{if(!cur)cur={name:'Verse 1',slides:[]};buf.push(t);if(buf.length>=lps)fsl();}
   }
   fsc();
-  if(!secs.length){
-    const fb=text.trim();
-    secs.push({name:'Verse 1',slides:[{id:uid(),primary:fb?[fb]:['(empty)'],secondary:[]}]});
-  }
+  if(!secs.length)secs.push({name:'Verse 1',slides:[{id:uid(),primary:[text.trim()||'(empty)'],secondary:[]}]});
   return secs;
 }
+function parseSRT(text,lps){return parseLyrics(text.replace(/\r/g,'').replace(/\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n/g,'').replace(/\n{2,}/g,'\n').trim(),lps);}
+function mergeSec(priSecs,secTxt,lps){if(!secTxt.trim())return priSecs;const ss=parseLyrics(secTxt,lps);return priSecs.map((sec,i)=>{const s2=ss[i];return{...sec,slides:sec.slides.map((sl,j)=>({...sl,secondary:s2&&s2.slides[j]?s2.slides[j].primary:[]}))};});}
 
-function parseSRT(text,lps){
-  const c=text.replace(/\r/g,'')
-    .replace(/\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n/g,'')
-    .replace(/\n{2,}/g,'\n').trim();
-  return parseLyrics(c,lps);
-}
-
-function mergeSec(priSecs,secTxt,lps){
-  if(!secTxt.trim())return priSecs;
-  const ss=parseLyrics(secTxt,lps);
-  return priSecs.map((sec,i)=>{
-    const s2=ss[i];
-    return{...sec,slides:sec.slides.map((sl,j)=>({
-      ...sl,secondary:s2&&s2.slides[j]?s2.slides[j].primary:[]
-    }))};
-  });
-}
-
-// Re-parse active song with new LPS
+// SET LPS — re-parse active song everywhere
 function setLPS(n){
   cfg.lps=n;
-  // Update LPS buttons everywhere
-  ['#lps-btns','#rpc-lps-btns','#rmob-lps-btns'].forEach(sel=>{
-    document.querySelectorAll(sel+' .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===n));
-  });
-  // Re-parse whichever song is active using freshSong
-  const activeSong = gridSong || rpcGridSong || (remLive&&remLive.song);
+  ['#lps-btns','#rpc-lps-btns','#rmob-lps-btns'].forEach(sel=>{document.querySelectorAll(sel+' .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===n));});
+  const activeSong=gridSong||rpcGridSong||(remLive&&remLive.song);
   if(activeSong&&activeSong.priRaw){
-    const parsed = freshSong(activeSong);
-    const tot = flatSlides(parsed).length;
-    if(live.idx>=tot) live.idx=Math.max(0,tot-1);
-    // Update controller
-    if(gridSong&&gridSong.id===parsed.id){ gridSong=parsed; renderGrid(parsed); updateLive(); }
-    // Update PC remote
-    if(typeof rpcGridSong!=='undefined'&&rpcGridSong&&rpcGridSong.id===parsed.id){ rpcGridSong=parsed; renderPCGrid(parsed); updateRPCLive(); }
-    // Update mobile remote
-    if(remLive&&remLive.song&&remLive.song.id===parsed.id){ remLive={...remLive,song:parsed}; renderMobRemote(remLive); }
+    const parsed=freshSong(activeSong);
+    const tot=flatSlides(parsed).length;
+    if(live.idx>=tot)live.idx=Math.max(0,tot-1);
+    if(gridSong&&gridSong.id===parsed.id){gridSong=parsed;renderGrid(parsed);updateLive();}
+    if(rpcGridSong&&rpcGridSong.id===parsed.id){rpcGridSong=parsed;renderPCGrid(parsed);updateRPCLive();}
+    if(remLive&&remLive.song&&remLive.song.id===parsed.id){remLive={...remLive,song:parsed};renderMobRemote(remLive);}
     pushLive();
   }
   saveAll();
 }
 
-// ── FILE UPLOAD ──
+// FILE UPLOAD
 async function hUpload(ev,tgt){
   const file=ev.target.files[0];if(!file)return;
-  const ext=file.name.split('.').pop().toLowerCase();
-  let text='';
+  const ext=file.name.split('.').pop().toLowerCase();let text='';
   try{
     if(ext==='txt'){text=await file.text();}
-    else if(ext==='srt'){
-      text=await file.text();
-      text=text.replace(/\r/g,'').replace(/\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n/g,'').replace(/\n{2,}/g,'\n').trim();
-    }
-    else if(ext==='docx'){
-      if(typeof mammoth==='undefined'){toast('mammoth.js not loaded');return;}
-      const ab=await file.arrayBuffer();
-      const r=await mammoth.extractRawText({arrayBuffer:ab});
-      text=r.value;
-    }
-    else if(ext==='pdf'){
-      if(typeof pdfjsLib==='undefined'){toast('pdf.js not loaded');return;}
-      pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-      const ab=await file.arrayBuffer();
-      const pdf=await pdfjsLib.getDocument({data:ab}).promise;
-      const pages=[];
-      for(let i=1;i<=pdf.numPages;i++){
-        const pg=await pdf.getPage(i);
-        const ct=await pg.getTextContent();
-        pages.push(ct.items.map(it=>it.str).join('\n'));
-      }
-      text=pages.join('\n');
-    }else{toast('Unsupported: .'+ext);return;}
+    else if(ext==='srt'){text=(await file.text()).replace(/\r/g,'').replace(/\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n/g,'').replace(/\n{2,}/g,'\n').trim();}
+    else if(ext==='docx'){if(typeof mammoth==='undefined'){toast('mammoth.js not loaded');return;}const ab=await file.arrayBuffer();const r=await mammoth.extractRawText({arrayBuffer:ab});text=r.value;}
+    else if(ext==='pdf'){if(typeof pdfjsLib==='undefined'){toast('pdf.js not loaded');return;}pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const ab=await file.arrayBuffer();const pdf=await pdfjsLib.getDocument({data:ab}).promise;const pages=[];for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const ct=await pg.getTextContent();pages.push(ct.items.map(it=>it.str).join('\n'));}text=pages.join('\n');}
+    else{toast('Unsupported: .'+ext);return;}
     const isDual=gc('ed-dual');
-    if(tgt==='pri'){$(isDual?'ed-prid':'ed-pri').value=text;}
-    else{$('ed-sec').value=text;}
+    if(tgt==='pri'){$(isDual?'ed-prid':'ed-pri').value=text;}else{$('ed-sec').value=text;}
     toast('Loaded: '+file.name);
   }catch(err){toast('Upload error: '+err.message);}
 }
+async function hBgImg(ev){const file=ev.target.files[0];if(!file)return;const r=new FileReader();r.onload=e=>{cfg.bgImg=e.target.result;cfg.bgType='image';$('bg-type').value='image';updateBGui();saveAll();pushLive();};r.readAsDataURL(file);}
 
-async function hBgImg(ev){
-  const file=ev.target.files[0];if(!file)return;
-  const r=new FileReader();
-  r.onload=e=>{cfg.bgImg=e.target.result;cfg.bgType='image';
-    $('bg-type').value='image';updateBGui();saveAll();pushLive();};
-  r.readAsDataURL(file);
-}
-
-// ── SYNC ──
+// SYNC
 function initBC(){
   try{
     bc=new BroadcastChannel(CH);
     bc.onmessage=e=>{
       if(!e.data||e.data.type!=='live')return;
-      if(MODE==='controller'){
-        const st=e.data.state;
-        if(st.songId===live.songId){
-          live.idx=st.idx;live.blank=st.blank;
-          renderGrid(gridSong);updateLive();blankUI();
-        }
-      }else{applyLU(e.data.state);}
+      if(MODE==='controller'){const st=e.data.state;if(st.songId===live.songId){live.idx=st.idx;live.blank=st.blank;renderGrid(gridSong);updateLive();blankUI();}}
+      else{applyLU(e.data.state);}
     };
   }catch(e){}
 }
 
 function pushLive(){
-  // Use gridSong/rpcGridSong (freshly parsed) not songById (may have stale sections)
-  const song = gridSong || rpcGridSong || songById(live.songId);
+  const song=gridSong||rpcGridSong||(remLive&&remLive.song)||songById(live.songId);
   const state={...live,song,cfg};
   if(bc)bc.postMessage({type:'live',state});
   if(fbRef)fbRef.set(state).catch(()=>{});
   localStorage.setItem(LSK.live,JSON.stringify(live));
 }
 
+function pushData(){
+  if(!fbDataRef)return;
+  _dataPushing=true;
+  fbDataRef.set({library:lib,setlists:sls})
+    .then(()=>setTimeout(()=>{_dataPushing=false;},1500))
+    .catch(()=>{_dataPushing=false;});
+}
+
 function saveFBfields(){
-  cfg.fb={
-    apiKey:gv('fb-ak')||'',
-    authDomain:gv('fb-ad')||'',
-    databaseURL:gv('fb-du')||'',
-    projectId:gv('fb-pi')||''
-  };
-  cfg.ghUrl=gv('gh-url')||'';
-  saveAll();
+  cfg.fb={apiKey:gv('fb-ak')||'',authDomain:gv('fb-ad')||'',databaseURL:gv('fb-du')||'',projectId:gv('fb-pi')||''};
+  cfg.ghUrl=gv('gh-url')||'';saveAll();
 }
 
 function tryFirebase(){
   const fc=cfg.fb;
-  if(!fc.apiKey||!fc.databaseURL){
-    $('fb-status').textContent='⚠ Fill in API Key and Database URL at minimum';
-    $('fb-status').style.color='var(--bl)';
-    return;
-  }
+  if(!fc||!fc.apiKey||!fc.databaseURL){$('fb-status').textContent='Fill in API Key and Database URL';$('fb-status').style.color='var(--bl)';return;}
   try{
-    if(typeof firebase==='undefined'){
-      $('fb-status').textContent='Firebase SDK not loaded (check internet)';return;
-    }
+    if(typeof firebase==='undefined'){$('fb-status').textContent='Firebase SDK not loaded';return;}
     const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(fc);
     fbDB=firebase.database(app);
     fbRef=fbDB.ref('altarlyrics/live');
     fbRef.on('value',snap=>{
       const d=snap.val();if(!d)return;
-      if(MODE==='controller'){
-        if(d.songId===live.songId){
-          live.idx=d.idx??live.idx;live.blank=d.blank??live.blank;
-          renderGrid(gridSong);updateLive();blankUI();
-        }
-      }else{applyLU(d);}
+      if(MODE==='controller'){if(d.songId===live.songId){live.idx=d.idx??live.idx;live.blank=d.blank??live.blank;renderGrid(gridSong);updateLive();blankUI();}}
+      else{applyLU(d);}
     });
-    $('sdot').classList.add('on');$('slbl').textContent='Firebase';
-    $('fb-status').textContent='✓ Connected';$('fb-status').style.color='var(--gn)';
-    saveAll();
-    // Generate QR code for remote URL
+    // BIDIRECTIONAL data channel
+    fbDataRef=fbDB.ref('altarlyrics/data');
+    if(MODE==='controller'){
+      fbDataRef.on('value',snap=>{
+        if(_dataPushing)return;
+        const d=snap.val();
+        if(!d){pushData();return;}
+        let changed=false;
+        if(d.library&&JSON.stringify(d.library)!==JSON.stringify(lib)){lib=d.library;changed=true;}
+        if(d.setlists&&JSON.stringify(d.setlists)!==JSON.stringify(sls)){sls=d.setlists;changed=true;}
+        if(changed){saveAll();renderLib();renderSLsel();renderSLpanel();}
+      });
+      setTimeout(()=>pushData(),800);
+    }
+    if($('sdot'))$('sdot').classList.add('on');if($('slbl'))$('slbl').textContent='Firebase';
+    $('fb-status').textContent='Connected';$('fb-status').style.color='var(--gn)';
+    // QR CODE
     const ghUrl=(cfg.ghUrl||'').trim().replace(/\/$/,'');
     const baseUrl=ghUrl||location.href.split('?')[0];
     const isLocal=!ghUrl&&location.protocol==='file:';
     const qrWrap=$('qr-wrap');
     if(qrWrap){
-      qrWrap.style.display='block';
-      $('qr-box').innerHTML='';
-      if(isLocal){
-        $('qr-box').innerHTML='<div style="font-size:11px;color:var(--bl);padding:8px;max-width:200px;line-height:1.5">⚠ Paste your GitHub Pages URL above to generate a working QR code for phones.</div>';
-      }else{
-        const remUrl=baseUrl+'?mode=remote';
-        try{new QRCode($('qr-box'),{text:remUrl,width:120,height:120,colorDark:'#000',colorLight:'#fff'});}catch(e){}
-        const urlEl=document.createElement('div');
-        urlEl.style.cssText='font-size:10px;color:var(--txd);margin-top:5px;word-break:break-all;max-width:200px';
-        urlEl.textContent=remUrl;
-        $('qr-box').appendChild(urlEl);
-      }
+      qrWrap.style.display='block';$('qr-box').innerHTML='';
+      if(isLocal){$('qr-box').innerHTML='<div style="font-size:11px;color:var(--bl);padding:8px;max-width:200px;line-height:1.5">Paste your GitHub Pages URL above to generate a working QR code.</div>';}
+      else{const remUrl=baseUrl+'?mode=remote';try{new QRCode($('qr-box'),{text:remUrl,width:120,height:120,colorDark:'#000',colorLight:'#fff'});}catch(e){}const uel=document.createElement('div');uel.style.cssText='font-size:10px;color:var(--txd);margin-top:5px;word-break:break-all;max-width:200px';uel.textContent=remUrl;$('qr-box').appendChild(uel);}
     }
-    // Controller: set up data channel and push library/setlists
-    if(MODE==='controller'){
-      fbDataRef=fbDB.ref('altarlyrics/data');
-      setTimeout(()=>pushData(),800); // Push after connection settles
-    }
-    toast('Firebase connected ✓');
-  }catch(err){
-    $('fb-status').textContent='Error: '+err.message;
-    $('fb-status').style.color='var(--rd)';
-    toast('Firebase error: '+err.message);
-  }
+    saveAll();toast('Firebase connected');
+  }catch(err){$('fb-status').textContent='Error: '+err.message;$('fb-status').style.color='var(--rd)';toast('Firebase error: '+err.message);}
 }
 
-// ── CONTROLLER ──
+
+// CONTROLLER INIT
 function initCtrl(){
   $('ctrl-mode').style.display='flex';
-  buildThemes();buildFonts();
-  loadCfgUI();
-  renderLib();
-  renderSLsel();
-  // Restore active setlist
-  if(activeSLid){
-    $('sl-sel').value=activeSLid;
-    renderSLpanel();
-  }else{
-    renderSLpanel();
-  }
-  // Restore active song
+  buildThemes();buildFonts();loadCfgUI();renderLib();renderSLsel();
+  if(activeSLid){$('sl-sel').value=activeSLid;renderSLpanel();}else{renderSLpanel();}
   if(live.songId){const s=songById(live.songId);if(s)loadSong(s,true);}
-  // Restore Firebase fields
-  if(cfg.fb&&cfg.fb.apiKey){
-    const f=cfg.fb;
-    if($('fb-ak'))$('fb-ak').value=f.apiKey||'';
-    if($('fb-ad'))$('fb-ad').value=f.authDomain||'';
-    if($('fb-du'))$('fb-du').value=f.databaseURL||'';
-    if($('fb-pi'))$('fb-pi').value=f.projectId||'';
-    if($('gh-url'))$('gh-url').value=cfg.ghUrl||'';
-    // Auto-reconnect
-    if(f.databaseURL) tryFirebase();
-  }
+  if(cfg.fb&&cfg.fb.apiKey){const f=cfg.fb;if($('fb-ak'))$('fb-ak').value=f.apiKey||'';if($('fb-ad'))$('fb-ad').value=f.authDomain||'';if($('fb-du'))$('fb-du').value=f.databaseURL||'';if($('fb-pi'))$('fb-pi').value=f.projectId||'';if($('gh-url'))$('gh-url').value=cfg.ghUrl||'';if(f.databaseURL)tryFirebase();}
 }
 
-function buildThemes(){
-  const g=$('thm-grid');if(!g)return;
-  g.innerHTML=Object.entries(THEMES).map(([k,t])=>
-    `<button class="thmbtn${cfg.theme===k?' on':''}" onclick="applyTheme('${k}')">${t.n}</button>`
-  ).join('');
-}
-
-function buildFonts(){
-  const g=$('fnt-grid');if(!g)return;
-  g.innerHTML=FONTS.map(f=>
-    `<button class="fbtn${cfg.font===f.v?' on':''}" style="font-family:'${f.v}'" onclick="setFont('${f.v}')">${f.l}</button>`
-  ).join('');
-}
+function buildThemes(){const g=$('thm-grid');if(!g)return;g.innerHTML=Object.entries(THEMES).map(([k,t])=>`<button class="thmbtn${cfg.theme===k?' on':''}" onclick="applyTheme('${k}')">${t.n}</button>`).join('');}
+function buildFonts(){const g=$('fnt-grid');if(!g)return;g.innerHTML=FONTS.map(f=>`<button class="fbtn${cfg.font===f.v?' on':''}" style="font-family:'${f.v}'" onclick="setFont('${f.v}')">${f.l}</button>`).join('');}
 
 function loadCfgUI(){
-  const sv=(id,v)=>{const e=$(id);if(e)e.value=v};
-  const sc=(id,v)=>{const e=$(id);if(e)e.checked=v};
-  sv('bg-type',cfg.bgType);sv('bgc1',cfg.bgC1);sv('bgc1h',cfg.bgC1);
-  sv('bgc1g',cfg.bgC1);sv('bgc2g',cfg.bgC2);
+  const sv=(id,v)=>{const e=$(id);if(e)e.value=v};const sc=(id,v)=>{const e=$(id);if(e)e.checked=v};
+  sv('bg-type',cfg.bgType);sv('bgc1',cfg.bgC1);sv('bgc1h',cfg.bgC1);sv('bgc1g',cfg.bgC1);sv('bgc2g',cfg.bgC2);
   sv('bg-op',cfg.bgOpacity);$('bgo-v').textContent=cfg.bgOpacity;
   sv('font-sz',cfg.fontSize);$('fsz-v').textContent=cfg.fontSize;
-  sv('txc',cfg.textColor);sv('txch',cfg.textColor);
-  sc('otgl',cfg.outline);
-  sv('out-col',cfg.outlineColor);
-  sv('lnsp',cfg.lineSpacing);
-  sv('pos-h',cfg.posH);$('ph-v').textContent=cfg.posH;
-  sv('pos-v',cfg.posV);$('pv-v').textContent=cfg.posV;
-  sv('blk-w',cfg.blockW);$('bw-v').textContent=cfg.blockW;
-  sc('sttgl',cfg.showTitle);sv('ttl-pos',cfg.titlePos||'bottom-center');
-  sc('artgl',cfg.showArtist);
-  sv('res-sel',cfg.resolution);
-  sc('pintgl',cfg.pinEnabled);sv('pin-val',cfg.pinValue);
-  sc('swptgl',cfg.swipeEnabled);
-  // LPS buttons
+  sv('txc',cfg.textColor);sv('txch',cfg.textColor);sc('otgl',cfg.outline);sv('out-col',cfg.outlineColor);
+  sv('lnsp',cfg.lineSpacing);sv('pos-h',cfg.posH);$('ph-v').textContent=cfg.posH;
+  sv('pos-v',cfg.posV);$('pv-v').textContent=cfg.posV;sv('blk-w',cfg.blockW);$('bw-v').textContent=cfg.blockW;
+  sc('sttgl',cfg.showTitle);sv('ttl-pos',cfg.titlePos||'bottom-center');sc('artgl',cfg.showArtist);
+  sv('res-sel',cfg.resolution);sc('pintgl',cfg.pinEnabled);sv('pin-val',cfg.pinValue);sc('swptgl',cfg.swipeEnabled);
   document.querySelectorAll('#lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
   updateBGui();updateOCrow();updatePinRow();updateTitleOpts();
   selBtns('aln-btns',['left','center','right'],cfg.textAlign);
@@ -1279,64 +875,27 @@ function loadCfgUI(){
   buildThemes();buildFonts();
 }
 
-function selBtns(parentId,vals,active){
-  const btns=document.querySelectorAll('#'+parentId+' .btn-sm');
-  btns.forEach((b,i)=>b.classList.toggle('on',vals[i]===active));
-}
-
-function updateBGui(){
-  const t=cfg.bgType;
-  $('bgs-row').style.display=t==='solid'?'':'none';
-  $('bgg-row').style.display=t==='gradient'?'':'none';
-  $('bgi-row').style.display=t==='image'?'':'none';
-  $('bgo-row').style.display=t==='transparent'?'none':'';
-}
+function selBtns(pid,vals,active){document.querySelectorAll('#'+pid+' .btn-sm').forEach((b,i)=>b.classList.toggle('on',vals[i]===active));}
+function updateBGui(){const t=cfg.bgType;$('bgs-row').style.display=t==='solid'?'':'none';$('bgg-row').style.display=t==='gradient'?'':'none';$('bgi-row').style.display=t==='image'?'':'none';$('bgo-row').style.display=t==='transparent'?'none':'';}
 function onBGchange(){cfg.bgType=gv('bg-type');updateBGui();SC();}
-function updateOCrow(){$('oc-row').style.display=cfg.outline?'':'none';}
+function updateOCrow(){const r=$('oc-row');if(r)r.style.display=cfg.outline?'':'none';}
 function onOutlineChange(){cfg.outline=gc('otgl');updateOCrow();SC();}
 function updatePinRow(){const r=$('pin-row');if(r)r.style.display=cfg.pinEnabled?'':'none';}
-function updateTitleOpts(){
-  const o=$('ttl-opts');if(o)o.style.display=cfg.showTitle?'':'none';
-}
+function updateTitleOpts(){const o=$('ttl-opts');if(o)o.style.display=cfg.showTitle?'':'none';}
 
 function SC(){
-  cfg.bgC1=gv('bgc1')||gv('bgc1g')||cfg.bgC1;
-  cfg.bgC2=gv('bgc2g')||cfg.bgC2;
-  cfg.bgOpacity=gn('bg-op');
-  cfg.fontSize=gn('font-sz')||cfg.fontSize;
-  cfg.textColor=gv('txc')||cfg.textColor;
-  cfg.outlineColor=gv('out-col')||cfg.outlineColor;
-  cfg.lineSpacing=gv('lnsp')||cfg.lineSpacing;
+  cfg.bgType=gv('bg-type')||cfg.bgType;cfg.bgC1=gv('bgc1')||gv('bgc1g')||cfg.bgC1;cfg.bgC2=gv('bgc2g')||cfg.bgC2;
+  cfg.bgOpacity=gn('bg-op');cfg.fontSize=gn('font-sz')||cfg.fontSize;cfg.textColor=gv('txc')||cfg.textColor;
+  cfg.outlineColor=gv('out-col')||cfg.outlineColor;cfg.lineSpacing=gv('lnsp')||cfg.lineSpacing;
   cfg.posH=gn('pos-h');cfg.posV=gn('pos-v');cfg.blockW=gn('blk-w');
-  cfg.showTitle=gc('sttgl');cfg.titlePos=gv('ttl-pos')||'bottom-center';
-  cfg.showArtist=gc('artgl');
-  cfg.resolution=gv('res-sel')||cfg.resolution;
-  cfg.pinEnabled=gc('pintgl');cfg.pinValue=gv('pin-val')||'';
-  cfg.swipeEnabled=gc('swptgl');
-  $('bgo-v').textContent=cfg.bgOpacity;
-  $('fsz-v').textContent=cfg.fontSize;
-  $('ph-v').textContent=cfg.posH;
-  $('pv-v').textContent=cfg.posV;
-  $('bw-v').textContent=cfg.blockW;
-  updateTitleOpts();updatePinRow();
-  saveAll();pushLive();
+  cfg.showTitle=gc('sttgl');cfg.titlePos=gv('ttl-pos')||'bottom-center';cfg.showArtist=gc('artgl');
+  cfg.resolution=gv('res-sel')||cfg.resolution;cfg.pinEnabled=gc('pintgl');cfg.pinValue=gv('pin-val')||'';cfg.swipeEnabled=gc('swptgl');
+  $('bgo-v').textContent=cfg.bgOpacity;$('fsz-v').textContent=cfg.fontSize;$('ph-v').textContent=cfg.posH;$('pv-v').textContent=cfg.posV;$('bw-v').textContent=cfg.blockW;
+  updateTitleOpts();updatePinRow();saveAll();pushLive();
 }
-
-function syncHex(id){
-  const h=gv(id+'h');
-  if(h&&/^#[0-9a-fA-F]{6}$/.test(h)){const e=$(id);if(e){e.value=h;SC();}}
-}
-
-function applyTheme(k){
-  const t=THEMES[k];if(!t)return;
-  cfg.theme=k;cfg.bgType=t.bgType;cfg.bgC1=t.bgC1;cfg.bgC2=t.bgC2;
-  cfg.bgOpacity=t.bgOp;cfg.textColor=t.tc;cfg.font=t.font;cfg.outline=t.outline;
-  loadCfgUI();
-  ['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});
-  saveAll();pushLive();
-}
-
-function setFont(f){cfg.font=f;buildFonts();saveAll();pushLive();}
+function syncHex(id){const h=gv(id+'h');if(h&&/^#[0-9a-fA-F]{6}$/.test(h)){const e=$(id);if(e){e.value=h;SC();}}}
+function applyTheme(k){const t=THEMES[k];if(!t)return;cfg.theme=k;cfg.bgType=t.bgType;cfg.bgC1=t.bgC1;cfg.bgC2=t.bgC2;cfg.bgOpacity=t.bgOp;cfg.textColor=t.tc;cfg.font=t.font;cfg.outline=t.outline;loadCfgUI();['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});saveAll();pushLive();}
+function setFont(f){cfg.font=f;buildFonts();['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'fnt-grid'))rBuildFonts(p);});saveAll();pushLive();}
 function setAlign(a){cfg.textAlign=a;selBtns('aln-btns',['left','center','right'],a);saveAll();pushLive();}
 function setPad(p){cfg.padding=p;selBtns('pad-btns',['S','M','L'],p);saveAll();pushLive();}
 function setAnim(a){cfg.animation=a;selBtns('ani-btns',['cut','fade','slide'],a);saveAll();pushLive();}
@@ -1344,821 +903,177 @@ function setAnim(a){cfg.animation=a;selBtns('ani-btns',['cut','fade','slide'],a)
 function swTab(n){
   const ns=['theme','text','pos','more'];
   document.querySelectorAll('.tbtn').forEach((b,i)=>b.classList.toggle('on',ns[i]===n));
-  document.querySelectorAll('.tpane').forEach(p=>{
-    const active=p.id==='tp-'+n;
-    p.classList.toggle('on',active);
-    p.style.display=active?'block':'none';
-  });
+  document.querySelectorAll('.tpane').forEach(p=>{const active=p.id==='tp-'+n;p.classList.toggle('on',active);p.style.display=active?'block':'none';});
 }
 
-// ── LIBRARY ──
+// LIBRARY
 function renderLib(filter){
   const el=$('songs-lst');if(!el)return;
   const items=filter?lib.filter(s=>(s.title+' '+(s.artist||'')).toLowerCase().includes(filter.toLowerCase())):lib;
-  if(!items.length){el.innerHTML='<div class="empty"><div class="eic">🎵</div>No songs yet.</div>';return;}
-  el.innerHTML=items.map(s=>`
-    <div class="si${live.songId===s.id?' on':''}" onclick="loadSong(songById('${s.id}'))">
-      <span style="flex:1;min-width:0">
-        <div class="si-ttl">${esc(s.title)}</div>
-        ${s.artist?`<div class="si-art">${esc(s.artist)}</div>`:''}
-      </span>
-      <span class="si-acts">
-        <button class="bic" onclick="event.stopPropagation();openEd('${s.id}')" title="Edit">✏️</button>
-        <button class="bic" onclick="event.stopPropagation();addToSL('${s.id}')" title="Add to setlist">➕</button>
-        <button class="bic" onclick="event.stopPropagation();delSong('${s.id}')" title="Delete">🗑</button>
-      </span>
-    </div>`).join('');
+  if(!items.length){el.innerHTML='<div class="empty"><div class="eic">&#127925;</div>No songs yet.</div>';return;}
+  el.innerHTML=items.map(s=>`<div class="si${live.songId===s.id?' on':''}" onclick="loadSong(songById('${s.id}'))">
+    <span style="flex:1;min-width:0"><div class="si-ttl">${esc(s.title)}</div>${s.artist?`<div class="si-art">${esc(s.artist)}</div>`:''}</span>
+    <span class="si-acts">
+      <button class="bic" onclick="event.stopPropagation();addToSL('${s.id}')" title="Add to setlist">&#10133;</button>
+      <button class="bic" onclick="event.stopPropagation();openEd('${s.id}')" title="Edit">&#9999;&#65039;</button>
+      <button class="bic" onclick="event.stopPropagation();delSong('${s.id}')" title="Delete">&#128465;</button>
+    </span></div>`).join('');
 }
-
 function filterLib(v){renderLib(v);}
+function delSong(id){if(!confirm('Delete this song?'))return;lib=lib.filter(s=>s.id!==id);sls.forEach(sl=>{sl.songIds=sl.songIds.filter(sid=>sid!==id);});if(live.songId===id){live.songId=null;live.idx=-1;}if(gridSong?.id===id){gridSong=null;renderGrid(null);}saveAll();pushData();renderLib();renderPCLib();renderSLpanel();renderPCSLpanel();}
 
-function delSong(id){
-  if(!confirm('Delete this song?'))return;
-  lib=lib.filter(s=>s.id!==id);
-  sls.forEach(sl=>{sl.songIds=sl.songIds.filter(sid=>sid!==id);});
-  if(live.songId===id){live.songId=null;live.idx=-1;}
-  if(gridSong?.id===id){gridSong=null;renderGrid(null);}
-  saveAll();pushData();renderLib();renderPCLib();renderSLpanel();renderPCSLpanel();
-}
-
-// ── SETLIST ──
-function renderSLsel(){
-  const sel=$('sl-sel');if(!sel)return;
-  sel.innerHTML='<option value="">— No Setlist —</option>'+
-    sls.map(s=>`<option value="${s.id}"${activeSLid===s.id?' selected':''}>${esc(s.name)}</option>`).join('');
-}
-
-function newSetlist(){
-  const nm=prompt('Setlist name:','Sunday AM');if(!nm)return;
-  const sl={id:uid(),name:nm,songIds:[]};
-  sls.push(sl);activeSLid=sl.id;saveAll();renderSLsel();renderSLpanel();
-}
-
-function loadSetlist(id){
-  activeSLid=id||null;
-  saveAll();
-  renderSLpanel();
-}
-
-function saveSetlist(){
-  if(!activeSLid){toast('No setlist selected');return;}
-  saveAll();toast('Setlist saved ✓');
-}
-
+// SETLIST
+function renderSLsel(){const sel=$('sl-sel');if(!sel)return;sel.innerHTML='<option value="">&#8212; No Setlist &#8212;</option>'+sls.map(s=>`<option value="${s.id}"${activeSLid===s.id?' selected':''}>${esc(s.name)}</option>`).join('');}
+function newSetlist(){const nm=prompt('Setlist name:','Sunday AM');if(!nm)return;const sl={id:uid(),name:nm,songIds:[]};sls.push(sl);activeSLid=sl.id;saveAll();pushData();renderSLsel();renderSLpanel();}
+function loadSetlist(id){activeSLid=id||null;saveAll();renderSLpanel();}
+function saveSetlist(){if(!activeSLid){toast('No setlist selected');return;}saveAll();pushData();toast('Setlist saved');}
 function activeSL(){return sls.find(s=>s.id===activeSLid);}
-
-function addToSL(songId){
-  if(!activeSLid){toast('Create or select a setlist first');return;}
-  const sl=activeSL();if(!sl)return;
-  if(sl.songIds.includes(songId)){toast('Already in setlist');return;}
-  sl.songIds.push(songId);saveAll();pushData();renderSLpanel();renderPCSLpanel();toast('Added to setlist');
-}
-
-function remFromSL(songId){
-  const sl=activeSL();if(!sl)return;
-  sl.songIds=sl.songIds.filter(id=>id!==songId);saveAll();renderSLpanel();
-}
-
+function addToSL(songId){if(!activeSLid){toast('Select a setlist first');return;}const sl=activeSL();if(!sl)return;if(sl.songIds.includes(songId)){toast('Already in setlist');return;}sl.songIds.push(songId);saveAll();pushData();renderSLpanel();renderPCSLpanel();toast('Added');}
+function remFromSL(songId){const sl=activeSL();if(!sl)return;sl.songIds=sl.songIds.filter(id=>id!==songId);saveAll();pushData();renderSLpanel();renderPCSLpanel();}
 function renderSLpanel(){
   const p=$('sl-inner');if(!p)return;
   const sl=activeSL();
-  if(!sl||!sl.songIds.length){
-    p.innerHTML='<div class="empty" style="padding:10px"><div style="font-size:16px">📋</div>Empty</div>';return;
-  }
-  const rows=sl.songIds.map((sid,idx)=>{
-    const s=songById(sid);if(!s)return'';
-    return`<div class="sli${live.songId===sid?' on':''}"
-      draggable="true"
-      ondragstart="dgs(event,${idx})" ondragover="dgo(event,${idx})" ondrop="dgd(event,${idx})"
-      onclick="loadSong(songById('${sid}'))" data-i="${idx}">
-      <span class="dh">⠿</span>
-      <span class="slitl">${esc(s.title)}</span>
-      <button class="slirm" onclick="event.stopPropagation();remFromSL('${sid}')">✕</button>
-    </div>`;
-  }).filter(r=>r!=='');
-  p.innerHTML=rows.length?rows.join(''):'<div class="empty" style="padding:10px"><div style="font-size:16px">📋</div>Songs not found in library</div>';
+  if(!sl||!sl.songIds.length){p.innerHTML='<div class="empty" style="padding:10px"><div style="font-size:14px">&#128203;</div>Empty</div>';return;}
+  const rows=sl.songIds.map((sid,idx)=>{const s=songById(sid);if(!s)return'';return`<div class="sli${live.songId===sid?' on':''}" draggable="true" ondragstart="dgs(event,${idx})" ondragover="dgo(event,${idx})" ondrop="dgd(event,${idx})" onclick="loadSong(songById('${sid}'))"><span class="dh">&#8943;</span><span class="slitl">${esc(s.title)}</span><button class="slirm" onclick="event.stopPropagation();remFromSL('${sid}')">&#10005;</button></div>`;}).filter(r=>r!=='');
+  p.innerHTML=rows.length?rows.join(''):'<div class="empty" style="padding:10px">Songs not in library</div>';
 }
-
 let dgSrc=null;
 function dgs(e,i){dgSrc=i;e.dataTransfer.effectAllowed='move';}
-function dgo(e,i){e.preventDefault();document.querySelectorAll('.sli').forEach((el,j)=>el.classList.toggle('dov',j===i));}
-function dgd(e,i){
-  e.preventDefault();
-  document.querySelectorAll('.sli').forEach(el=>el.classList.remove('dov'));
-  if(dgSrc===null||dgSrc===i)return;
-  const sl=activeSL();if(!sl)return;
-  const m=sl.songIds.splice(dgSrc,1)[0];sl.songIds.splice(i,0,m);
-  saveAll();renderSLpanel();dgSrc=null;
-}
+function dgo(e,i){e.preventDefault();document.querySelectorAll('#sl-inner .sli').forEach((el,j)=>el.classList.toggle('dov',j===i));}
+function dgd(e,i){e.preventDefault();document.querySelectorAll('#sl-inner .sli').forEach(el=>el.classList.remove('dov'));if(dgSrc===null||dgSrc===i)return;const sl=activeSL();if(!sl)return;const m=sl.songIds.splice(dgSrc,1)[0];sl.songIds.splice(i,0,m);saveAll();pushData();renderSLpanel();dgSrc=null;}
 
-// ── GRID ──
-// Always re-parse a song with current LPS before use
-function freshSong(song){
-  if(!song) return song;
-  if(!song.priRaw) return song; // no raw text, use as-is
-  let secs = parseLyrics(song.priRaw, cfg.lps);
-  if(song.dual && song.secRaw) secs = mergeSec(secs, song.secRaw, cfg.lps);
-  return {...song, sections: secs};
-}
-
-function loadSong(song,silent=false){
-  if(!song)return;
-  song = freshSong(song);
-  gridSong=song;live.songId=song.id;
-  const fs=flatSlides(song);
-  if(live.idx<0||live.idx>=fs.length)live.idx=0;
-  renderGrid(song);renderLib();renderSLpanel();updateLive();
-  if(!silent)pushLive();
-}
-
+// GRID
+function loadSong(song,silent=false){if(!song)return;song=freshSong(song);gridSong=song;live.songId=song.id;const fs=flatSlides(song);if(live.idx<0||live.idx>=fs.length)live.idx=0;renderGrid(song);renderLib();renderSLpanel();updateLive();if(!silent)pushLive();}
 function renderGrid(song){
-  const grid=$('slide-grid');
-  const title=$('grid-title');
-  const ctr=$('slide-ctr');
-  if(!grid)return;
-  if(!song){
-    title.textContent='Select a song';title.style.color='var(--txd)';ctr.textContent='—';
-    grid.innerHTML='<div class="empty" style="padding-top:40px"><div class="eic">🎵</div>Click a song to load slides</div>';return;
-  }
-  title.textContent=song.title+(song.artist?' — '+song.artist:'');
-  title.style.color='var(--tx)';
-  const fs=flatSlides(song);
-  ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`— / ${fs.length}`;
+  const grid=$('slide-grid');const title=$('grid-title');const ctr=$('slide-ctr');
+  document.querySelectorAll('#lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
+  if(!song||!grid){if(title){title.textContent='Select a song';title.style.color='var(--txd)';}if(ctr)ctr.textContent='&#8212;';if(grid)grid.innerHTML='<div class="empty" style="padding-top:40px"><div class="eic">&#127925;</div>Click a song to load slides</div>';return;}
+  if(title){title.textContent=song.title+(song.artist?' &#8212; '+song.artist:'');title.style.color='var(--tx)';}
+  const fs=flatSlides(song);if(ctr)ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`&#8212; / ${fs.length}`;
   let html='';let gi=0;
-  song.sections.forEach(sec=>{
-    html+=`<div class="slbl">${esc(sec.name)}</div><div class="srow">`;
-    sec.slides.forEach(sl=>{
-      const gIdx=gi++;
-      html+=`<div class="sc${live.idx===gIdx?' on':''}" onclick="goTo(${gIdx})">
-        <div class="scn">${gIdx+1}</div>
-        <div class="sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>
-        ${sl.secondary.length?`<div class="scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
-      </div>`;
-    });
-    html+='</div>';
-  });
-  grid.innerHTML=html;
-  const ac=grid.querySelector('.sc.on');
-  if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
+  song.sections.forEach(sec=>{html+=`<div class="slbl">${esc(sec.name)}</div><div class="srow">`;sec.slides.forEach(sl=>{const gIdx=gi++;html+=`<div class="sc${live.idx===gIdx?' on':''}" onclick="goTo(${gIdx})"><div class="scn">${gIdx+1}</div><div class="sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>${sl.secondary.length?`<div class="scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});html+='</div>';});
+  grid.innerHTML=html;const ac=grid.querySelector('.sc.on');if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
 
-// ── NAVIGATION ──
-function goTo(idx){
-  const song=gridSong;if(!song)return;
-  const fs=flatSlides(song);
-  if(idx<0||idx>=fs.length)return;
-  live.idx=idx;live.blank=false;
-  updateLive();renderGrid(song);blankUI();pushLive();
-}
+// NAVIGATION
+function goTo(idx){const song=gridSong;if(!song)return;const fs=flatSlides(song);if(idx<0||idx>=fs.length)return;live.idx=idx;live.blank=false;updateLive();renderGrid(song);blankUI();pushLive();}
 function goNext(){const s=gridSong;if(!s)return;const f=flatSlides(s);if(live.idx<f.length-1)goTo(live.idx+1);}
 function goPrev(){if(live.idx>0)goTo(live.idx-1);}
 function toggleBlank(){live.blank=!live.blank;blankUI();pushLive();}
+function blankUI(){const b=$('blank-btn');if(!b)return;const on=live.blank;b.textContent=on?'SHOW':'BLANK';b.style.background=on?'var(--livebg)':'var(--blbg)';b.style.borderColor=on?'var(--live)':'var(--bl)';b.style.color=on?'var(--live)':'var(--bl)';}
+function updateLive(){const song=gridSong;const fs=song?flatSlides(song):[];const cur=fs[live.idx];const lt=$('ltxt'),ls=$('lsec');if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'&#8212;';lt.style.color=cur?'var(--tx)':'var(--txd)';}if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';}
 
-function blankUI(){
-  const b=$('blank-btn');if(!b)return;
-  const on=live.blank;
-  b.textContent=on?'SHOW':'BLANK';
-  b.style.background=on?'var(--livebg)':'var(--blbg)';
-  b.style.borderColor=on?'var(--live)':'var(--bl)';
-  b.style.color=on?'var(--live)':'var(--bl)';
-}
-
-function updateLive(){
-  const song=gridSong;
-  const fs=song?flatSlides(song):[];
-  const cur=fs[live.idx];
-  const lt=$('ltxt'),ls=$('lsec');
-  if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'—';lt.style.color=cur?'var(--tx)':'var(--txd)';}
-  if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';
-}
-
-// ── SONG EDITOR ──
+// SONG EDITOR
 function openEd(songId){
-  edSongId=songId;
-  const song=songId?songById(songId):null;
-  $('ed-mtit').textContent=song?'Edit Song':'Add Song';
-  $('ed-title').value=song?song.title:'';
-  $('ed-artist').value=song?song.artist||'':'';
-  $('ed-dual').checked=song?song.dual:false;
-  if(song){
-    // Convert sections back to raw text
-    const toRaw=secs=>secs.map(s=>`[${s.name}]\n${s.slides.map(sl=>sl.primary.join('\n')).join('\n\n')}`).join('\n\n');
-    const toRawSec=secs=>secs.map(s=>`[${s.name}]\n${s.slides.map(sl=>sl.secondary.join('\n')).join('\n\n')}`).join('\n\n');
-    const priRaw=song.priRaw||toRaw(song.sections);
-    const secRaw=song.secRaw||(song.dual?toRawSec(song.sections):'');
-    $('ed-pri').value=priRaw;$('ed-prid').value=priRaw;$('ed-sec').value=secRaw;
-    $('ed-cs').checked=song.cs?.enabled||false;
-    if(song.cs?.enabled){
-      $('ed-fn').value=song.cs.font||'';$('ed-tc').value=song.cs.tc||'#ffffff';
-      $('ed-bt').value=song.cs.bgt||'';$('ed-bc').value=song.cs.bgc||'#000000';
-    }else{$('ed-cs').checked=false;}
-  }else{
-    $('ed-pri').value='';$('ed-prid').value='';$('ed-sec').value='';
-    $('ed-cs').checked=false;
-  }
-  togDual();togCS();
-  $('ed-modal').classList.add('open');
-  setTimeout(()=>$('ed-title').focus(),80);
+  edSongId=songId;const song=songId?songById(songId):null;
+  $('ed-mtit').textContent=song?'Edit Song':'Add Song';$('ed-title').value=song?song.title:'';$('ed-artist').value=song?song.artist||'':'';$('ed-dual').checked=song?song.dual:false;
+  if(song){const toRaw=secs=>secs.map(s=>`[${s.name}]\n${s.slides.map(sl=>sl.primary.join('\n')).join('\n\n')}`).join('\n\n');const toRawS=secs=>secs.map(s=>`[${s.name}]\n${s.slides.map(sl=>sl.secondary.join('\n')).join('\n\n')}`).join('\n\n');const priRaw=song.priRaw||toRaw(song.sections);const secRaw=song.secRaw||(song.dual?toRawS(song.sections):'');$('ed-pri').value=priRaw;$('ed-prid').value=priRaw;$('ed-sec').value=secRaw;$('ed-cs').checked=song.cs?.enabled||false;if(song.cs?.enabled){$('ed-fn').value=song.cs.font||'';$('ed-tc').value=song.cs.tc||'#ffffff';$('ed-bt').value=song.cs.bgt||'';$('ed-bc').value=song.cs.bgc||'#000000';}}
+  else{$('ed-pri').value='';$('ed-prid').value='';$('ed-sec').value='';$('ed-cs').checked=false;}
+  togDual();togCS();$('ed-modal').classList.add('open');setTimeout(()=>$('ed-title').focus(),80);
 }
-
 function closeEd(){$('ed-modal').classList.remove('open');}
 function togDual(){const d=gc('ed-dual');$('s-col').style.display=d?'none':'';$('d-col').style.display=d?'':'none';}
 function togCS(){$('cs-pnl').style.display=gc('ed-cs')?'':'none';}
-
 function saveSong(){
-  const title=(gv('ed-title')||'').trim();
-  if(!title){toast('Please enter a song title');return;}
-  const artist=(gv('ed-artist')||'').trim();
-  const isDual=gc('ed-dual');
-  const priRaw=isDual?($('ed-prid').value||''):($('ed-pri').value||'');
-  const secRaw=isDual?($('ed-sec').value||''):'';
-  let sections=parseLyrics(priRaw,cfg.lps);
-  if(isDual&&secRaw.trim())sections=mergeSec(sections,secRaw,cfg.lps);
-  const csOn=gc('ed-cs');
-  const cs=csOn?{enabled:true,font:gv('ed-fn'),tc:gv('ed-tc'),bgt:gv('ed-bt'),bgc:gv('ed-bc')}:{enabled:false};
+  const title=(gv('ed-title')||'').trim();if(!title){toast('Enter a song title');return;}
+  const artist=(gv('ed-artist')||'').trim();const isDual=gc('ed-dual');
+  const priRaw=isDual?($('ed-prid').value||''):($('ed-pri').value||'');const secRaw=isDual?($('ed-sec').value||''):'';
+  let sections=parseLyrics(priRaw,cfg.lps);if(isDual&&secRaw.trim())sections=mergeSec(sections,secRaw,cfg.lps);
+  const csOn=gc('ed-cs');const cs=csOn?{enabled:true,font:gv('ed-fn'),tc:gv('ed-tc'),bgt:gv('ed-bt'),bgc:gv('ed-bc')}:{enabled:false};
   const song={id:edSongId||uid(),title,artist,dual:isDual,priRaw,secRaw,sections,cs};
-  if(edSongId){const i=lib.findIndex(s=>s.id===edSongId);if(i>=0)lib[i]=song;}
-  else{lib.push(song);}
-  saveAll();pushData();closeEd();renderLib();renderPCLib();
-  if(gridSong?.id===song.id)loadSong(song);
-  toast('Song saved ✓');
+  if(edSongId){const i=lib.findIndex(s=>s.id===edSongId);if(i>=0)lib[i]=song;}else{lib.push(song);}
+  saveAll();pushData();closeEd();renderLib();renderPCLib();if(gridSong?.id===song.id)loadSong(song);toast('Song saved');
 }
 
-// ── EXPORT / IMPORT ──
+// EXPORT/IMPORT
 function exportData(){
-  const data={ver:VER,cfg,lib,sls,at:new Date().toISOString()};
-  const json=JSON.stringify(data,null,2);
-  const fname='AltarLyrics-backup-'+new Date().toISOString().slice(0,10)+'.json';
-  // Try standard download
-  try{
-    const blob=new Blob([json],{type:'application/json'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.style.display='none';a.href=url;a.download=fname;
-    document.body.appendChild(a);a.click();
-    setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},2000);
-    toast('Downloading — check your Downloads folder ✓');
-  }catch(e){}
-  // Always show fallback modal with copyable JSON
+  const data={ver:VER,cfg,lib,sls,at:new Date().toISOString()};const json=JSON.stringify(data,null,2);const fname='AltarLyrics-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  try{const blob=new Blob([json],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.style.display='none';a.href=url;a.download=fname;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},2000);}catch(e){}
   showExportModal(json,fname);
 }
-
-function showExportModal(json,fname){
-  // Remove existing modal if any
-  const old=$('export-modal');if(old)old.remove();
-  const m=document.createElement('div');
-  m.id='export-modal';
-  m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px';
-  m.innerHTML=`
-    <div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;width:100%;max-width:560px;display:flex;flex-direction:column;max-height:85vh;overflow:hidden">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bd)">
-        <span style="font-weight:700;font-size:14px">📤 Export — ${fname}</span>
-        <button onclick="document.getElementById('export-modal').remove()" style="background:none;border:none;color:var(--txd);font-size:18px;cursor:pointer">✕</button>
-      </div>
-      <div style="padding:12px 16px;font-size:11px;color:var(--txd);border-bottom:1px solid var(--bd)">
-        If the file didn't download automatically, copy the text below and save it as <strong style="color:var(--tx)">${fname}</strong>
-      </div>
-      <textarea readonly style="flex:1;margin:12px 16px;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:8px;border-radius:6px;font-size:10px;font-family:monospace;resize:none;min-height:200px" onclick="this.select()">${json}</textarea>
-      <div style="padding:10px 16px;display:flex;gap:8px;border-top:1px solid var(--bd)">
-        <button class="btn btn-ac" style="flex:1" onclick="navigator.clipboard.writeText(document.querySelector('#export-modal textarea').value).then(()=>toast('Copied to clipboard ✓'))">📋 Copy to Clipboard</button>
-        <button class="btn" onclick="document.getElementById('export-modal').remove()">Close</button>
-      </div>
-    </div>`;
-  document.body.appendChild(m);
-}
-
-function importData(ev){
-  const file=ev.target.files[0];if(!file)return;
-  ev.target.value='';// reset so same file can be re-selected
-  const r=new FileReader();
-  r.onload=e=>{
-    try{
-      const d=JSON.parse(e.target.result);
-      if(d.lib)lib=d.lib;
-      if(d.sls)sls=d.sls;
-      if(d.cfg)cfg={...DEFS,...d.cfg};
-      // Re-parse songs with current LPS if priRaw available
-      lib.forEach(s=>{
-        if(s.priRaw){
-          let secs=parseLyrics(s.priRaw,cfg.lps);
-          if(s.dual&&s.secRaw)secs=mergeSec(secs,s.secRaw,cfg.lps);
-          s.sections=secs;
-        }
-      });
-      saveAll();pushData();renderLib();renderPCLib();renderSLsel();renderPCSLsel();renderSLpanel();renderPCSLpanel();loadCfgUI();
-      // Restore Firebase fields
-      if(cfg.fb&&cfg.fb.apiKey){
-        $('fb-ak').value=cfg.fb.apiKey||'';
-        $('fb-ad').value=cfg.fb.authDomain||'';
-        $('fb-du').value=cfg.fb.databaseURL||'';
-        $('fb-pi').value=cfg.fb.projectId||'';
-      }
-      toast('Import successful ✓');
-    }catch(err){toast('Import failed: '+err.message);}
-  };
-  r.readAsText(file);
-}
-
-// ── DISPLAY ──
-function initDisp(){
-  document.body.style.background='transparent';
-  document.documentElement.style.background='transparent';
-  $('disp-mode').style.display='block';
-  initBC();
-  // Firebase from stored config
-  if(cfg.fb&&cfg.fb.databaseURL){
-    try{
-      if(typeof firebase!=='undefined'){
-        const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);
-        fbDB=firebase.database(app);
-        fbRef=fbDB.ref('altarlyrics/live');
-        fbRef.on('value',snap=>{if(snap.val())applyLU(snap.val());});
-      }
-    }catch(e){}
-  }
-  // Crash recovery
-  try{
-    const lv=JSON.parse(localStorage.getItem(LSK.live)||'{}');
-    if(lv.song)applyLU(lv);
-  }catch(e){}
-}
-
-let _cfgSynced=false;
-function applyLU(state){
-  if(!state)return;
-  // On first receive in remote mode, sync full cfg from controller
-  if(MODE==='remote'&&!_cfgSynced&&state.cfg){
-    cfg={...DEFS,...state.cfg};_cfgSynced=true;
-    ['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});
-    document.querySelectorAll('#rpc-lps-btns .btn-sm,#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
-  }else if(state.cfg&&state.cfg.lps){
-    cfg.lps=state.cfg.lps;
-  }
-  // Use song sections exactly as sent by controller — already correctly parsed there
-  // Do NOT re-parse here; re-parsing with a possibly-stale local cfg.lps causes wrong line count
-  if(MODE==='display'){
-    if(state.blank){clrDisp(state.cfg||state.settings);return;}
-    if(state.song&&state.idx>=0){
-      const slides=flatSlides(state.song);
-      const slide=slides[state.idx];
-      if(slide)showSlide(slide,state.song,state.cfg||state.settings||{});
-    }
-  }
-  if(MODE==='remote')remApply(state);
-}
-
-function showSlide(slide,song,c){
-  const blk=$('lyr-blk'),bgEl=$('lyr-bg'),inEl=$('lyr-in');
-  const txEl=$('lyr-txt'),priEl=$('pri-lines'),secEl=$('sec-lines');
-  if(!blk||!priEl)return;
-  const res=(c.resolution||'1920x1080').split('x');
-  const W=+res[0]||1920,H=+res[1]||1080;
-  const sc=Math.min(window.innerWidth/W,window.innerHeight/H);
-  const bw=(c.blockW||80)/100*W;
-  const px=(c.posH||50)/100*W;
-  const py=(c.posV||85)/100*H;
-  blk.style.cssText=`width:${bw}px;left:${px-bw/2}px;top:${py}px;transform:scale(${sc});transform-origin:top left;display:block;position:absolute;`;
-  // Background — no animation
-  const op=(c.bgOpacity||75)/100;
-  const bt=(song?.cs?.enabled&&song.cs.bgt)||c.bgType||'transparent';
-  const bc1=(song?.cs?.enabled&&song.cs.bgc)||c.bgC1||'#000';
-  if(bt==='transparent')      bgEl.style.cssText='position:absolute;inset:0;z-index:1;border-radius:4px';
-  else if(bt==='solid')       bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:${bc1};opacity:${op}`;
-  else if(bt==='gradient')    bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:linear-gradient(135deg,${c.bgC1||'#000'},${c.bgC2||'#222'});opacity:${op}`;
-  else if(bt==='image'&&c.bgImg) bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:url(${c.bgImg}) center/cover;opacity:${op}`;
-  const padM={S:'6px 10px',M:'12px 18px',L:'20px 28px'};
-  inEl.style.padding=padM[c.padding||'M']||padM['M'];
-  const font=`'${(song?.cs?.enabled&&song.cs.font)||c.font||'Montserrat'}'`;
-  const tc=(song?.cs?.enabled&&song.cs.tc)||c.textColor||'#fff';
-  const fsz=(c.fontSize||48)+'px';
-  const ta=c.textAlign||'center';
-  const ls=c.lineSpacing||'1.5';
-  const sh=c.outline?`1px 1px 0 ${c.outlineColor||'#000'},-1px -1px 0 ${c.outlineColor||'#000'},1px -1px 0 ${c.outlineColor||'#000'},-1px 1px 0 ${c.outlineColor||'#000'}`:'';
-  // Song title — independent anchor
-  const ta2=$('ttl-anchor');
-  if(ta2){
-    const needAnchor=(c.showTitle&&song?.title)||(c.showArtist&&song?.artist);
-    if(needAnchor){
-      ta2.style.display='block';
-      const pos=c.titlePos||'bottom-center';
-      const posMap={
-        'top-left':   'top:0;left:0;right:auto;bottom:auto;text-align:left',
-        'top-center': 'top:0;left:0;right:0;bottom:auto;text-align:center',
-        'top-right':  'top:0;right:0;left:auto;bottom:auto;text-align:right',
-        'bottom-left':'bottom:0;left:0;right:auto;top:auto;text-align:left',
-        'bottom-center':'bottom:0;left:0;right:0;top:auto;text-align:center',
-        'bottom-right':'bottom:0;right:0;left:auto;top:auto;text-align:right'
-      };
-      ta2.style.cssText=`position:absolute;z-index:3;pointer-events:none;padding:10px 16px;display:block;${posMap[pos]||posMap['bottom-center']}`;
-      const tsz=Math.max(14,(c.fontSize||48)*.55)+'px';
-      const asz=Math.max(12,(c.fontSize||48)*.42)+'px';
-      // Title line
-      if(c.showTitle&&song?.title){
-        $('ttl-disp').style.cssText=`font-family:${font};font-size:${tsz};color:${tc};text-shadow:${sh};display:block`;
-        $('ttl-disp').textContent=song.title;
-      }else{$('ttl-disp').style.display='none';}
-      // Artist line
-      if(c.showArtist&&song?.artist){
-        $('artist-disp').style.cssText=`font-family:${font};font-size:${asz};color:${tc};opacity:.75;text-shadow:${sh};display:block`;
-        $('artist-disp').textContent=song.artist;
-      }else{$('artist-disp').style.display='none';}
-    }else{ta2.style.display='none';}
-  }
-  const anim=c.animation||'fade';
-  function setContent(){
-    priEl.innerHTML=slide.primary.map(l=>`<span class="dl">${l}</span>`).join('');
-    Object.assign(priEl.style,{fontFamily:font,fontSize:fsz,color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block'});
-    if(slide.secondary&&slide.secondary.length){
-      secEl.innerHTML=slide.secondary.map(l=>`<span class="dl">${l}</span>`).join('');
-      Object.assign(secEl.style,{fontFamily:font,fontSize:Math.max(14,(c.fontSize||48)*.7)+'px',color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block',marginTop:'5px',opacity:'.88'});
-    }else{secEl.style.display='none';}
-  }
-  if(anim==='cut'||!dispCur){
-    txEl.className='';setContent();
-  }else{
-    txEl.classList.remove('afi','asi');
-    txEl.classList.add(anim==='slide'?'aso':'afo');
-    setTimeout(()=>{setContent();txEl.classList.remove('afo','aso');txEl.classList.add(anim==='slide'?'asi':'afi');},210);
-  }
-  dispCur=slide;
-}
-
-function clrDisp(c){
-  const blk=$('lyr-blk');if(!blk)return;
-  const anim=c?.animation||'fade';
-  const t=$('lyr-txt');
-  if(anim!=='cut'){t.classList.add(anim==='slide'?'aso':'afo');setTimeout(()=>{blk.style.display='none';dispCur=null;},280);}
-  else{blk.style.display='none';dispCur=null;}
-  const ta=$('ttl-anchor');if(ta)ta.style.display='none';
-}
-
-// ── REMOTE ──
-function initRemote(){
-  const rm=$('rem-mode');if(rm)rm.style.display='flex';
-  loadAll();
-  // Try to connect using stored config
-  if(cfg.fb&&cfg.fb.databaseURL){
-    startRemote();
-  }else{
-    showRemoteSetup();
-  }
-}
-
-function showRemoteSetup(){
-  const s=$('rem-setup'),m=$('rem-main');
-  if(s){s.style.display='flex';}
-  if(m){m.style.display='none';}
-}
-
-function showRemoteMain(){
-  const s=$('rem-setup'),m=$('rem-main');
-  if(s){s.style.display='none';}
-  if(m){m.style.display='flex';}
-  if(cfg.swipeEnabled)initSwipe();
-  // Load last state from localStorage
-  try{
-    const st=JSON.parse(localStorage.getItem(LSK.live)||'{}');
-    if(st.song)applyLU(st);
-  }catch(e){}
-}
-
-function remSetupConnect(){
-  const ak=(gv('rs-ak')||'').trim();
-  const ad=(gv('rs-ad')||'').trim();
-  const du=(gv('rs-du')||'').trim();
-  const pi=(gv('rs-pi')||'').trim();
-  const st=$('rs-status');
-  if(!ak||!du){if(st){st.textContent='⚠ API Key and Database URL are required';st.style.color='var(--bl)';}return;}
-  cfg.fb={apiKey:ak,authDomain:ad,databaseURL:du,projectId:pi};
-  saveAll();
-  if(st){st.textContent='Connecting…';st.style.color='var(--txd)';}
-  startRemote(st);
-}
-
-function remDisconnect(){
-  cfg.fb={apiKey:'',authDomain:'',databaseURL:'',projectId:''};
-  saveAll();
-  if(fbRef){try{fbRef.off();}catch(e){}}
-  fbRef=null;fbDB=null;
-  showRemoteSetup();
-}
-
-function startRemote(statusEl){
-  if('wakeLock' in navigator)navigator.wakeLock.request('screen').catch(()=>{});
-  initBC();
-  if(cfg.fb&&cfg.fb.databaseURL){
-    try{
-      if(typeof firebase==='undefined'){
-        if(statusEl){statusEl.textContent='Firebase SDK not loaded';statusEl.style.color='var(--rd)';}
-        return;
-      }
-      // Clear existing app if config changed
-      if(firebase.apps.length){
-        // Reuse existing
-      }
-      const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);
-      fbDB=firebase.database(app);
-      fbRef=fbDB.ref('altarlyrics/live');
-      fbRef.on('value',snap=>{
-        if(snap.val())applyLU(snap.val());
-      });
-      // Show main remote on first successful connection
-      if(statusEl){statusEl.textContent='✓ Connected!';statusEl.style.color='var(--gn)';}
-      setTimeout(()=>showRemoteMain(),600);
-    }catch(err){
-      if(statusEl){statusEl.textContent='Error: '+err.message;statusEl.style.color='var(--rd)';}
-      return;
-    }
-  }else{
-    // No Firebase — still show main for BroadcastChannel use
-    showRemoteMain();
-  }
-}
+function showExportModal(json,fname){const old=$('export-modal');if(old)old.remove();const m=document.createElement('div');m.id='export-modal';m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px';m.innerHTML=`<div style="background:var(--sf);border:1px solid var(--bd);border-radius:10px;width:100%;max-width:540px;display:flex;flex-direction:column;max-height:85vh;overflow:hidden"><div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bd)"><span style="font-weight:700;font-size:14px">Export &#8212; ${fname}</span><button onclick="document.getElementById('export-modal').remove()" style="background:none;border:none;color:var(--txd);font-size:18px;cursor:pointer">&#10005;</button></div><div style="padding:10px 16px;font-size:11px;color:var(--txd);border-bottom:1px solid var(--bd)">If download failed, copy text below and save as <strong style="color:var(--tx)">${fname}</strong></div><textarea readonly style="flex:1;margin:12px 16px;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:8px;border-radius:6px;font-size:10px;font-family:monospace;resize:none;min-height:200px" onclick="this.select()">${json}</textarea><div style="padding:10px 16px;display:flex;gap:8px;border-top:1px solid var(--bd)"><button class="btn btn-ac" style="flex:1" onclick="navigator.clipboard.writeText(document.querySelector('#export-modal textarea').value).then(()=>toast('Copied'))">Copy to Clipboard</button><button class="btn" onclick="document.getElementById('export-modal').remove()">Close</button></div></div>`;document.body.appendChild(m);}
+function importData(ev){const file=ev.target.files[0];if(!file)return;ev.target.value='';const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result);if(d.lib)lib=d.lib;if(d.sls)sls=d.sls;if(d.cfg)cfg={...DEFS,...d.cfg};saveAll();pushData();renderLib();renderPCLib();renderSLsel();renderPCSLsel();renderSLpanel();renderPCSLpanel();loadCfgUI();if(cfg.fb&&cfg.fb.apiKey){$('fb-ak').value=cfg.fb.apiKey||'';$('fb-ad').value=cfg.fb.authDomain||'';$('fb-du').value=cfg.fb.databaseURL||'';$('fb-pi').value=cfg.fb.projectId||'';}toast('Import successful');}catch(err){toast('Import failed: '+err.message);}};r.readAsText(file);}
 
 
-function setRView(v){
-  remView=v;
-  $('rem-mode').classList.toggle('pc-view',v==='pc');
-  $('vt-mob').classList.toggle('on',v==='mobile');
-  $('vt-pc').classList.toggle('on',v==='pc');
-  // Re-render grid in new layout
-  if(remLive&&remLive.song) remApply(remLive);
-}
-
-function remApply(state){
-  if(!state)return;
-  remLive=state;
-  const song=state.song;
-  const curIdx=state.idx||0;
-  $('rem-sname').textContent=song?(song.title+(song.artist?' — '+song.artist:'')):'AltarLyrics Remote';
-  const isBlk=state.blank||false;
-  const rb=$('rem-blk');
-  if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';
-    rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
-  if(!song)return;
-  const sb=$('rem-secs');
-  if(sb){
-    let off=0;
-    sb.innerHTML=song.sections.map(sec=>{
-      const si=off;off+=sec.slides.length;
-      const isOn=curIdx>=si&&curIdx<si+sec.slides.length;
-      return`<button class="rsb${isOn?' on':''}" onclick="rGoTo(${si})">${esc(sec.name)}</button>`;
-    }).join('');
-  }
-  const grid=$('rem-grid');if(!grid)return;
-  let html='';let gi=0;
-  if(remView==='pc'){
-    song.sections.forEach(sec=>{
-      html+=`<div class="pc-slbl">${esc(sec.name)}</div><div class="pc-srow">`;
-      sec.slides.forEach(sl=>{
-        const gIdx=gi++;const isOn=curIdx===gIdx;
-        html+=`<div class="pc-sc${isOn?' on':''}" onclick="rGoTo(${gIdx})">
-          <div class="pc-scn">${gIdx+1}</div>
-          <div class="pc-sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>
-          ${sl.secondary&&sl.secondary.length?`<div class="pc-scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
-        </div>`;
-      });
-      html+='</div>';
-    });
-  }else{
-    song.sections.forEach(sec=>{
-      sec.slides.forEach(sl=>{
-        const gIdx=gi++;const isOn=curIdx===gIdx;
-        html+=`<div class="rc${isOn?' on':''}" onclick="rGoTo(${gIdx})">
-          <div class="rcs">${esc(sec.name)}</div>
-          ${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}
-          ${sl.secondary&&sl.secondary.length?`<div class="rcsec">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
-        </div>`;
-      });
-    });
-  }
-  grid.innerHTML=html;
-  const ac=grid.querySelector('.pc-sc.on,.rc.on');
-  if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
-}
-function rBlank(){
-  const nb=!remLive.blank;
-  const upd={...remLive,blank:nb};
-  if(bc)bc.postMessage({type:'live',state:upd});
-  if(fbRef)fbRef.set(upd).catch(()=>{});
-  remApply(upd);
-}
-
-function rPrev(){const ni=(remLive.idx||0)-1;if(ni>=0)rGoTo(ni);}
-function rNext(){
-  const song=remLive.song;if(!song)return;
-  const ni=(remLive.idx||0)+1;
-  if(ni<flatSlides(song).length)rGoTo(ni);
-}
-function rGoTo(idx){
-  const upd={...remLive,idx,blank:false};
-  if(bc)bc.postMessage({type:'live',state:upd});
-  if(fbRef)fbRef.set(upd).catch(()=>{});
-  remApply(upd);
-}
-
-function initSwipe(){
-  let sx=0,sy=0;
-  const el=$('rem-grid');if(!el)return;
-  el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
-  el.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){dx<0?rNext():rPrev();}
-  },{passive:true});
-}
-
-document.addEventListener('keydown',e=>{
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
-  if(MODE==='controller'){
-    if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();goNext();}
-    if(e.code==='ArrowLeft'){e.preventDefault();goPrev();}
-    if(e.code==='Escape'){e.preventDefault();toggleBlank();}
-  }else if(MODE==='remote'&&remView==='pc'){
-    if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();rNext();}
-    if(e.code==='ArrowLeft'){e.preventDefault();rPrev();}
-    if(e.code==='Escape'){e.preventDefault();rBlank();}
-  }
-});
-
-function init(){
-  loadAll();
-  if(MODE==='display'){initDisp();}
-  else if(MODE==='remote'){initRemote();}
-  else{initBC();initCtrl();swTab('theme');}
-}
-
-document.addEventListener('DOMContentLoaded',()=>{
-  const pi=$('pin-in');
-  if(pi)pi.addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});
-  init();
-});
-
-
-
-// ── FIREBASE DATA CHANNEL ─────────────────────────────────────────────────
-let fbDataRef = null;
-
-function pushData(){
-  if(!fbDataRef) return;
-  fbDataRef.set({library:lib, setlists:sls}).catch(()=>{});
-}
-
-// ── SETTINGS PANEL BUILDER ────────────────────────────────────────────────
-function buildSettingsHTML(pfx, handler) {
-  const p = pfx, h = handler;
-  return `
-  <div class="tabs" id="${p}stabs" style="margin-bottom:8px">
+// SETTINGS PANEL BUILDER (for PC remote + mobile settings)
+function buildSettingsHTML(pfx){
+  const p=pfx;
+  return `<div class="tabs" id="${p}stabs" style="margin-bottom:8px">
     <button class="tbtn on" onclick="swSTab('${p}','theme')">Theme</button>
     <button class="tbtn" onclick="swSTab('${p}','text')">Text</button>
     <button class="tbtn" onclick="swSTab('${p}','pos')">Pos</button>
   </div>
   <div id="${p}tp-theme">
-    <div class="clbl">Themes</div>
-    <div class="g3" id="${p}thm-grid" style="margin-bottom:8px"></div>
-    <div class="crow">
-      <div class="clbl">Background</div>
+    <div class="clbl">Themes</div><div class="g3" id="${p}thm-grid" style="margin-bottom:8px"></div>
+    <div class="crow"><div class="clbl">Background</div>
       <select id="${p}bg-type" onchange="onBGChP('${p}')">
-        <option value="transparent">Transparent</option>
-        <option value="solid">Solid</option>
-        <option value="gradient">Gradient</option>
-      </select>
-    </div>
-    <div id="${p}bgs-row" class="crow" style="display:none">
-      <div class="clbl">BG Color</div>
-      <div class="crow-row">
-        <input type="color" id="${p}bgc1" onchange="rSC('${p}')">
-        <input type="text" class="cinp" id="${p}bgc1h" oninput="rSyncHex('${p}bgc1')">
-      </div>
-    </div>
-    <div id="${p}bgg-row" class="crow" style="display:none">
-      <div class="clbl">Gradient Colors</div>
-      <div class="crow-row">
-        <input type="color" id="${p}bgc1g" onchange="rSC('${p}')">
-        <input type="color" id="${p}bgc2g" onchange="rSC('${p}')">
-      </div>
-    </div>
-    <div id="${p}bgo-row" class="crow">
-      <div class="clbl">BG Opacity: <span id="${p}bgo-v">75</span>%</div>
-      <input type="range" id="${p}bg-op" min="0" max="100" value="75" oninput="rSC('${p}')">
-    </div>
+        <option value="transparent">Transparent</option><option value="solid">Solid</option><option value="gradient">Gradient</option>
+      </select></div>
+    <div id="${p}bgs-row" class="crow" style="display:none"><div class="clbl">BG Color</div>
+      <div class="crow-row"><input type="color" id="${p}bgc1" onchange="rSC('${p}')"><input type="text" class="cinp" id="${p}bgc1h" oninput="rSyncHex('${p}bgc1')"></div></div>
+    <div id="${p}bgg-row" class="crow" style="display:none"><div class="clbl">Gradient Colors</div>
+      <div class="crow-row"><input type="color" id="${p}bgc1g" onchange="rSC('${p}')"><input type="color" id="${p}bgc2g" onchange="rSC('${p}')"></div></div>
+    <div id="${p}bgo-row" class="crow"><div class="clbl">BG Opacity: <span id="${p}bgo-v">75</span>%</div>
+      <input type="range" id="${p}bg-op" min="0" max="100" value="75" oninput="rSC('${p}')"></div>
   </div>
   <div id="${p}tp-text" style="display:none">
-    <div class="crow">
-      <div class="clbl">Font</div>
-      <div id="${p}fnt-grid"></div>
-    </div>
-    <div class="crow">
-      <div class="clbl">Size: <span id="${p}fsz-v">48</span>px</div>
-      <input type="range" id="${p}font-sz" min="16" max="120" value="48" oninput="rSC('${p}')">
-    </div>
-    <div class="crow">
-      <div class="clbl">Text Color</div>
-      <div class="crow-row">
-        <input type="color" id="${p}txc" value="#ffffff" onchange="rSC('${p}')">
-        <input type="text" class="cinp" id="${p}txch" value="#ffffff" oninput="rSyncHex('${p}txc')">
-      </div>
-    </div>
-    <div class="crow">
-      <div class="clbl">Alignment</div>
+    <div class="crow"><div class="clbl">Font</div><div id="${p}fnt-grid"></div></div>
+    <div class="crow"><div class="clbl">Size: <span id="${p}fsz-v">48</span>px</div><input type="range" id="${p}font-sz" min="16" max="120" value="48" oninput="rSC('${p}')"></div>
+    <div class="crow"><div class="clbl">Text Color</div>
+      <div class="crow-row"><input type="color" id="${p}txc" value="#ffffff" onchange="rSC('${p}')"><input type="text" class="cinp" id="${p}txch" value="#ffffff" oninput="rSyncHex('${p}txc')"></div></div>
+    <div class="crow"><div class="clbl">Alignment</div>
       <div class="g3" id="${p}aln-btns">
         <button class="btn btn-sm" onclick="rSetAlign('${p}','left')">Left</button>
         <button class="btn btn-sm on" onclick="rSetAlign('${p}','center')">Center</button>
         <button class="btn btn-sm" onclick="rSetAlign('${p}','right')">Right</button>
-      </div>
-    </div>
-    <div class="tglrow">
-      <span class="tgllbl">Text Outline</span>
-      <label class="tgl"><input type="checkbox" id="${p}otgl" onchange="rOnOCh('${p}')"><span class="tgls"></span></label>
-    </div>
-    <div id="${p}oc-row" class="crow" style="display:none">
-      <div class="clbl">Outline Color</div>
-      <input type="color" id="${p}out-col" value="#000000" onchange="rSC('${p}')">
-    </div>
-    <div class="crow">
-      <div class="clbl">Line Spacing</div>
-      <select id="${p}lnsp" onchange="rSC('${p}')">
-        <option value="1.2">Tight</option><option value="1.5" selected>Normal</option>
-        <option value="1.9">Relaxed</option><option value="2.4">Loose</option>
-      </select>
-    </div>
-    <div class="crow">
-      <div class="clbl">Padding</div>
+      </div></div>
+    <div class="tglrow"><span class="tgllbl">Text Outline</span><label class="tgl"><input type="checkbox" id="${p}otgl" onchange="rOnOCh('${p}')"><span class="tgls"></span></label></div>
+    <div id="${p}oc-row" class="crow" style="display:none"><div class="clbl">Outline Color</div><input type="color" id="${p}out-col" value="#000000" onchange="rSC('${p}')"></div>
+    <div class="crow"><div class="clbl">Line Spacing</div>
+      <select id="${p}lnsp" onchange="rSC('${p}')"><option value="1.2">Tight</option><option value="1.5" selected>Normal</option><option value="1.9">Relaxed</option><option value="2.4">Loose</option></select></div>
+    <div class="crow"><div class="clbl">Padding</div>
       <div class="g3" id="${p}pad-btns">
         <button class="btn btn-sm" onclick="rSetPad('${p}','S')">S</button>
         <button class="btn btn-sm on" onclick="rSetPad('${p}','M')">M</button>
         <button class="btn btn-sm" onclick="rSetPad('${p}','L')">L</button>
-      </div>
-    </div>
+      </div></div>
   </div>
   <div id="${p}tp-pos" style="display:none">
-    <div class="crow">
-      <div class="clbl">Horizontal: <span id="${p}ph-v">50</span>%</div>
-      <input type="range" id="${p}pos-h" min="0" max="100" value="50" oninput="rSC('${p}')">
-    </div>
-    <div class="crow">
-      <div class="clbl">Vertical: <span id="${p}pv-v">85</span>%</div>
-      <input type="range" id="${p}pos-v" min="0" max="100" value="85" oninput="rSC('${p}')">
-    </div>
-    <div class="crow">
-      <div class="clbl">Block Width: <span id="${p}bw-v">80</span>%</div>
-      <input type="range" id="${p}blk-w" min="20" max="100" value="80" oninput="rSC('${p}')">
-    </div>
-    <div class="crow">
-      <div class="clbl">Animation</div>
+    <div class="crow"><div class="clbl">Horizontal: <span id="${p}ph-v">50</span>%</div><input type="range" id="${p}pos-h" min="0" max="100" value="50" oninput="rSC('${p}')"></div>
+    <div class="crow"><div class="clbl">Vertical: <span id="${p}pv-v">85</span>%</div><input type="range" id="${p}pos-v" min="0" max="100" value="85" oninput="rSC('${p}')"></div>
+    <div class="crow"><div class="clbl">Block Width: <span id="${p}bw-v">80</span>%</div><input type="range" id="${p}blk-w" min="20" max="100" value="80" oninput="rSC('${p}')"></div>
+    <div class="crow"><div class="clbl">Animation</div>
       <div class="g3" id="${p}ani-btns">
         <button class="btn btn-sm" onclick="rSetAnim('${p}','cut')">Cut</button>
         <button class="btn btn-sm on" onclick="rSetAnim('${p}','fade')">Fade</button>
         <button class="btn btn-sm" onclick="rSetAnim('${p}','slide')">Slide</button>
-      </div>
-    </div>
+      </div></div>
   </div>`;
 }
 
-function swSTab(pfx, n){
-  const ns=['theme','text','pos'];
-  const tabs=document.querySelectorAll('#'+pfx+'stabs .tbtn');
-  tabs.forEach((b,i)=>b.classList.toggle('on',ns[i]===n));
-  ns.forEach(name=>{
-    const p=document.getElementById(pfx+'tp-'+name);
-    if(p) p.style.display=(name===n)?'block':'none';
-  });
-}
+function swSTab(pfx,n){const ns=['theme','text','pos'];document.querySelectorAll('#'+pfx+'stabs .tbtn').forEach((b,i)=>b.classList.toggle('on',ns[i]===n));ns.forEach(name=>{const p=document.getElementById(pfx+'tp-'+name);if(p)p.style.display=(name===n)?'block':'none';});}
 
 function rWriteCfg(pfx){
   const sv=(id,v)=>{const e=document.getElementById(pfx+id);if(e)e.value=v};
   const sc=(id,v)=>{const e=document.getElementById(pfx+id);if(e)e.checked=v};
-  sv('bg-type',cfg.bgType);sv('bgc1',cfg.bgC1);sv('bgc1h',cfg.bgC1);
-  sv('bgc1g',cfg.bgC1);sv('bgc2g',cfg.bgC2);
-  sv('bg-op',cfg.bgOpacity);
-  const bov=document.getElementById(pfx+'bgo-v');if(bov)bov.textContent=cfg.bgOpacity;
-  sv('font-sz',cfg.fontSize);
-  const fsv=document.getElementById(pfx+'fsz-v');if(fsv)fsv.textContent=cfg.fontSize;
-  sv('txc',cfg.textColor);sv('txch',cfg.textColor);
-  sc('otgl',cfg.outline);sv('out-col',cfg.outlineColor);
-  sv('lnsp',cfg.lineSpacing);
+  sv('bg-type',cfg.bgType);sv('bgc1',cfg.bgC1);sv('bgc1h',cfg.bgC1);sv('bgc1g',cfg.bgC1);sv('bgc2g',cfg.bgC2);
+  sv('bg-op',cfg.bgOpacity);const bov=document.getElementById(pfx+'bgo-v');if(bov)bov.textContent=cfg.bgOpacity;
+  sv('font-sz',cfg.fontSize);const fsv=document.getElementById(pfx+'fsz-v');if(fsv)fsv.textContent=cfg.fontSize;
+  sv('txc',cfg.textColor);sv('txch',cfg.textColor);sc('otgl',cfg.outline);sv('out-col',cfg.outlineColor);sv('lnsp',cfg.lineSpacing);
   sv('pos-h',cfg.posH);sv('pos-v',cfg.posV);sv('blk-w',cfg.blockW);
   const phv=document.getElementById(pfx+'ph-v');if(phv)phv.textContent=cfg.posH;
   const pvv=document.getElementById(pfx+'pv-v');if(pvv)pvv.textContent=cfg.posV;
   const bwv=document.getElementById(pfx+'bw-v');if(bwv)bwv.textContent=cfg.blockW;
-  rUpdateBGUI(pfx);rUpdateOCrow(pfx);
-  rBuildThemes(pfx);rBuildFonts(pfx);
-  selBtns(pfx+'aln-btns',['left','center','right'],cfg.textAlign);
-  selBtns(pfx+'pad-btns',['S','M','L'],cfg.padding);
-  selBtns(pfx+'ani-btns',['cut','fade','slide'],cfg.animation);
+  rUpdateBGUI(pfx);rUpdateOCrow(pfx);rBuildThemes(pfx);rBuildFonts(pfx);
+  ['aln-btns','pad-btns','ani-btns'].forEach((id,i)=>{const vals=[['left','center','right'],['S','M','L'],['cut','fade','slide']][i];const active=[cfg.textAlign,cfg.padding,cfg.animation][i];document.querySelectorAll('#'+pfx+id+' .btn-sm').forEach((b,j)=>b.classList.toggle('on',vals[j]===active));});
 }
 
 function rSC(pfx){
   const gvp=id=>{const e=document.getElementById(pfx+id);return e?e.value:null};
-  const gcp=id=>{const e=document.getElementById(pfx+id);return e?e.checked:false};
   const gnp=id=>{const e=document.getElementById(pfx+id);return e?+e.value:0};
-  cfg.bgType=gvp('bg-type')||cfg.bgType;
-  cfg.bgC1=gvp('bgc1')||gvp('bgc1g')||cfg.bgC1;
-  cfg.bgC2=gvp('bgc2g')||cfg.bgC2;
-  cfg.bgOpacity=gnp('bg-op');
-  cfg.fontSize=gnp('font-sz')||cfg.fontSize;
-  cfg.textColor=gvp('txc')||cfg.textColor;
-  cfg.outlineColor=gvp('out-col')||cfg.outlineColor;
-  cfg.lineSpacing=gvp('lnsp')||cfg.lineSpacing;
+  cfg.bgType=gvp('bg-type')||cfg.bgType;cfg.bgC1=gvp('bgc1')||gvp('bgc1g')||cfg.bgC1;cfg.bgC2=gvp('bgc2g')||cfg.bgC2;
+  cfg.bgOpacity=gnp('bg-op');cfg.fontSize=gnp('font-sz')||cfg.fontSize;cfg.textColor=gvp('txc')||cfg.textColor;
+  cfg.outlineColor=gvp('out-col')||cfg.outlineColor;cfg.lineSpacing=gvp('lnsp')||cfg.lineSpacing;
   cfg.posH=gnp('pos-h');cfg.posV=gnp('pos-v');cfg.blockW=gnp('blk-w');
   const bov=document.getElementById(pfx+'bgo-v');if(bov)bov.textContent=cfg.bgOpacity;
   const fsv=document.getElementById(pfx+'fsz-v');if(fsv)fsv.textContent=cfg.fontSize;
@@ -2167,493 +1082,278 @@ function rSC(pfx){
   const bwv=document.getElementById(pfx+'bw-v');if(bwv)bwv.textContent=cfg.blockW;
   saveAll();pushLive();
 }
+function rSyncHex(id){const hexEl=document.getElementById(id+'h');const picEl=document.getElementById(id);if(!hexEl||!picEl)return;const h=hexEl.value;if(h&&/^#[0-9a-fA-F]{6}$/.test(h)){picEl.value=h;}}
+function onBGChP(pfx){const e=document.getElementById(pfx+'bg-type');if(e)cfg.bgType=e.value;rUpdateBGUI(pfx);rSC(pfx);}
+function rUpdateBGUI(pfx){const t=cfg.bgType;const rows={[pfx+'bgs-row']:t==='solid',[pfx+'bgg-row']:t==='gradient',[pfx+'bgo-row']:t!=='transparent'};Object.entries(rows).forEach(([id,show])=>{const e=document.getElementById(id);if(e)e.style.display=show?'':'none';});}
+function rOnOCh(pfx){const e=document.getElementById(pfx+'otgl');if(e)cfg.outline=e.checked;rUpdateOCrow(pfx);rSC(pfx);}
+function rUpdateOCrow(pfx){const e=document.getElementById(pfx+'oc-row');if(e)e.style.display=cfg.outline?'':'none';}
+function rSetAlign(pfx,a){cfg.textAlign=a;document.querySelectorAll('#'+pfx+'aln-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',['left','center','right'][i]===a));saveAll();pushLive();}
+function rSetPad(pfx,p){cfg.padding=p;document.querySelectorAll('#'+pfx+'pad-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',['S','M','L'][i]===p));saveAll();pushLive();}
+function rSetAnim(pfx,a){cfg.animation=a;document.querySelectorAll('#'+pfx+'ani-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',['cut','fade','slide'][i]===a));saveAll();pushLive();}
+function rBuildThemes(pfx){const g=document.getElementById(pfx+'thm-grid');if(!g)return;g.innerHTML=Object.entries(THEMES).map(([k,t])=>`<button class="thmbtn${cfg.theme===k?' on':''}" onclick="rApplyTheme('${pfx}','${k}')">${t.n}</button>`).join('');}
+function rBuildFonts(pfx){const g=document.getElementById(pfx+'fnt-grid');if(!g)return;g.innerHTML=FONTS.map(f=>`<button class="fbtn${cfg.font===f.v?' on':''}" style="font-family:'${f.v}'" onclick="rSetFont('${pfx}','${f.v}')">${f.l}</button>`).join('');}
+function rApplyTheme(pfx,k){applyTheme(k);['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});}
+function rSetFont(pfx,f){setFont(f);['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'fnt-grid'))rBuildFonts(p);});}
 
-function rSyncHex(id){
-  const hexEl=document.getElementById(id+'h');const picEl=document.getElementById(id);
-  if(!hexEl||!picEl)return;
-  const h=hexEl.value;if(h&&/^#[0-9a-fA-F]{6}$/.test(h)){picEl.value=h;}
-}
-
-function onBGChP(pfx){
-  const e=document.getElementById(pfx+'bg-type');
-  if(e) cfg.bgType=e.value;
-  rUpdateBGUI(pfx);rSC(pfx);
-}
-
-function rUpdateBGUI(pfx){
-  const t=cfg.bgType;
-  const rows={[pfx+'bgs-row']:t==='solid',[pfx+'bgg-row']:t==='gradient',[pfx+'bgo-row']:t!=='transparent'};
-  Object.entries(rows).forEach(([id,show])=>{const e=document.getElementById(id);if(e)e.style.display=show?'':'none';});
-}
-
-function rOnOCh(pfx){
-  const e=document.getElementById(pfx+'otgl');
-  if(e)cfg.outline=e.checked;
-  rUpdateOCrow(pfx);rSC(pfx);
-}
-
-function rUpdateOCrow(pfx){
-  const e=document.getElementById(pfx+'oc-row');if(e)e.style.display=cfg.outline?'':'none';
-}
-
-function rSetAlign(pfx,a){cfg.textAlign=a;selBtns(pfx+'aln-btns',['left','center','right'],a);saveAll();pushLive();}
-function rSetPad(pfx,p){cfg.padding=p;selBtns(pfx+'pad-btns',['S','M','L'],p);saveAll();pushLive();}
-function rSetAnim(pfx,a){cfg.animation=a;selBtns(pfx+'ani-btns',['cut','fade','slide'],a);saveAll();pushLive();}
-
-function rBuildThemes(pfx){
-  const g=document.getElementById(pfx+'thm-grid');if(!g)return;
-  g.innerHTML=Object.entries(THEMES).map(([k,t])=>
-    `<button class="thmbtn${cfg.theme===k?' on':''}" onclick="rApplyTheme('${pfx}','${k}')">${t.n}</button>`
-  ).join('');
-}
-
-function rBuildFonts(pfx){
-  const g=document.getElementById(pfx+'fnt-grid');if(!g)return;
-  g.innerHTML=FONTS.map(f=>
-    `<button class="fbtn${cfg.font===f.v?' on':''}" style="font-family:'${f.v}'" onclick="rSetFont('${pfx}','${f.v}')">${f.l}</button>`
-  ).join('');
-}
-
-function rApplyTheme(pfx,k){
-  applyTheme(k);
-  // Write to all active settings panels
-  ['rpc-','mob-'].forEach(p=>rWriteCfg(p));
-}
-
-function rSetFont(pfx,f){
-  setFont(f);
-  ['rpc-','mob-'].forEach(p=>rBuildFonts(p));
-}
-
-// ── PC REMOTE ─────────────────────────────────────────────────────────────
-let rpcActiveSLid = null;
-let rpcGridSong = null;
-
+// PC REMOTE
 function initPCRemote(){
-  // Inject settings panel
-  const slot=document.getElementById('rpc-settings-slot');
-  if(slot) slot.innerHTML=buildSettingsHTML('rpc-','rpc-');
-  rWriteCfg('rpc-');
-  renderPCLib();
-  renderPCSLsel();
-  renderPCSLpanel();
+  const slot=$('rpc-settings-slot');
+  if(slot&&!slot.innerHTML.trim()){slot.innerHTML=buildSettingsHTML('rpc-');rWriteCfg('rpc-');}
+  renderPCLib();renderPCSLsel();renderPCSLpanel();
   if(live.songId){const s=songById(live.songId);if(s)rpcLoadSong(s,true);}
+  document.querySelectorAll('#rpc-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
 }
 
 function renderPCLib(filter){
-  const el=document.getElementById('rpc-songs-lst');if(!el)return;
+  const el=$('rpc-songs-lst');if(!el)return;
   const items=filter?lib.filter(s=>(s.title+' '+(s.artist||'')).toLowerCase().includes(filter.toLowerCase())):lib;
-  if(!items.length){el.innerHTML='<div class="empty"><div class="eic">🎵</div>No songs</div>';return;}
-  el.innerHTML=items.map(s=>`
-    <div class="si${live.songId===s.id?' on':''}" onclick="rpcLoadSong(songById('${s.id}'))">
-      <span style="flex:1;min-width:0">
-        <div class="si-ttl">${esc(s.title)}</div>
-        ${s.artist?`<div class="si-art">${esc(s.artist)}</div>`:''}
-      </span>
-      <span class="si-acts">
-        <button class="bic" onclick="event.stopPropagation();rpcAddToSL('${s.id}')" title="Add to setlist">➕</button>
-      </span>
-    </div>`).join('');
+  if(!items.length){el.innerHTML='<div class="empty"><div class="eic">&#128225;</div>No songs</div>';return;}
+  el.innerHTML=items.map(s=>`<div class="si${live.songId===s.id?' on':''}" onclick="rpcLoadSong(songById('${s.id}'))">
+    <span style="flex:1;min-width:0"><div class="si-ttl">${esc(s.title)}</div>${s.artist?`<div class="si-art">${esc(s.artist)}</div>`:''}</span>
+    <span style="display:flex;gap:2px;flex-shrink:0">
+      <button class="bic" onclick="event.stopPropagation();rpcAddToSL('${s.id}')" title="Add to setlist">&#10133;</button>
+      <button class="bic" onclick="event.stopPropagation();openEd('${s.id}')" title="Edit">&#9999;&#65039;</button>
+      <button class="bic" onclick="event.stopPropagation();delSong('${s.id}')" title="Delete">&#128465;</button>
+    </span></div>`).join('');
 }
-
 function filterRPCLib(v){renderPCLib(v);}
 
-function renderPCSLsel(){
-  const sel=document.getElementById('rpc-sl-sel');if(!sel)return;
-  sel.innerHTML='<option value="">— No Setlist —</option>'+
-    sls.map(s=>`<option value="${s.id}"${rpcActiveSLid===s.id?' selected':''}>${esc(s.name)}</option>`).join('');
-}
-
-function rpcLoadSetlist(id){
-  rpcActiveSLid=id||null;
-  renderPCSLpanel();
-}
-
+function renderPCSLsel(){const sel=$('rpc-sl-sel');if(!sel)return;sel.innerHTML='<option value="">&#8212; None &#8212;</option>'+sls.map(s=>`<option value="${s.id}"${rpcActiveSLid===s.id?' selected':''}>${esc(s.name)}</option>`).join('');}
+function rpcLoadSetlist(id){rpcActiveSLid=id||null;renderPCSLpanel();}
 function rpcActiveSL(){return sls.find(s=>s.id===rpcActiveSLid);}
-
-function rpcNewSetlist(){
-  const nm=prompt('Setlist name:','Sunday AM');if(!nm)return;
-  const sl={id:uid(),name:nm,songIds:[]};
-  sls.push(sl);rpcActiveSLid=sl.id;
-  saveAll();pushData();renderPCSLsel();renderPCSLpanel();
-}
-
-function rpcSaveSetlist(){
-  if(!rpcActiveSLid){toast('No setlist selected');return;}
-  saveAll();pushData();toast('Setlist saved ✓');
-}
-
-function rpcAddToSL(songId){
-  if(!rpcActiveSLid){toast('Select a setlist first');return;}
-  const sl=rpcActiveSL();if(!sl)return;
-  if(sl.songIds.includes(songId)){toast('Already in setlist');return;}
-  sl.songIds.push(songId);saveAll();pushData();renderPCSLpanel();toast('Added ✓');
-}
-
-function rpcRemFromSL(songId){
-  const sl=rpcActiveSL();if(!sl)return;
-  sl.songIds=sl.songIds.filter(id=>id!==songId);
-  saveAll();pushData();renderPCSLpanel();
-}
-
+function rpcNewSetlist(){const nm=prompt('Setlist name:','Sunday AM');if(!nm)return;const sl={id:uid(),name:nm,songIds:[]};sls.push(sl);rpcActiveSLid=sl.id;saveAll();pushData();renderPCSLsel();renderPCSLpanel();}
+function rpcSaveSetlist(){if(!rpcActiveSLid){toast('No setlist selected');return;}saveAll();pushData();toast('Setlist saved');}
+function rpcAddToSL(songId){if(!rpcActiveSLid){toast('Select a setlist first');return;}const sl=rpcActiveSL();if(!sl)return;if(sl.songIds.includes(songId)){toast('Already in setlist');return;}sl.songIds.push(songId);saveAll();pushData();renderPCSLpanel();toast('Added');}
+function rpcRemFromSL(songId){const sl=rpcActiveSL();if(!sl)return;sl.songIds=sl.songIds.filter(id=>id!==songId);saveAll();pushData();renderPCSLpanel();}
 function renderPCSLpanel(){
-  const p=document.getElementById('rpc-sl-inner');if(!p)return;
-  const sl=rpcActiveSL();
-  if(!sl||!sl.songIds.length){
-    p.innerHTML='<div class="empty" style="padding:10px"><div style="font-size:14px">📋</div>Empty</div>';return;
-  }
-  p.innerHTML=sl.songIds.map((sid,idx)=>{
-    const s=songById(sid);if(!s)return'';
-    return`<div class="sli${live.songId===sid?' on':''}"
-      draggable="true"
-      ondragstart="rpcDgs(event,${idx})" ondragover="rpcDgo(event,${idx})" ondrop="rpcDgd(event,${idx})"
-      onclick="rpcLoadSong(songById('${sid}'))">
-      <span class="dh">⠿</span><span class="slitl">${esc(s.title)}</span>
-      <button class="slirm" onclick="event.stopPropagation();rpcRemFromSL('${sid}')">✕</button>
-    </div>`;
-  }).join('');
+  const p=$('rpc-sl-inner');if(!p)return;
+  const sl=rpcActiveSL();if(!sl||!sl.songIds.length){p.innerHTML='<div class="empty" style="padding:8px"><div style="font-size:14px">&#128203;</div>Empty</div>';return;}
+  p.innerHTML=sl.songIds.map((sid,idx)=>{const s=songById(sid);if(!s)return'';return`<div class="sli${live.songId===sid?' on':''}" draggable="true" ondragstart="rpcDgs(event,${idx})" ondragover="rpcDgo(event,${idx})" ondrop="rpcDgd(event,${idx})" onclick="rpcLoadSong(songById('${sid}'))"><span class="dh">&#8943;</span><span class="slitl">${esc(s.title)}</span><button class="slirm" onclick="event.stopPropagation();rpcRemFromSL('${sid}')">&#10005;</button></div>`;}).filter(r=>r!=='').join('');
 }
-
 let rpcDgSrc=null;
 function rpcDgs(e,i){rpcDgSrc=i;e.dataTransfer.effectAllowed='move';}
 function rpcDgo(e,i){e.preventDefault();document.querySelectorAll('#rpc-sl-inner .sli').forEach((el,j)=>el.classList.toggle('dov',j===i));}
-function rpcDgd(e,i){
-  e.preventDefault();
-  document.querySelectorAll('#rpc-sl-inner .sli').forEach(el=>el.classList.remove('dov'));
-  if(rpcDgSrc===null||rpcDgSrc===i)return;
-  const sl=rpcActiveSL();if(!sl)return;
-  const m=sl.songIds.splice(rpcDgSrc,1)[0];sl.songIds.splice(i,0,m);
-  saveAll();pushData();renderPCSLpanel();rpcDgSrc=null;
-}
+function rpcDgd(e,i){e.preventDefault();document.querySelectorAll('#rpc-sl-inner .sli').forEach(el=>el.classList.remove('dov'));if(rpcDgSrc===null||rpcDgSrc===i)return;const sl=rpcActiveSL();if(!sl)return;const m=sl.songIds.splice(rpcDgSrc,1)[0];sl.songIds.splice(i,0,m);saveAll();pushData();renderPCSLpanel();rpcDgSrc=null;}
 
-function rpcLoadSong(song,silent=false){
-  if(!song)return;
-  song = freshSong(song);
-  rpcGridSong=song;live.songId=song.id;
-  const fs=flatSlides(song);
-  if(live.idx<0||live.idx>=fs.length)live.idx=0;
-  renderPCGrid(song);renderPCLib();renderPCSLpanel();
-  updateRPCLive();if(!silent)pushLive();
-}
+function rpcLoadSong(song,silent=false){if(!song)return;song=freshSong(song);rpcGridSong=song;live.songId=song.id;const fs=flatSlides(song);if(live.idx<0||live.idx>=fs.length)live.idx=0;renderPCGrid(song);renderPCLib();renderPCSLpanel();updateRPCLive();if(!silent)pushLive();}
 
 function renderPCGrid(song){
-  const grid=document.getElementById('rpc-grid');
-  const title=document.getElementById('rpc-song-title');
-  const ctr=document.getElementById('rpc-ctr');
-  // Sync LPS buttons
+  const grid=$('rpc-grid');const title=$('rpc-song-title');const ctr=$('rpc-ctr');
   document.querySelectorAll('#rpc-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
   if(!song||!grid)return;
-  if(title){title.textContent=song.title+(song.artist?' — '+song.artist:'');title.style.color='var(--tx)';}
-  const fs=flatSlides(song);
-  if(ctr)ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`— / ${fs.length}`;
+  if(title){title.textContent=song.title+(song.artist?' &#8212; '+song.artist:'');title.style.color='var(--tx)';}
+  const fs=flatSlides(song);if(ctr)ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`&#8212; / ${fs.length}`;
   let html='';let gi=0;
-  song.sections.forEach(sec=>{
-    html+=`<div class="slbl">${esc(sec.name)}</div><div class="srow">`;
-    sec.slides.forEach(sl=>{
-      const gIdx=gi++;
-      html+=`<div class="sc${live.idx===gIdx?' on':''}" onclick="rpcGoTo(${gIdx})">
-        <div class="scn">${gIdx+1}</div>
-        <div class="sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>
-        ${sl.secondary.length?`<div class="scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
-      </div>`;
-    });
-    html+='</div>';
-  });
-  grid.innerHTML=html;
-  const ac=grid.querySelector('.sc.on');
-  if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
+  song.sections.forEach(sec=>{html+=`<div class="pc-slbl">${esc(sec.name)}</div><div class="pc-srow">`;sec.slides.forEach(sl=>{const gIdx=gi++;html+=`<div class="pc-sc${live.idx===gIdx?' on':''}" onclick="rpcGoTo(${gIdx})"><div class="pc-scn">${gIdx+1}</div><div class="pc-sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>${sl.secondary.length?`<div class="pc-scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});html+='</div>';});
+  grid.innerHTML=html;const ac=grid.querySelector('.pc-sc.on');if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
+function updateRPCLive(){const song=rpcGridSong;const fs=song?flatSlides(song):[];const cur=fs[live.idx];const lt=$('rpc-ltxt'),ls=$('rpc-lsec');if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'&#8212;';lt.style.color=cur?'var(--tx)':'var(--txd)';}if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';}
+function rpcGoTo(idx){live.idx=idx;live.blank=false;const song=rpcGridSong;if(!song)return;const fs=flatSlides(song);if(idx<0||idx>=fs.length)return;renderPCGrid(song);updateRPCLive();rpcBlankUI();pushLive();}
+function rpcBlankUI(){const b=$('rpc-blank-btn');if(!b)return;const on=live.blank;b.textContent=on?'SHOW':'BLANK';b.style.background=on?'var(--livebg)':'var(--blbg)';b.style.borderColor=on?'var(--live)':'var(--bl)';b.style.color=on?'var(--live)':'var(--bl)';}
 
-function updateRPCLive(){
-  const song=rpcGridSong;
-  const fs=song?flatSlides(song):[];
-  const cur=fs[live.idx];
-  const lt=document.getElementById('rpc-ltxt'),ls=document.getElementById('rpc-lsec');
-  if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'—';lt.style.color=cur?'var(--tx)':'var(--txd)';}
-  if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';
-}
 
-function rpcGoTo(idx){
-  const song=rpcGridSong;if(!song)return;
-  const fs=flatSlides(song);if(idx<0||idx>=fs.length)return;
-  live.idx=idx;live.blank=false;
-  renderPCGrid(song);updateRPCLive();rpcBlankUI();pushLive();
-  // Also update controller side if present
-  renderGrid(gridSong);updateLive();
-}
-
-function rpcBlankUI(){
-  const b=document.getElementById('rpc-blank-btn');if(!b)return;
-  const on=live.blank;
-  b.textContent=on?'SHOW':'BLANK';
-  b.style.background=on?'var(--livebg)':'var(--blbg)';
-  b.style.borderColor=on?'var(--live)':'var(--bl)';
-  b.style.color=on?'var(--live)':'var(--bl)';
-}
-
-// ── MOBILE REMOTE ─────────────────────────────────────────────────────────
-let mobSearchActive = false;
-
+// MOBILE REMOTE
 function renderMobRemote(state){
   if(!state)return;
-  const song=state.song;
-  const curIdx=state.idx||0;
-  const isBlk=state.blank||false;
-
-  // Header
-  const sn=document.getElementById('rmob-sname');
-  if(sn)sn.textContent=song?(song.title+(song.artist?' — '+song.artist:'')):'Waiting for song…';
-  const rb=document.getElementById('rmob-blk');
-  if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';
-    rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
-
-  // LPS buttons
+  const song=state.song;const curIdx=typeof state.idx==='number'?state.idx:0;const isBlk=state.blank||false;
+  const sn=$('rem-sname');if(sn)sn.textContent=song?(song.title+(song.artist?' &#8212; '+song.artist:'')):'Waiting for song&#8230;';
+  const rb=$('rem-blk');if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
   document.querySelectorAll('#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
-
   if(!song)return;
-
-  // Section bar
-  const sb=document.getElementById('rmob-secs');
-  if(sb){
-    let off=0;
-    sb.innerHTML=song.sections.map(sec=>{
-      const si=off;off+=sec.slides.length;
-      const isOn=curIdx>=si&&curIdx<si+sec.slides.length;
-      return`<button class="rsb${isOn?' on':''}" onclick="rGoTo(${si})">${esc(sec.name)}</button>`;
-    }).join('');
-  }
-
-  // Slide grid
-  const grid=document.getElementById('rmob-grid');if(!grid)return;
-  const srchVal=(document.getElementById('rmob-srch')?.value||'').toLowerCase();
+  const sb=$('rmob-secs');
+  if(sb){let off=0;sb.innerHTML=song.sections.map(sec=>{const si=off;off+=sec.slides.length;const isOn=curIdx>=si&&curIdx<si+sec.slides.length;return`<button class="rsb${isOn?' on':''}" onclick="rGoTo(${si})">${esc(sec.name)}</button>`;}).join('');}
+  const grid=$('rmob-grid');if(!grid)return;
+  const srchVal=mobSearchActive?(($('rmob-srch')?.value||'')).toLowerCase():'';
+  if(mobSearchActive){renderMobLibSearch(srchVal);return;}
   let html='';let gi=0;
-  song.sections.forEach(sec=>{
-    sec.slides.forEach(sl=>{
-      const gIdx=gi++;
-      const txt=sl.primary.join(' ').toLowerCase();
-      if(srchVal&&!txt.includes(srchVal)&&!sec.name.toLowerCase().includes(srchVal)){return;}
-      const isOn=curIdx===gIdx;
-      html+=`<div class="rc${isOn?' on':''}" onclick="rGoTo(${gIdx})">
-        <div class="rcs">${esc(sec.name)}</div>
-        ${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}
-        ${sl.secondary&&sl.secondary.length?`<div class="rcsec">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}
-      </div>`;
-    });
-  });
-  grid.innerHTML=html||'<div class="empty">No results</div>';
-  const ac=grid.querySelector('.rc.on');
-  if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
-}
-
-function filterMobGrid(v){
-  // Search mode: filter library songs
-  renderMobLibSearch(v);
+  song.sections.forEach(sec=>{sec.slides.forEach(sl=>{const gIdx=gi++;const isOn=curIdx===gIdx;html+=`<div class="rc${isOn?' on':''}" onclick="rGoTo(${gIdx})"><div class="rcs">${esc(sec.name)}</div>${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}${sl.secondary&&sl.secondary.length?`<div class="rcsec">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});});
+  grid.innerHTML=html||'<div class="empty">No slides</div>';
+  const ac=grid.querySelector('.rc.on');if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
 
 function renderMobLibSearch(query){
-  const grid=document.getElementById('rmob-grid');if(!grid)return;
+  const grid=$('rmob-grid');if(!grid)return;
   const q=(query||'').toLowerCase();
   const items=q?lib.filter(s=>(s.title+' '+(s.artist||'')).toLowerCase().includes(q)):lib;
-  const secBar=document.getElementById('rmob-secs');
-  if(secBar)secBar.style.display='none';
-  if(!items.length){
-    grid.innerHTML='<div class="empty"><div class="eic">🎵</div>No songs found</div>';return;
-  }
-  grid.innerHTML=items.map(s=>`
-    <div class="rc" onclick="mobLoadSong('${s.id}')">
-      <div class="rcs">Song</div>
-      <div style="font-weight:600;font-size:15px">${esc(s.title)}</div>
-      ${s.artist?`<div style="font-size:12px;color:var(--txd);margin-top:2px">${esc(s.artist)}</div>`:''}
-    </div>`).join('');
+  const secBar=$('rmob-secs');if(secBar)secBar.style.display='none';
+  if(!items.length){grid.innerHTML='<div class="empty"><div class="eic">&#127925;</div>No songs found</div>';return;}
+  grid.innerHTML=items.map(s=>`<div class="rc" onclick="mobLoadSong('${s.id}')"><div class="rcs">Song</div><div style="font-weight:600;font-size:15px">${esc(s.title)}</div>${s.artist?`<div style="font-size:12px;color:var(--txd);margin-top:2px">${esc(s.artist)}</div>`:''}</div>`).join('');
 }
+
+function filterMobGrid(v){renderMobLibSearch(v);}
 
 function mobLoadSong(id){
   const song=lib.find(s=>s.id===id);if(!song)return;
-  const fresh=freshSong(song);
-  live.songId=id;live.idx=0;live.blank=false;
-  const state={...live,song:fresh,cfg};
-  remLive=state;
-  if(bc)bc.postMessage({type:'live',state});
-  if(fbRef)fbRef.set(state).catch(()=>{});
-  // Close search, restore section bar, show slide grid
+  const fresh=freshSong(song);live.songId=id;live.idx=0;live.blank=false;
+  const state={...live,song:fresh,cfg};remLive=state;
+  if(bc)bc.postMessage({type:'live',state});if(fbRef)fbRef.set(state).catch(()=>{});
   mobSearchActive=false;
-  const bar=document.getElementById('rmob-srch-bar');if(bar)bar.classList.remove('show');
-  const btn=document.getElementById('tb-srch-btn');if(btn)btn.classList.remove('on');
-  const inp=document.getElementById('rmob-srch');if(inp)inp.value='';
-  const secBar=document.getElementById('rmob-secs');if(secBar)secBar.style.display='';
+  const bar=$('rmob-srch-bar');if(bar)bar.classList.remove('show');
+  const btn=$('tb-srch-btn');if(btn)btn.classList.remove('on');
+  const inp=$('rmob-srch');if(inp)inp.value='';
+  const secBar=$('rmob-secs');if(secBar)secBar.style.display='';
   renderMobRemote(state);
 }
 
 function toggleMobSearch(){
   mobSearchActive=!mobSearchActive;
-  const bar=document.getElementById('rmob-srch-bar');
-  if(bar)bar.classList.toggle('show',mobSearchActive);
-  const btn=document.getElementById('tb-srch-btn');
-  if(btn)btn.classList.toggle('on',mobSearchActive);
-  const secBar=document.getElementById('rmob-secs');
-  if(mobSearchActive){
-    if(secBar)secBar.style.display='none';
-    const inp=document.getElementById('rmob-srch');
-    if(inp){inp.value='';inp.focus();}
-    renderMobLibSearch('');
-  }else{
-    if(secBar)secBar.style.display='';
-    const inp=document.getElementById('rmob-srch');if(inp)inp.value='';
-    if(remLive)renderMobRemote(remLive);
-  }
+  const bar=$('rmob-srch-bar');if(bar)bar.classList.toggle('show',mobSearchActive);
+  const btn=$('tb-srch-btn');if(btn)btn.classList.toggle('on',mobSearchActive);
+  const secBar=$('rmob-secs');
+  if(mobSearchActive){if(secBar)secBar.style.display='none';const inp=$('rmob-srch');if(inp){inp.value='';inp.focus();}renderMobLibSearch('');}
+  else{if(secBar)secBar.style.display='';const inp=$('rmob-srch');if(inp)inp.value='';if(remLive)renderMobRemote(remLive);}
 }
 
-// Mobile Settings
 function openMobSettings(){
-  const slot=document.getElementById('mob-settings-slot');
-  if(slot&&!slot.innerHTML.trim()){
-    slot.innerHTML=buildSettingsHTML('mob-','mob-');
-    rWriteCfg('mob-');
-  }
-  const ov=document.getElementById('mob-settings');
-  if(ov)ov.classList.add('show');
+  const slot=$('mob-settings-slot');
+  if(slot&&!slot.innerHTML.trim()){slot.innerHTML=buildSettingsHTML('mob-');rWriteCfg('mob-');}
+  const ov=$('mob-settings');if(ov)ov.classList.add('show');
 }
+function closeMobSettings(){const ov=$('mob-settings');if(ov)ov.classList.remove('show');}
 
-function closeMobSettings(){
-  const ov=document.getElementById('mob-settings');
-  if(ov)ov.classList.remove('show');
-}
-
-// Mobile Setlist
-function openMobSL(){
-  renderMobSLbody();
-  const bg=document.getElementById('mob-sl-bg');
-  if(bg)bg.classList.add('show');
-}
-
-function closeMobSL(){
-  const bg=document.getElementById('mob-sl-bg');
-  if(bg)bg.classList.remove('show');
-}
-
+function openMobSL(){renderMobSLbody();const bg=$('mob-sl-bg');if(bg)bg.classList.add('show');}
+function closeMobSL(){const bg=$('mob-sl-bg');if(bg)bg.classList.remove('show');}
 function renderMobSLbody(){
-  const body=document.getElementById('mob-sl-body');if(!body)return;
-  if(!sls.length){
-    body.innerHTML='<div class="empty">No saved setlists</div>';return;
-  }
-  body.innerHTML=sls.map(sl=>{
-    const cnt=sl.songIds.length;
-    const isOn=rpcActiveSLid===sl.id||activeSLid===sl.id;
-    return`<div class="sl-big${isOn?' on':''}" onclick="mobLoadSetlist('${sl.id}')">
-      <div>
-        <div class="sl-big-name">${esc(sl.name)}</div>
-        <div class="sl-big-cnt">${cnt} song${cnt!==1?'s':''}</div>
-      </div>
-      <span style="font-size:18px">${isOn?'✓':''}</span>
-    </div>`;
-  }).join('');
+  const body=$('mob-sl-body');if(!body)return;
+  if(!sls.length){body.innerHTML='<div class="empty">No saved setlists</div>';return;}
+  body.innerHTML=sls.map(sl=>{const cnt=sl.songIds.length;const isOn=rpcActiveSLid===sl.id||activeSLid===sl.id;return`<div class="sl-big${isOn?' on':''}" onclick="mobLoadSetlist('${sl.id}')"><div><div class="sl-big-name">${esc(sl.name)}</div><div class="sl-big-cnt">${cnt} song${cnt!==1?'s':''}</div></div><span style="font-size:18px">${isOn?'&#10003;':''}</span></div>`;}).join('');
 }
-
 function mobLoadSetlist(id){
-  // Load setlist so its songs appear in the slide grid
-  const sl=sls.find(s=>s.id===id);
-  if(!sl||!sl.songIds.length){closeMobSL();toast('Setlist is empty');return;}
-  // Load first song from setlist
-  const firstSong=songById(sl.songIds[0]);
-  if(firstSong){
-    rGoTo(0);
-    // Update live song
-    live.songId=firstSong.id;live.idx=0;
-    remLive={...remLive,songId:firstSong.id,idx:0,song:firstSong};
-    renderMobRemote(remLive);
-    pushLive();
-  }
-  closeMobSL();toast('Loaded: '+sl.name);
+  const sl=sls.find(s=>s.id===id);if(!sl||!sl.songIds.length){closeMobSL();toast('Setlist is empty');return;}
+  const firstSong=songById(sl.songIds[0]);if(!firstSong){closeMobSL();toast('Songs not loaded yet');return;}
+  closeMobSL();mobLoadSong(sl.songIds[0]);toast('Loaded: '+sl.name);
 }
 
-// ── UPDATED setRView ──────────────────────────────────────────────────────
-function setRView(v){
-  remView=v;
-  document.getElementById('vt-mob').classList.toggle('on',v==='mobile');
-  document.getElementById('vt-pc').classList.toggle('on',v==='pc');
-  const pc=document.getElementById('rem-pc');
-  const mob=document.getElementById('rem-mob');
-  if(pc)pc.classList.toggle('show',v==='pc');
-  if(mob)mob.classList.toggle('show',v==='mobile');
-  if(v==='pc'){
-    initPCRemote();
-    if(remLive&&remLive.song) rpcLoadSong(remLive.song,true);
-  }
-  if(v==='mobile'&&remLive) renderMobRemote(remLive);
-}
-
-// ── UPDATED remApply ─────────────────────────────────────────────────────
+// REMOTE APPLY — live.idx ALWAYS set before any render
 function remApply(state){
   if(!state)return;
   remLive=state;
-  const song=state.song;
-  const isBlk=state.blank||false;
+  const song=state.song;const curIdx=typeof state.idx==='number'?state.idx:0;const isBlk=state.blank||false;
+  // Update live state FIRST so every render call sees correct values
+  live.idx=curIdx;live.blank=isBlk;
   // Shared header
-  const sn=document.getElementById('rem-sname');
-  if(sn)sn.textContent=song?(song.title+(song.artist?' — '+song.artist:'')):'Waiting for song…';
-  const rb=document.getElementById('rem-blk');
-  if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';
-    rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
-  // PC view
+  const sn=$('rem-sname');if(sn)sn.textContent=song?(song.title+(song.artist?' &#8212; '+song.artist:'')):'Waiting for song&#8230;';
+  const rb=$('rem-blk');if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
   if(remView==='pc'&&song){
-    if(rpcGridSong?.id!==song.id)rpcLoadSong(song,true);
-    else{renderPCGrid(song);updateRPCLive();rpcBlankUI();}
-    live.idx=state.idx||0;live.blank=isBlk;
-    renderPCGrid(song);updateRPCLive();rpcBlankUI();
+    if(!rpcGridSong||rpcGridSong.id!==song.id){rpcGridSong=song;renderPCGrid(song);renderPCLib();renderPCSLpanel();}
+    else{renderPCGrid(song);}
+    updateRPCLive();rpcBlankUI();
   }
-  // Mobile view
-  if(remView==='mobile') renderMobRemote(state);
+  if(remView==='mobile')renderMobRemote(state);
 }
 
-// ── UPDATED tryFirebase (adds data channel) ───────────────────────────────
-// Patch into existing tryFirebase after fbRef is set
-function tryFirebaseWithData(){
-  tryFirebase();
-  // Add data channel listener for remote
-  if(fbDB&&MODE==='remote'){
-    fbDataRef=fbDB.ref('altarlyrics/data');
-    fbDataRef.on('value',snap=>{
-      const d=snap.val();
-      if(!d)return;
-      if(d.library){lib=d.library;}
-      if(d.setlists){sls=d.setlists;}
-      renderPCLib();renderPCSLsel();renderPCSLpanel();renderMobSLbody();
-    });
-  }
+// REMOTE NAVIGATION
+function rBlank(){live.blank=!live.blank;const upd={...remLive,blank:live.blank};if(bc)bc.postMessage({type:'live',state:upd});if(fbRef)fbRef.set(upd).catch(()=>{});remApply(upd);}
+function rPrev(){const ni=(remLive.idx||0)-1;if(ni>=0)rGoTo(ni);}
+function rNext(){const song=remLive.song;if(!song)return;const ni=(remLive.idx||0)+1;if(ni<flatSlides(song).length)rGoTo(ni);}
+function rGoTo(idx){
+  live.idx=idx;live.blank=false;
+  const upd={...remLive,idx,blank:false};
+  if(bc)bc.postMessage({type:'live',state:upd});if(fbRef)fbRef.set(upd).catch(()=>{});
+  remApply(upd);
 }
 
-// Updated startRemote to also set up data channel
-const _origStartRemote = startRemote;
+// VIEW SWITCH
+function setRView(v){
+  remView=v;
+  $('vt-mob').classList.toggle('on',v==='mobile');$('vt-pc').classList.toggle('on',v==='pc');
+  const pc=$('rem-pc');const mob=$('rem-mob');
+  if(pc)pc.classList.toggle('show',v==='pc');if(mob)mob.classList.toggle('show',v==='mobile');
+  if(v==='pc'){initPCRemote();if(remLive&&remLive.song)rpcLoadSong(remLive.song,true);}
+  if(v==='mobile'&&remLive)renderMobRemote(remLive);
+}
 
-// ── UPDATED showRemoteMain ────────────────────────────────────────────────
+// DISPLAY
+function initDisp(){
+  document.body.style.background='transparent';document.documentElement.style.background='transparent';
+  $('disp-mode').style.display='block';initBC();
+  if(cfg.fb&&cfg.fb.databaseURL){try{if(typeof firebase!=='undefined'){const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);fbDB=firebase.database(app);fbRef=fbDB.ref('altarlyrics/live');fbRef.on('value',snap=>{if(snap.val())applyLU(snap.val());});}}catch(e){}}
+  try{const lv=JSON.parse(localStorage.getItem(LSK.live)||'{}');if(lv.song)applyLU(lv);}catch(e){}
+}
+
+let _cfgSyncedI=false;
+function applyLU(state){
+  if(!state)return;
+  if(MODE==='remote'&&!_cfgSyncedI&&state.cfg){cfg={...DEFS,...state.cfg};_cfgSyncedI=true;['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});document.querySelectorAll('#rpc-lps-btns .btn-sm,#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));}
+  else if(state.cfg&&state.cfg.lps){cfg.lps=state.cfg.lps;}
+  if(MODE==='display'){
+    if(state.blank){clrDisp(state.cfg||state.settings);return;}
+    if(state.song&&state.idx>=0){const slides=flatSlides(state.song);const slide=slides[state.idx];if(slide)showSlide(slide,state.song,state.cfg||state.settings||{});}
+  }
+  if(MODE==='remote')remApply(state);
+}
+
+function showSlide(slide,song,c){
+  const blk=$('lyr-blk'),bgEl=$('lyr-bg'),inEl=$('lyr-in');
+  const txEl=$('lyr-txt'),priEl=$('pri-lines'),secEl=$('sec-lines');
+  if(!blk||!priEl)return;
+  const res=(c.resolution||'1920x1080').split('x');const W=+res[0]||1920,H=+res[1]||1080;
+  const sc=Math.min(window.innerWidth/W,window.innerHeight/H);
+  const bw=(c.blockW||80)/100*W;const px=(c.posH||50)/100*W;const py=(c.posV||85)/100*H;
+  blk.style.cssText=`width:${bw}px;left:${px-bw/2}px;top:${py}px;transform:scale(${sc});transform-origin:top left;display:block;position:absolute;`;
+  const op=(c.bgOpacity||75)/100;const bt=(song?.cs?.enabled&&song.cs.bgt)||c.bgType||'transparent';const bc1=(song?.cs?.enabled&&song.cs.bgc)||c.bgC1||'#000';
+  if(bt==='transparent')bgEl.style.cssText='position:absolute;inset:0;z-index:1;border-radius:4px';
+  else if(bt==='solid')bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:${bc1};opacity:${op}`;
+  else if(bt==='gradient')bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:linear-gradient(135deg,${c.bgC1||'#000'},${c.bgC2||'#222'});opacity:${op}`;
+  else if(bt==='image'&&c.bgImg)bgEl.style.cssText=`position:absolute;inset:0;z-index:1;border-radius:4px;background:url(${c.bgImg}) center/cover;opacity:${op}`;
+  const padM={S:'6px 10px',M:'12px 18px',L:'20px 28px'};inEl.style.padding=padM[c.padding||'M']||padM['M'];
+  const font=`'${(song?.cs?.enabled&&song.cs.font)||c.font||'Montserrat'}'`;const tc=(song?.cs?.enabled&&song.cs.tc)||c.textColor||'#fff';
+  const fsz=(c.fontSize||48)+'px';const ta=c.textAlign||'center';const ls=c.lineSpacing||'1.5';
+  const sh=c.outline?`1px 1px 0 ${c.outlineColor||'#000'},-1px -1px 0 ${c.outlineColor||'#000'},1px -1px 0 ${c.outlineColor||'#000'},-1px 1px 0 ${c.outlineColor||'#000'}`:'';
+  // Title anchor
+  const ta2=$('ttl-anchor');if(ta2){const needAnchor=(c.showTitle&&song?.title)||(c.showArtist&&song?.artist);if(needAnchor){const pos=c.titlePos||'bottom-center';const posMap={'top-left':'top:0;left:0;right:auto;bottom:auto;text-align:left','top-center':'top:0;left:0;right:0;bottom:auto;text-align:center','top-right':'top:0;right:0;left:auto;bottom:auto;text-align:right','bottom-left':'bottom:0;left:0;right:auto;top:auto;text-align:left','bottom-center':'bottom:0;left:0;right:0;top:auto;text-align:center','bottom-right':'bottom:0;right:0;left:auto;top:auto;text-align:right'};ta2.style.cssText=`position:absolute;z-index:3;pointer-events:none;padding:10px 16px;display:block;${posMap[pos]||posMap['bottom-center']}`;const tsz=Math.max(14,(c.fontSize||48)*.55)+'px';const asz=Math.max(12,(c.fontSize||48)*.42)+'px';const td=$('ttl-disp');if(td){if(c.showTitle&&song?.title){td.style.cssText=`font-family:${font};font-size:${tsz};color:${tc};text-shadow:${sh};display:block`;td.textContent=song.title;}else{td.style.display='none';}}const ad=$('artist-disp');if(ad){if(c.showArtist&&song?.artist){ad.style.cssText=`font-family:${font};font-size:${asz};color:${tc};opacity:.75;text-shadow:${sh};display:block`;ad.textContent=song.artist;}else{ad.style.display='none';}}}else{ta2.style.display='none';}}
+  const anim=c.animation||'fade';
+  function setContent(){priEl.innerHTML=slide.primary.map(l=>`<span class="dl">${l}</span>`).join('');Object.assign(priEl.style,{fontFamily:font,fontSize:fsz,color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block'});if(slide.secondary&&slide.secondary.length){secEl.innerHTML=slide.secondary.map(l=>`<span class="dl">${l}</span>`).join('');Object.assign(secEl.style,{fontFamily:font,fontSize:Math.max(14,(c.fontSize||48)*.7)+'px',color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block',marginTop:'5px',opacity:'.88'});}else{secEl.style.display='none';}}
+  if(anim==='cut'||!dispCur){txEl.className='';setContent();}
+  else{txEl.classList.remove('afi','asi');txEl.classList.add(anim==='slide'?'aso':'afo');setTimeout(()=>{setContent();txEl.classList.remove('afo','aso');txEl.classList.add(anim==='slide'?'asi':'afi');},210);}
+  dispCur=slide;
+}
+function clrDisp(c){const blk=$('lyr-blk');if(!blk)return;const anim=c?.animation||'fade';const t=$('lyr-txt');if(anim!=='cut'){t.classList.add(anim==='slide'?'aso':'afo');setTimeout(()=>{blk.style.display='none';dispCur=null;},280);}else{blk.style.display='none';dispCur=null;}const ta=$('ttl-anchor');if(ta)ta.style.display='none';}
+
+// REMOTE INIT
+function initRemote(){const rm=$('rem-mode');if(rm)rm.style.display='flex';loadAll();if(cfg.fb&&cfg.fb.databaseURL){startRemote();}else{showRemoteSetup();}}
+function showRemoteSetup(){const s=$('rem-setup'),m=$('rem-main');if(s)s.style.display='flex';if(m)m.style.display='none';}
 function showRemoteMain(){
-  const s=document.getElementById('rem-setup'),m=document.getElementById('rem-main');
-  if(s)s.style.display='none';
-  if(m){m.style.display='flex';}
-  // Set up data listener
-  if(fbDB){
-    fbDataRef=fbDB.ref('altarlyrics/data');
-    fbDataRef.on('value',snap=>{
-      const d=snap.val();if(!d)return;
-      if(d.library)lib=d.library;
-      if(d.setlists)sls=d.setlists;
-      renderPCLib();renderPCSLsel();renderPCSLpanel();renderMobSLbody();
-    });
-  }
-  // Default to mobile view
-  setRView('mobile');
-  if(cfg.swipeEnabled)initSwipe();
-  try{
-    const st=JSON.parse(localStorage.getItem(LSK.live)||'{}');
-    if(st.song)applyLU(st);
-  }catch(e){}
+  const s=$('rem-setup'),m=$('rem-main');if(s)s.style.display='none';if(m)m.style.display='flex';
+  if(fbDB){fbDataRef=fbDB.ref('altarlyrics/data');fbDataRef.on('value',snap=>{const d=snap.val();if(!d)return;if(d.library)lib=d.library;if(d.setlists)sls=d.setlists;renderPCLib();renderPCSLsel();renderPCSLpanel();renderMobSLbody();});}
+  setRView('mobile');if(cfg.swipeEnabled)initSwipe();
+  try{const st=JSON.parse(localStorage.getItem(LSK.live)||'{}');if(st.song)applyLU(st);}catch(e){}
 }
+function remSetupConnect(){
+  const ak=(gv('rs-ak')||'').trim();const ad=(gv('rs-ad')||'').trim();const du=(gv('rs-du')||'').trim();const pi=(gv('rs-pi')||'').trim();const st=$('rs-status');
+  if(!ak||!du){if(st){st.textContent='API Key and Database URL required';st.style.color='var(--bl)';}return;}
+  cfg.fb={apiKey:ak,authDomain:ad,databaseURL:du,projectId:pi};saveAll();if(st){st.textContent='Connecting&#8230;';st.style.color='var(--txd)';}startRemote(st);
+}
+function remDisconnect(){cfg.fb={apiKey:'',authDomain:'',databaseURL:'',projectId:''};saveAll();if(fbRef){try{fbRef.off();}catch(e){}}fbRef=null;fbDB=null;showRemoteSetup();}
+function startRemote(statusEl){
+  if('wakeLock' in navigator)navigator.wakeLock.request('screen').catch(()=>{});initBC();
+  if(cfg.fb&&cfg.fb.databaseURL){
+    try{if(typeof firebase==='undefined'){if(statusEl){statusEl.textContent='Firebase SDK not loaded';statusEl.style.color='var(--rd)';}return;}
+      const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);fbDB=firebase.database(app);fbRef=fbDB.ref('altarlyrics/live');
+      fbRef.on('value',snap=>{if(snap.val())applyLU(snap.val());});
+      if(statusEl){statusEl.textContent='&#10003; Connected!';statusEl.style.color='var(--gn)';}setTimeout(()=>showRemoteMain(),600);
+    }catch(err){if(statusEl){statusEl.textContent='Error: '+err.message;statusEl.style.color='var(--rd)';}return;}
+  }else{showRemoteMain();}
+}
+function checkPin(){if($('pin-in').value===cfg.pinValue){$('pin-ov').classList.remove('show');startRemote();}else{$('pin-err').textContent='Incorrect PIN';$('pin-in').value='';}}
+function initSwipe(){let sx=0,sy=0;const el=$('rmob-grid');if(!el)return;el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});el.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){dx<0?rNext():rPrev();}},{passive:true});}
 
-// ── UPDATED pushLive (also pushes data from controller) ──────────────────
-const _origPushLive = pushLive;
+// KEYBOARD
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
+  if(MODE==='controller'){if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();goNext();}if(e.code==='ArrowLeft'){e.preventDefault();goPrev();}if(e.code==='Escape'){e.preventDefault();toggleBlank();}}
+  else if(MODE==='remote'&&remView==='pc'){if(e.code==='Space'||e.code==='ArrowRight'){e.preventDefault();rNext();}if(e.code==='ArrowLeft'){e.preventDefault();rPrev();}if(e.code==='Escape'){e.preventDefault();rBlank();}}
+});
 
-// Override pushData calls in controller functions
-// (Controller calls pushData() after library changes)
+// INIT
+function init(){
+  loadAll();
+  if(MODE==='display'){initDisp();}
+  else if(MODE==='remote'){initRemote();}
+  else{initBC();$('ctrl-mode').style.display='flex';buildThemes();buildFonts();loadCfgUI();renderLib();renderSLsel();if(activeSLid){$('sl-sel').value=activeSLid;renderSLpanel();}else{renderSLpanel();}if(live.songId){const s=songById(live.songId);if(s)loadSong(s,true);}if(cfg.fb&&cfg.fb.apiKey){const f=cfg.fb;if($('fb-ak'))$('fb-ak').value=f.apiKey||'';if($('fb-ad'))$('fb-ad').value=f.authDomain||'';if($('fb-du'))$('fb-du').value=f.databaseURL||'';if($('fb-pi'))$('fb-pi').value=f.projectId||'';if($('gh-url'))$('gh-url').value=cfg.ghUrl||'';if(f.databaseURL)tryFirebase();}swTab('theme');}
+}
+document.addEventListener('DOMContentLoaded',()=>{const pi=$('pin-in');if(pi)pi.addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});init();});
+
 </script>
 </body>
 </html>
