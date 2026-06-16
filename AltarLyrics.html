@@ -66,7 +66,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
 .si-art{font-size:10px;color:var(--txd);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .si-acts{display:none;gap:1px}
 .si:hover .si-acts{display:flex}
-#lib-bot{padding:8px 9px;border-top:1px solid var(--bd);flex-direction:column;
+#lib-bot{display:flex;padding:8px 9px;border-top:1px solid var(--bd);flex-direction:column;
   gap:5px;flex-shrink:0}
 #sl-inner{overflow-y:auto;max-height:190px}
 .sli{padding:5px 8px;border-radius:5px;cursor:pointer;font-size:12px;
@@ -166,7 +166,7 @@ select:focus,.cinp:focus{outline:none;border-color:var(--ac)}
 .asi{animation:SI .28s ease forwards}
 .aso{animation:SO .2s ease forwards}
 #ttl-anchor{position:absolute;z-index:3;pointer-events:none;display:none;padding:10px 14px}
-#rem-mode{height:100vh;display:none;flex-direction:column;background:var(--bg);overflow:hidden}
+#rem-mode{height:100vh;height:var(--app-h,100vh);display:none;flex-direction:column;background:var(--bg);overflow:hidden}
 #rem-setup{display:none;flex-direction:column;align-items:center;justify-content:center;
   height:100%;padding:30px 20px;text-align:center}
 .rs-in{width:100%;background:var(--sf2);border:1px solid var(--bd);color:var(--tx);
@@ -209,9 +209,10 @@ select:focus,.cinp:focus{outline:none;border-color:var(--ac)}
 #rmob-grid{flex:1;min-height:0;overflow-y:auto;padding:8px;-webkit-overflow-scrolling:touch}
 #rmob-nav{display:flex;gap:7px;padding:10px 12px;background:var(--sf);
   border-top:1px solid var(--bd);flex-shrink:0;
-  padding-bottom:max(10px,env(safe-area-inset-bottom))}
-#rmob-nav button{flex:1;padding:15px;border-radius:10px;font-size:17px;font-weight:700;
-  cursor:pointer;border:1.5px solid var(--bd);background:var(--sf2);color:var(--tx)}
+  padding-bottom:max(18px,env(safe-area-inset-bottom,18px));min-height:80px}
+#rmob-nav button{flex:1;padding:16px 10px;border-radius:10px;font-size:17px;font-weight:700;
+  cursor:pointer;border:1.5px solid var(--bd);background:var(--sf2);color:var(--tx);
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation}
 #rmob-nav #rmob-next{background:var(--ac);border-color:var(--ac);color:#fff}
 .rsb{background:var(--sf2);border:1px solid var(--bd);color:var(--txd);
   padding:4px 10px;border-radius:18px;font-size:11px;cursor:pointer;white-space:nowrap;
@@ -316,7 +317,7 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
         <input type="text" id="lib-srch" placeholder="Search songs&#8230;" oninput="filterLib(this.value)">
       </div>
       <div id="songs-lst"><div class="empty"><div class="eic">&#127925;</div>No songs yet.</div></div>
-      <div id="lib-bot" style="display:flex">
+      <div id="lib-bot">
         <button class="btn btn-ac" style="width:100%;font-size:12px" onclick="openEd(null)">+ Add Song</button>
         <div style="border-top:1px solid var(--bd);padding-top:7px;margin-top:0">
           <div class="plbl">Today&#39;s Setlist</div>
@@ -688,7 +689,7 @@ let activeSLid=null,gridSong=null,edSongId=null;
 let bc=null,fbDB=null,fbRef=null,fbDataRef=null;
 let dispCur=null,remLive={song:null,idx:-1,blank:false},remView='mobile';
 let rpcActiveSLid=null,rpcGridSong=null,mobSearchActive=false;
-let _dataPushing=false,_cfgSynced=false;
+let _dataPushing=false;
 
 // UTILS
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).substr(2,5);
@@ -704,6 +705,20 @@ function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 // STORAGE
 function saveAll(){try{localStorage.setItem(LSK.cfg,JSON.stringify(cfg));localStorage.setItem(LSK.lib,JSON.stringify(lib));localStorage.setItem(LSK.sls,JSON.stringify(sls));localStorage.setItem(LSK.live,JSON.stringify(live));if(activeSLid)localStorage.setItem(LSK.slid,activeSLid);else localStorage.removeItem(LSK.slid);}catch(e){}}
 function loadAll(){try{const c=localStorage.getItem(LSK.cfg);if(c)cfg={...DEFS,...JSON.parse(c)};const l=localStorage.getItem(LSK.lib);if(l)lib=JSON.parse(l);const s=localStorage.getItem(LSK.sls);if(s)sls=JSON.parse(s);const lv=localStorage.getItem(LSK.live);if(lv)live={...live,...JSON.parse(lv)};const sid=localStorage.getItem(LSK.slid);if(sid)activeSLid=sid;}catch(e){}}
+
+// Normalize song data from Firebase (converts objects back to arrays where needed)
+function normalizeSong(song){
+  if(!song||!song.sections)return song;
+  const secs=Array.isArray(song.sections)?song.sections:Object.values(song.sections);
+  return{...song,sections:secs.map(sec=>{
+    const slides=Array.isArray(sec.slides)?sec.slides:Object.values(sec.slides||{});
+    return{name:sec.name||'',slides:slides.map(sl=>({
+      id:sl.id||uid(),
+      primary:Array.isArray(sl.primary)?sl.primary:(sl.primary?Object.values(sl.primary):[]),
+      secondary:Array.isArray(sl.secondary)?sl.secondary:(sl.secondary?Object.values(sl.secondary):[])
+    }))};
+  })};
+}
 
 // FRESH SONG — always re-parse from raw text with current LPS
 function freshSong(song){
@@ -845,15 +860,7 @@ function tryFirebase(){
 }
 
 
-// CONTROLLER INIT
-function initCtrl(){
-  $('ctrl-mode').style.display='flex';
-  buildThemes();buildFonts();loadCfgUI();renderLib();renderSLsel();
-  if(activeSLid){$('sl-sel').value=activeSLid;renderSLpanel();}else{renderSLpanel();}
-  if(live.songId){const s=songById(live.songId);if(s)loadSong(s,true);}
-  if(cfg.fb&&cfg.fb.apiKey){const f=cfg.fb;if($('fb-ak'))$('fb-ak').value=f.apiKey||'';if($('fb-ad'))$('fb-ad').value=f.authDomain||'';if($('fb-du'))$('fb-du').value=f.databaseURL||'';if($('fb-pi'))$('fb-pi').value=f.projectId||'';if($('gh-url'))$('gh-url').value=cfg.ghUrl||'';if(f.databaseURL)tryFirebase();}
-}
-
+// Controller init handled inline in init()
 function buildThemes(){const g=$('thm-grid');if(!g)return;g.innerHTML=Object.entries(THEMES).map(([k,t])=>`<button class="thmbtn${cfg.theme===k?' on':''}" onclick="applyTheme('${k}')">${t.n}</button>`).join('');}
 function buildFonts(){const g=$('fnt-grid');if(!g)return;g.innerHTML=FONTS.map(f=>`<button class="fbtn${cfg.font===f.v?' on':''}" style="font-family:'${f.v}'" onclick="setFont('${f.v}')">${f.l}</button>`).join('');}
 
@@ -947,11 +954,11 @@ function loadSong(song,silent=false){if(!song)return;song=freshSong(song);gridSo
 function renderGrid(song){
   const grid=$('slide-grid');const title=$('grid-title');const ctr=$('slide-ctr');
   document.querySelectorAll('#lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
-  if(!song||!grid){if(title){title.textContent='Select a song';title.style.color='var(--txd)';}if(ctr)ctr.textContent='&#8212;';if(grid)grid.innerHTML='<div class="empty" style="padding-top:40px"><div class="eic">&#127925;</div>Click a song to load slides</div>';return;}
-  if(title){title.textContent=song.title+(song.artist?' &#8212; '+song.artist:'');title.style.color='var(--tx)';}
-  const fs=flatSlides(song);if(ctr)ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`&#8212; / ${fs.length}`;
+  if(!song||!grid){if(title){title.textContent='Select a song';title.style.color='var(--txd)';}if(ctr)ctr.textContent='—';if(grid)grid.innerHTML='<div class="empty" style="padding-top:40px"><div class="eic">&#127925;</div>Click a song to load slides</div>';return;}
+  if(title){title.innerHTML=esc(song.title)+(song.artist?' — '+esc(song.artist):'');title.style.color='var(--tx)';}
+  const fs=flatSlides(song);if(ctr)ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`— / ${fs.length}`;
   let html='';let gi=0;
-  song.sections.forEach(sec=>{html+=`<div class="slbl">${esc(sec.name)}</div><div class="srow">`;sec.slides.forEach(sl=>{const gIdx=gi++;html+=`<div class="sc${live.idx===gIdx?' on':''}" onclick="goTo(${gIdx})"><div class="scn">${gIdx+1}</div><div class="sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>${sl.secondary.length?`<div class="scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});html+='</div>';});
+  song.sections.forEach(sec=>{html+=`<div class="slbl">${esc(sec.name)}</div><div class="srow">`;sec.slides.forEach(sl=>{const gIdx=gi++;html+=`<div class="sc${live.idx===gIdx?' on':''}" onclick="goTo(${gIdx})"><div class="scn">${gIdx+1}</div><div class="sct">${esc((sl.primary||[]).join('\n')).replace(/\n/g,'<br>')}</div>${sl.secondary&&sl.secondary.length?`<div class="scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});html+='</div>';});
   grid.innerHTML=html;const ac=grid.querySelector('.sc.on');if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
 
@@ -961,7 +968,7 @@ function goNext(){const s=gridSong;if(!s)return;const f=flatSlides(s);if(live.id
 function goPrev(){if(live.idx>0)goTo(live.idx-1);}
 function toggleBlank(){live.blank=!live.blank;blankUI();pushLive();}
 function blankUI(){const b=$('blank-btn');if(!b)return;const on=live.blank;b.textContent=on?'SHOW':'BLANK';b.style.background=on?'var(--livebg)':'var(--blbg)';b.style.borderColor=on?'var(--live)':'var(--bl)';b.style.color=on?'var(--live)':'var(--bl)';}
-function updateLive(){const song=gridSong;const fs=song?flatSlides(song):[];const cur=fs[live.idx];const lt=$('ltxt'),ls=$('lsec');if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'&#8212;';lt.style.color=cur?'var(--tx)':'var(--txd)';}if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';}
+function updateLive(){const song=gridSong;const fs=song?flatSlides(song):[];const cur=fs[live.idx];const lt=$('ltxt'),ls=$('lsec');if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'—';lt.style.color=cur?'var(--tx)':'var(--txd)';}if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';}
 
 // SONG EDITOR
 function openEd(songId){
@@ -1123,7 +1130,26 @@ function rpcLoadSetlist(id){rpcActiveSLid=id||null;renderPCSLpanel();}
 function rpcActiveSL(){return sls.find(s=>s.id===rpcActiveSLid);}
 function rpcNewSetlist(){const nm=prompt('Setlist name:','Sunday AM');if(!nm)return;const sl={id:uid(),name:nm,songIds:[]};sls.push(sl);rpcActiveSLid=sl.id;saveAll();pushData();renderPCSLsel();renderPCSLpanel();}
 function rpcSaveSetlist(){if(!rpcActiveSLid){toast('No setlist selected');return;}saveAll();pushData();toast('Setlist saved');}
-function rpcAddToSL(songId){if(!rpcActiveSLid){toast('Select a setlist first');return;}const sl=rpcActiveSL();if(!sl)return;if(sl.songIds.includes(songId)){toast('Already in setlist');return;}sl.songIds.push(songId);saveAll();pushData();renderPCSLpanel();toast('Added');}
+function rpcAddToSL(songId){
+  if(!rpcActiveSLid){
+    if(sls.length>0){
+      // Auto-select first available setlist
+      rpcActiveSLid=sls[0].id;
+      const sel=$('rpc-sl-sel');if(sel)sel.value=rpcActiveSLid;
+      renderPCSLpanel();
+    }else{
+      // Create a new setlist
+      const nm=prompt('Name for new setlist:','Sunday AM');if(!nm)return;
+      const sl={id:uid(),name:nm,songIds:[]};
+      sls.push(sl);rpcActiveSLid=sl.id;
+      saveAll();pushData();renderPCSLsel();renderPCSLpanel();
+    }
+  }
+  const sl=rpcActiveSL();if(!sl)return;
+  if(sl.songIds.includes(songId)){toast('Already in setlist');return;}
+  sl.songIds.push(songId);saveAll();pushData();renderPCSLpanel();
+  toast('Added to: '+sl.name);
+}
 function rpcRemFromSL(songId){const sl=rpcActiveSL();if(!sl)return;sl.songIds=sl.songIds.filter(id=>id!==songId);saveAll();pushData();renderPCSLpanel();}
 function renderPCSLpanel(){
   const p=$('rpc-sl-inner');if(!p)return;
@@ -1135,19 +1161,19 @@ function rpcDgs(e,i){rpcDgSrc=i;e.dataTransfer.effectAllowed='move';}
 function rpcDgo(e,i){e.preventDefault();document.querySelectorAll('#rpc-sl-inner .sli').forEach((el,j)=>el.classList.toggle('dov',j===i));}
 function rpcDgd(e,i){e.preventDefault();document.querySelectorAll('#rpc-sl-inner .sli').forEach(el=>el.classList.remove('dov'));if(rpcDgSrc===null||rpcDgSrc===i)return;const sl=rpcActiveSL();if(!sl)return;const m=sl.songIds.splice(rpcDgSrc,1)[0];sl.songIds.splice(i,0,m);saveAll();pushData();renderPCSLpanel();rpcDgSrc=null;}
 
-function rpcLoadSong(song,silent=false){if(!song)return;song=freshSong(song);rpcGridSong=song;live.songId=song.id;const fs=flatSlides(song);if(live.idx<0||live.idx>=fs.length)live.idx=0;renderPCGrid(song);renderPCLib();renderPCSLpanel();updateRPCLive();if(!silent)pushLive();}
+function rpcLoadSong(song,silent=false){if(!song)return;song=freshSong(song);rpcGridSong=song;live.songId=song.id;const fs=flatSlides(song);if(live.idx<0||live.idx>=fs.length)live.idx=0;renderPCGrid(song);renderPCLib();renderPCSLpanel();updateRPCLive();if(!silent){live.idx=0;pushLive();}}
 
 function renderPCGrid(song){
   const grid=$('rpc-grid');const title=$('rpc-song-title');const ctr=$('rpc-ctr');
   document.querySelectorAll('#rpc-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
   if(!song||!grid)return;
-  if(title){title.textContent=song.title+(song.artist?' &#8212; '+song.artist:'');title.style.color='var(--tx)';}
-  const fs=flatSlides(song);if(ctr)ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`&#8212; / ${fs.length}`;
+  if(title){title.innerHTML=esc(song.title)+(song.artist?' — '+esc(song.artist):'');title.style.color='var(--tx)';}
+  const fs=flatSlides(song);if(ctr)ctr.textContent=live.idx>=0?`${live.idx+1} / ${fs.length}`:`— / ${fs.length}`;
   let html='';let gi=0;
-  song.sections.forEach(sec=>{html+=`<div class="pc-slbl">${esc(sec.name)}</div><div class="pc-srow">`;sec.slides.forEach(sl=>{const gIdx=gi++;html+=`<div class="pc-sc${live.idx===gIdx?' on':''}" onclick="rpcGoTo(${gIdx})"><div class="pc-scn">${gIdx+1}</div><div class="pc-sct">${esc(sl.primary.join('\n')).replace(/\n/g,'<br>')}</div>${sl.secondary.length?`<div class="pc-scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});html+='</div>';});
+  song.sections.forEach(sec=>{html+=`<div class="pc-slbl">${esc(sec.name)}</div><div class="pc-srow">`;sec.slides.forEach(sl=>{const gIdx=gi++;html+=`<div class="pc-sc${live.idx===gIdx?' on':''}" onclick="rpcGoTo(${gIdx})"><div class="pc-scn">${gIdx+1}</div><div class="pc-sct">${esc((sl.primary||[]).join('\n')).replace(/\n/g,'<br>')}</div>${sl.secondary&&sl.secondary.length?`<div class="pc-scs">${esc(sl.secondary.join('\n')).replace(/\n/g,'<br>')}</div>`:''}</div>`;});html+='</div>';});
   grid.innerHTML=html;const ac=grid.querySelector('.pc-sc.on');if(ac)ac.scrollIntoView({block:'nearest',behavior:'smooth'});
 }
-function updateRPCLive(){const song=rpcGridSong;const fs=song?flatSlides(song):[];const cur=fs[live.idx];const lt=$('rpc-ltxt'),ls=$('rpc-lsec');if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'&#8212;';lt.style.color=cur?'var(--tx)':'var(--txd)';}if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';}
+function updateRPCLive(){const song=rpcGridSong;const fs=song?flatSlides(song):[];const cur=fs[live.idx];const lt=$('rpc-ltxt'),ls=$('rpc-lsec');if(lt){lt.innerHTML=cur?esc(cur.primary.join('\n')).replace(/\n/g,'<br>'):'—';lt.style.color=cur?'var(--tx)':'var(--txd)';}if(ls)ls.innerHTML=cur?.secondary?.length?esc(cur.secondary.join('\n')).replace(/\n/g,'<br>'):'';}
 function rpcGoTo(idx){live.idx=idx;live.blank=false;const song=rpcGridSong;if(!song)return;const fs=flatSlides(song);if(idx<0||idx>=fs.length)return;renderPCGrid(song);updateRPCLive();rpcBlankUI();pushLive();}
 function rpcBlankUI(){const b=$('rpc-blank-btn');if(!b)return;const on=live.blank;b.textContent=on?'SHOW':'BLANK';b.style.background=on?'var(--livebg)':'var(--blbg)';b.style.borderColor=on?'var(--live)':'var(--bl)';b.style.color=on?'var(--live)':'var(--bl)';}
 
@@ -1156,7 +1182,7 @@ function rpcBlankUI(){const b=$('rpc-blank-btn');if(!b)return;const on=live.blan
 function renderMobRemote(state){
   if(!state)return;
   const song=state.song;const curIdx=typeof state.idx==='number'?state.idx:0;const isBlk=state.blank||false;
-  const sn=$('rem-sname');if(sn)sn.textContent=song?(song.title+(song.artist?' &#8212; '+song.artist:'')):'Waiting for song&#8230;';
+  const sn=$('rem-sname');if(sn)sn.textContent=song?(song.title+(song.artist?' — '+song.artist:'')):'Waiting for song…';
   const rb=$('rem-blk');if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
   document.querySelectorAll('#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));
   if(!song)return;
@@ -1183,8 +1209,10 @@ function renderMobLibSearch(query){
 function filterMobGrid(v){renderMobLibSearch(v);}
 
 function mobLoadSong(id){
-  const song=lib.find(s=>s.id===id);if(!song)return;
-  const fresh=freshSong(song);live.songId=id;live.idx=0;live.blank=false;
+  const song=lib.find(s=>s.id===id);
+  if(!song){toast('Song not found - library may still be loading');return;}
+  const fresh=freshSong(song);if(!fresh)return;
+  live.songId=id;live.idx=0;live.blank=false;
   const state={...live,song:fresh,cfg};remLive=state;
   if(bc)bc.postMessage({type:'live',state});if(fbRef)fbRef.set(state).catch(()=>{});
   mobSearchActive=false;
@@ -1215,7 +1243,7 @@ function openMobSL(){renderMobSLbody();const bg=$('mob-sl-bg');if(bg)bg.classLis
 function closeMobSL(){const bg=$('mob-sl-bg');if(bg)bg.classList.remove('show');}
 function renderMobSLbody(){
   const body=$('mob-sl-body');if(!body)return;
-  if(!sls.length){body.innerHTML='<div class="empty">No saved setlists</div>';return;}
+  if(!sls.length){body.innerHTML='<div class="empty" style="padding:20px"><div class="eic">&#128203;</div>No setlists yet<div style="font-size:11px;color:var(--txd);margin-top:8px">Create setlists on the OBS laptop &#8212; they sync here automatically.</div></div>';return;}
   body.innerHTML=sls.map(sl=>{const cnt=sl.songIds.length;const isOn=rpcActiveSLid===sl.id||activeSLid===sl.id;return`<div class="sl-big${isOn?' on':''}" onclick="mobLoadSetlist('${sl.id}')"><div><div class="sl-big-name">${esc(sl.name)}</div><div class="sl-big-cnt">${cnt} song${cnt!==1?'s':''}</div></div><span style="font-size:18px">${isOn?'&#10003;':''}</span></div>`;}).join('');
 }
 function mobLoadSetlist(id){
@@ -1227,12 +1255,13 @@ function mobLoadSetlist(id){
 // REMOTE APPLY — live.idx ALWAYS set before any render
 function remApply(state){
   if(!state)return;
+  if(state.song)state={...state,song:normalizeSong(state.song)};
   remLive=state;
   const song=state.song;const curIdx=typeof state.idx==='number'?state.idx:0;const isBlk=state.blank||false;
   // Update live state FIRST so every render call sees correct values
   live.idx=curIdx;live.blank=isBlk;
   // Shared header
-  const sn=$('rem-sname');if(sn)sn.textContent=song?(song.title+(song.artist?' &#8212; '+song.artist:'')):'Waiting for song&#8230;';
+  const sn=$('rem-sname');if(sn)sn.textContent=song?(song.title+(song.artist?' — '+song.artist:'')):'Waiting for song…';
   const rb=$('rem-blk');if(rb){rb.textContent=isBlk?'SHOW':'BLANK';rb.style.borderColor=isBlk?'var(--live)':'var(--bl)';rb.style.color=isBlk?'var(--live)':'var(--bl)';rb.style.background=isBlk?'var(--livebg)':'var(--blbg)';}
   if(remView==='pc'&&song){
     if(!rpcGridSong||rpcGridSong.id!==song.id){rpcGridSong=song;renderPCGrid(song);renderPCLib();renderPCSLpanel();}
@@ -1249,8 +1278,18 @@ function rNext(){const song=remLive.song;if(!song)return;const ni=(remLive.idx||
 function rGoTo(idx){
   live.idx=idx;live.blank=false;
   const upd={...remLive,idx,blank:false};
-  if(bc)bc.postMessage({type:'live',state:upd});if(fbRef)fbRef.set(upd).catch(()=>{});
-  remApply(upd);
+  remLive=upd;
+  // Direct UI update — don't rely on remApply/Firebase echo for responsiveness
+  if(remView==='pc'&&rpcGridSong){
+    renderPCGrid(rpcGridSong);updateRPCLive();rpcBlankUI();
+  }
+  if(remView==='mobile'){renderMobRemote(upd);}
+  // Update shared BLANK button
+  const rb=$('rem-blk');
+  if(rb)rb.textContent=live.blank?'SHOW':'BLANK';
+  // Push to display via Firebase/BC
+  if(bc)bc.postMessage({type:'live',state:upd});
+  if(fbRef)fbRef.set(upd).catch(()=>{});
 }
 
 // VIEW SWITCH
@@ -1259,7 +1298,7 @@ function setRView(v){
   $('vt-mob').classList.toggle('on',v==='mobile');$('vt-pc').classList.toggle('on',v==='pc');
   const pc=$('rem-pc');const mob=$('rem-mob');
   if(pc)pc.classList.toggle('show',v==='pc');if(mob)mob.classList.toggle('show',v==='mobile');
-  if(v==='pc'){initPCRemote();if(remLive&&remLive.song)rpcLoadSong(remLive.song,true);}
+  if(v==='pc'){initPCRemote();if(remLive&&remLive.song)rpcLoadSong(normalizeSong(remLive.song),true);}
   if(v==='mobile'&&remLive)renderMobRemote(remLive);
 }
 
@@ -1271,10 +1310,12 @@ function initDisp(){
   try{const lv=JSON.parse(localStorage.getItem(LSK.live)||'{}');if(lv.song)applyLU(lv);}catch(e){}
 }
 
-let _cfgSyncedI=false;
+let _cfgSynced=false;
 function applyLU(state){
   if(!state)return;
-  if(MODE==='remote'&&!_cfgSyncedI&&state.cfg){cfg={...DEFS,...state.cfg};_cfgSyncedI=true;['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});document.querySelectorAll('#rpc-lps-btns .btn-sm,#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));}
+  // Normalize song data (Firebase can corrupt empty arrays)
+  if(state.song)state={...state,song:normalizeSong(state.song)};
+  if(MODE==='remote'&&!_cfgSynced&&state.cfg){cfg={...DEFS,...state.cfg};_cfgSynced=true;['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});document.querySelectorAll('#rpc-lps-btns .btn-sm,#rmob-lps-btns .btn-sm').forEach((b,i)=>b.classList.toggle('on',[1,2,4][i]===cfg.lps));}
   else if(state.cfg&&state.cfg.lps){cfg.lps=state.cfg.lps;}
   if(MODE==='display'){
     if(state.blank){clrDisp(state.cfg||state.settings);return;}
@@ -1315,14 +1356,14 @@ function initRemote(){const rm=$('rem-mode');if(rm)rm.style.display='flex';loadA
 function showRemoteSetup(){const s=$('rem-setup'),m=$('rem-main');if(s)s.style.display='flex';if(m)m.style.display='none';}
 function showRemoteMain(){
   const s=$('rem-setup'),m=$('rem-main');if(s)s.style.display='none';if(m)m.style.display='flex';
-  if(fbDB){fbDataRef=fbDB.ref('altarlyrics/data');fbDataRef.on('value',snap=>{const d=snap.val();if(!d)return;if(d.library)lib=d.library;if(d.setlists)sls=d.setlists;renderPCLib();renderPCSLsel();renderPCSLpanel();renderMobSLbody();});}
+  if(fbDB){fbDataRef=fbDB.ref('altarlyrics/data');fbDataRef.on('value',snap=>{const d=snap.val();if(!d)return;if(d.library)lib=d.library;if(d.setlists)sls=d.setlists;renderPCLib();renderPCSLsel();renderPCSLpanel();renderMobSLbody();if($('mob-sl-bg')&&$('mob-sl-bg').classList.contains('show'))renderMobSLbody();});}
   setRView('mobile');if(cfg.swipeEnabled)initSwipe();
   try{const st=JSON.parse(localStorage.getItem(LSK.live)||'{}');if(st.song)applyLU(st);}catch(e){}
 }
 function remSetupConnect(){
   const ak=(gv('rs-ak')||'').trim();const ad=(gv('rs-ad')||'').trim();const du=(gv('rs-du')||'').trim();const pi=(gv('rs-pi')||'').trim();const st=$('rs-status');
   if(!ak||!du){if(st){st.textContent='API Key and Database URL required';st.style.color='var(--bl)';}return;}
-  cfg.fb={apiKey:ak,authDomain:ad,databaseURL:du,projectId:pi};saveAll();if(st){st.textContent='Connecting&#8230;';st.style.color='var(--txd)';}startRemote(st);
+  cfg.fb={apiKey:ak,authDomain:ad,databaseURL:du,projectId:pi};saveAll();if(st){st.textContent='Connecting…';st.style.color='var(--txd)';}startRemote(st);
 }
 function remDisconnect(){cfg.fb={apiKey:'',authDomain:'',databaseURL:'',projectId:''};saveAll();if(fbRef){try{fbRef.off();}catch(e){}}fbRef=null;fbDB=null;showRemoteSetup();}
 function startRemote(statusEl){
@@ -1331,7 +1372,7 @@ function startRemote(statusEl){
     try{if(typeof firebase==='undefined'){if(statusEl){statusEl.textContent='Firebase SDK not loaded';statusEl.style.color='var(--rd)';}return;}
       const app=firebase.apps.length?firebase.apps[0]:firebase.initializeApp(cfg.fb);fbDB=firebase.database(app);fbRef=fbDB.ref('altarlyrics/live');
       fbRef.on('value',snap=>{if(snap.val())applyLU(snap.val());});
-      if(statusEl){statusEl.textContent='&#10003; Connected!';statusEl.style.color='var(--gn)';}setTimeout(()=>showRemoteMain(),600);
+      if(statusEl){statusEl.textContent='✓ Connected!';statusEl.style.color='var(--gn)';}setTimeout(()=>showRemoteMain(),600);
     }catch(err){if(statusEl){statusEl.textContent='Error: '+err.message;statusEl.style.color='var(--rd)';}return;}
   }else{showRemoteMain();}
 }
@@ -1352,6 +1393,13 @@ function init(){
   else if(MODE==='remote'){initRemote();}
   else{initBC();$('ctrl-mode').style.display='flex';buildThemes();buildFonts();loadCfgUI();renderLib();renderSLsel();if(activeSLid){$('sl-sel').value=activeSLid;renderSLpanel();}else{renderSLpanel();}if(live.songId){const s=songById(live.songId);if(s)loadSong(s,true);}if(cfg.fb&&cfg.fb.apiKey){const f=cfg.fb;if($('fb-ak'))$('fb-ak').value=f.apiKey||'';if($('fb-ad'))$('fb-ad').value=f.authDomain||'';if($('fb-du'))$('fb-du').value=f.databaseURL||'';if($('fb-pi'))$('fb-pi').value=f.projectId||'';if($('gh-url'))$('gh-url').value=cfg.ghUrl||'';if(f.databaseURL)tryFirebase();}swTab('theme');}
 }
+function setAppH(){
+  const h=window.visualViewport?window.visualViewport.height:window.innerHeight;
+  document.documentElement.style.setProperty('--app-h',h+'px');
+}
+window.addEventListener('resize',setAppH);
+if(window.visualViewport)window.visualViewport.addEventListener('resize',setAppH);
+setAppH();
 document.addEventListener('DOMContentLoaded',()=>{const pi=$('pin-in');if(pi)pi.addEventListener('keydown',e=>{if(e.key==='Enter')checkPin();});init();});
 
 </script>
