@@ -187,7 +187,7 @@ select:focus,.cinp:focus{outline:none;border-color:var(--ac)}
 #rpc-grid-pnl{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
 #rpc-ctrl{width:var(--rw);background:var(--sf);border-left:1px solid var(--bd);
   display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
-#rem-mob{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+#rem-mob{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;isolation:isolate}
 #rem-mob.show{display:flex}
 #rmob-toolbar{display:flex;align-items:center;gap:5px;padding:6px 10px;
   background:var(--sf2);border-bottom:1px solid var(--bd);flex-shrink:0;min-height:0;overflow-x:auto;scrollbar-width:none}
@@ -237,13 +237,13 @@ select:focus,.cinp:focus{outline:none;border-color:var(--ac)}
 .pc-scn{font-size:9px;color:var(--txd);margin-bottom:3px}
 .pc-sct{font-size:11px;line-height:1.4;color:var(--tx)}
 .pc-scs{font-size:10px;color:var(--txd);line-height:1.3;margin-top:2px;font-style:italic}
-.mob-ov{position:fixed;inset:0;background:var(--bg);z-index:500;display:none;flex-direction:column;overflow:hidden}
+.mob-ov{position:absolute;inset:0;background:var(--bg);z-index:10;display:none;flex-direction:column;overflow:hidden}
 .mob-ov.show{display:flex}
 .mob-ov-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--sf);border-bottom:1px solid var(--bd);flex-shrink:0}
 .mob-ov-back{background:none;border:none;color:var(--ac);font-size:13px;cursor:pointer;padding:4px 6px;border-radius:5px}
 .mob-ov-title{font-size:14px;font-weight:700;flex:1}
 .mob-ov-body{flex:1;overflow-y:auto;padding:12px}
-#mob-sl-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:400;display:none;align-items:flex-end}
+#mob-sl-bg{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:9;display:none;align-items:flex-end}
 #mob-sl-bg.show{display:flex}
 #mob-sl-sheet{background:var(--sf);border-radius:14px 14px 0 0;width:100%;max-height:75vh;display:flex;flex-direction:column;overflow:hidden}
 .slsh-hdr{display:flex;align-items:center;padding:13px 16px 10px;border-bottom:1px solid var(--bd)}
@@ -583,27 +583,27 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
           <button onclick="rPrev()">&#9664; PREV</button>
           <button id="rmob-next" onclick="rNext()">NEXT &#9654;</button>
         </div>
+      
+      <!-- MOBILE OVERLAYS (position:absolute inside rem-mob) -->
+      <div id="mob-settings" class="mob-ov">
+        <div class="mob-ov-hdr">
+          <button class="mob-ov-back" onclick="closeMobSettings()">&#8592; Back</button>
+          <span class="mob-ov-title">Display Settings</span>
+        </div>
+        <div class="mob-ov-body" id="mob-settings-slot"></div>
       </div>
+      <div id="mob-sl-bg" onclick="if(event.target===this)closeMobSL()">
+        <div id="mob-sl-sheet">
+          <div class="slsh-hdr"><span>Setlists</span><button class="bic" onclick="closeMobSL()">&#10005;</button></div>
+          <div class="slsh-body" id="mob-sl-body"></div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </div>
 
-<!-- MOBILE SETTINGS -->
-<div id="mob-settings" class="mob-ov">
-  <div class="mob-ov-hdr">
-    <button class="mob-ov-back" onclick="closeMobSettings()">&#8592; Back</button>
-    <span class="mob-ov-title">Display Settings</span>
-  </div>
-  <div class="mob-ov-body" id="mob-settings-slot"></div>
-</div>
 
-<!-- MOBILE SETLIST -->
-<div id="mob-sl-bg">
-  <div id="mob-sl-sheet">
-    <div class="slsh-hdr"><span>Setlists</span><button class="bic" onclick="closeMobSL()">&#10005;</button></div>
-    <div class="slsh-body" id="mob-sl-body"></div>
-  </div>
-</div>
 
 <!-- SONG EDITOR -->
 <div class="mov" id="ed-modal">
@@ -692,6 +692,7 @@ let activeSLid=null,gridSong=null,edSongId=null;
 let bc=null,fbDB=null,fbRef=null,fbDataRef=null;
 let dispCur=null,remLive={song:null,idx:-1,blank:false},remView='mobile';
 let rpcActiveSLid=null,rpcGridSong=null,mobSearchActive=false;
+const DEVICE_ID='d'+Math.random().toString(36).substr(2,8);
 let _dataPushing=false;
 
 // UTILS
@@ -809,8 +810,8 @@ function pushLive(){
 function pushData(){
   if(!fbDataRef)return;
   _dataPushing=true;
-  fbDataRef.set({library:lib,setlists:sls})
-    .then(()=>setTimeout(()=>{_dataPushing=false;},1500))
+  fbDataRef.set({library:lib,setlists:sls,_pusher:DEVICE_ID})
+    .then(()=>{setTimeout(()=>{_dataPushing=false;},300);})
     .catch(()=>{_dataPushing=false;});
 }
 
@@ -836,12 +837,12 @@ function tryFirebase(){
     fbDataRef=fbDB.ref('altarlyrics/data');
     if(MODE==='controller'){
       fbDataRef.on('value',snap=>{
-        if(_dataPushing)return;
         const d=snap.val();
         if(!d){pushData();return;}
+        if(d._pusher===DEVICE_ID)return; // skip our own echo
         let changed=false;
-        if(d.library&&JSON.stringify(d.library)!==JSON.stringify(lib)){lib=d.library;changed=true;}
-        if(d.setlists&&JSON.stringify(d.setlists)!==JSON.stringify(sls)){sls=d.setlists;changed=true;}
+        if(d.library){lib=d.library;changed=true;}
+        if(d.setlists){sls=d.setlists;changed=true;}
         if(changed){saveAll();renderLib();renderSLsel();renderSLpanel();}
       });
       setTimeout(()=>pushData(),800);
@@ -1426,7 +1427,13 @@ function initRemote(){const rm=$('rem-mode');if(rm)rm.style.display='flex';loadA
 function showRemoteSetup(){const s=$('rem-setup'),m=$('rem-main');if(s)s.style.display='flex';if(m)m.style.display='none';}
 function showRemoteMain(){
   const s=$('rem-setup'),m=$('rem-main');if(s)s.style.display='none';if(m)m.style.display='flex';
-  if(fbDB){fbDataRef=fbDB.ref('altarlyrics/data');fbDataRef.on('value',snap=>{const d=snap.val();if(!d)return;if(d.library)lib=d.library;if(d.setlists)sls=d.setlists;renderPCLib();renderPCSLsel();renderPCSLpanel();renderMobSLbody();if($('mob-sl-bg')&&$('mob-sl-bg').classList.contains('show'))renderMobSLbody();});}
+  if(fbDB){fbDataRef=fbDB.ref('altarlyrics/data');fbDataRef.on('value',snap=>{
+      const d=snap.val();if(!d)return;
+      if(d._pusher===DEVICE_ID)return; // skip our own echo
+      if(d.library)lib=d.library;
+      if(d.setlists)sls=d.setlists;
+      renderPCLib();renderPCSLsel();renderPCSLpanel();renderMobSLbody();
+    });}
   setRView('mobile');if(cfg.swipeEnabled)initSwipe();
   try{const st=JSON.parse(localStorage.getItem(LSK.live)||'{}');if(st.song)applyLU(st);}catch(e){}
 }
