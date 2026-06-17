@@ -411,6 +411,22 @@ textarea.fi{resize:vertical;font-family:monospace;line-height:1.5;min-height:100
               <button class="btn btn-sm on" onclick="setPad('M')">M</button>
               <button class="btn btn-sm" onclick="setPad('L')">L</button>
             </div></div>
+          <div class="sep">
+            <div class="seplbl">Translation Style</div>
+            <div class="tglrow"><span class="tgllbl">Match Primary</span>
+              <label class="tgl"><input type="checkbox" id="sec-match" onchange="onSecMatch()"><span class="tgls"></span></label></div>
+            <div id="sec-custom">
+              <div class="crow"><div class="clbl">Color</div>
+                <div class="crow-row"><input type="color" id="sec-col" value="#cccccc" onchange="SC()">
+                  <input type="text" class="cinp" id="sec-colh" value="#cccccc" oninput="syncHex('sec-col')"></div></div>
+              <div class="crow"><div class="clbl">Size: <span id="sec-fsz-v">34</span>px</div>
+                <input type="range" id="sec-fsz" min="12" max="100" value="34" oninput="SC()"></div>
+              <div class="crow"><div class="clbl">Opacity: <span id="sec-op-v">88</span>%</div>
+                <input type="range" id="sec-op" min="10" max="100" value="88" oninput="SC()"></div>
+              <div class="tglrow"><span class="tgllbl">Italic</span>
+                <label class="tgl"><input type="checkbox" id="sec-ital" onchange="SC()"><span class="tgls"></span></label></div>
+            </div>
+          </div>
         </div>
         <div class="tpane" id="tp-pos">
           <div class="crow"><div class="clbl">Horizontal: <span id="ph-v">50</span>%</div>
@@ -675,7 +691,8 @@ const DEFS={lps:2,theme:'classic-white',font:'Montserrat',fontSize:48,textColor:
   bgC2:'#1a1a2e',bgOpacity:75,bgImg:null,posH:50,posV:85,blockW:80,animation:'fade',
   lineSpacing:'1.5',padding:'M',showTitle:false,titlePos:'bottom-center',showArtist:false,
   resolution:'1920x1080',pinEnabled:false,pinValue:'',swipeEnabled:true,
-  fb:{apiKey:'',authDomain:'',databaseURL:'',projectId:''},ghUrl:''};
+  fb:{apiKey:'',authDomain:'',databaseURL:'',projectId:''},ghUrl:'',
+  sec:{matchPrimary:false,color:'#cccccc',fontSize:34,opacity:88,italic:false}};
 const THEMES={
   'classic-white':{n:'Classic White',bgType:'solid',bgC1:'#000000',bgC2:'#000000',bgOp:72,tc:'#ffffff',font:'Montserrat',outline:false},
   'gold-black':   {n:'Gold & Black', bgType:'solid',bgC1:'#1a1200',bgC2:'#1a1200',bgOp:85,tc:'#FFD700',font:'Oswald',    outline:false},
@@ -909,6 +926,14 @@ function loadCfgUI(){
   selBtns('pad-btns',['S','M','L'],cfg.padding);
   selBtns('ani-btns',['cut','fade','slide'],cfg.animation);
   buildThemes();buildFonts();
+  // Translation style
+  const sec=cfg.sec||{};
+  sc('sec-match',sec.matchPrimary||false);
+  sv('sec-col',sec.color||'#cccccc');sv('sec-colh',sec.color||'#cccccc');
+  sv('sec-fsz',sec.fontSize||34);const sfv=$('sec-fsz-v');if(sfv)sfv.textContent=sec.fontSize||34;
+  sv('sec-op',sec.opacity??88);const sov=$('sec-op-v');if(sov)sov.textContent=sec.opacity??88;
+  sc('sec-ital',sec.italic||false);
+  const scp=$('sec-custom');if(scp)scp.style.display=(sec.matchPrimary||false)?'none':'';
 }
 
 function selBtns(pid,vals,active){document.querySelectorAll('#'+pid+' .btn-sm').forEach((b,i)=>b.classList.toggle('on',vals[i]===active));}
@@ -918,6 +943,16 @@ function updateOCrow(){const r=$('oc-row');if(r)r.style.display=cfg.outline?'':'
 function onOutlineChange(){cfg.outline=gc('otgl');updateOCrow();SC();}
 function updatePinRow(){const r=$('pin-row');if(r)r.style.display=cfg.pinEnabled?'':'none';}
 function updateTitleOpts(){const o=$('ttl-opts');if(o)o.style.display=cfg.showTitle?'':'none';}
+function onSecMatch(){
+  const sm=gc('sec-match');
+  const scp=$('sec-custom');if(scp)scp.style.display=sm?'none':'';
+  SC();
+}
+function onRSecMatch(pfx){
+  const sm=document.getElementById(pfx+'sec-match');if(!sm)return;
+  const scp=document.getElementById(pfx+'sec-custom');if(scp)scp.style.display=sm.checked?'none':'';
+  rSC(pfx);
+}
 
 function SC(){
   cfg.bgType=gv('bg-type')||cfg.bgType;cfg.bgC1=gv('bgc1')||gv('bgc1g')||cfg.bgC1;cfg.bgC2=gv('bgc2g')||cfg.bgC2;
@@ -927,7 +962,20 @@ function SC(){
   cfg.showTitle=gc('sttgl');cfg.titlePos=gv('ttl-pos')||'bottom-center';cfg.showArtist=gc('artgl');
   cfg.resolution=gv('res-sel')||cfg.resolution;cfg.pinEnabled=gc('pintgl');cfg.pinValue=gv('pin-val')||'';cfg.swipeEnabled=gc('swptgl');
   $('bgo-v').textContent=cfg.bgOpacity;$('fsz-v').textContent=cfg.fontSize;$('ph-v').textContent=cfg.posH;$('pv-v').textContent=cfg.posV;$('bw-v').textContent=cfg.blockW;
-  updateTitleOpts();updatePinRow();saveAll();pushLive();
+  updateTitleOpts();updatePinRow();
+  // Translation style
+  const sm=gc('sec-match');
+  cfg.sec={
+    matchPrimary:sm,
+    color:gv('sec-col')||cfg.sec?.color||'#cccccc',
+    fontSize:gn('sec-fsz')||cfg.sec?.fontSize||34,
+    opacity:gn('sec-op')!==0?gn('sec-op'):cfg.sec?.opacity??88,
+    italic:gc('sec-ital')
+  };
+  const scp=$('sec-custom');if(scp)scp.style.display=sm?'none':'';
+  const sfv=$('sec-fsz-v');if(sfv)sfv.textContent=cfg.sec.fontSize;
+  const sov=$('sec-op-v');if(sov)sov.textContent=cfg.sec.opacity;
+  saveAll();pushLive();
 }
 function syncHex(id){const h=gv(id+'h');if(h&&/^#[0-9a-fA-F]{6}$/.test(h)){const e=$(id);if(e){e.value=h;SC();}}}
 function applyTheme(k){const t=THEMES[k];if(!t)return;cfg.theme=k;cfg.bgType=t.bgType;cfg.bgC1=t.bgC1;cfg.bgC2=t.bgC2;cfg.bgOpacity=t.bgOp;cfg.textColor=t.tc;cfg.font=t.font;cfg.outline=t.outline;loadCfgUI();['rpc-','mob-'].forEach(p=>{if(document.getElementById(p+'thm-grid'))rWriteCfg(p);});saveAll();pushLive();}
@@ -1167,6 +1215,22 @@ function buildSettingsHTML(pfx){
         <button class="btn btn-sm on" onclick="rSetPad('${p}','M')">M</button>
         <button class="btn btn-sm" onclick="rSetPad('${p}','L')">L</button>
       </div></div>
+    <div class="sep">
+      <div class="seplbl">Translation Style</div>
+      <div class="tglrow"><span class="tgllbl">Match Primary</span>
+        <label class="tgl"><input type="checkbox" id="${p}sec-match" onchange="onRSecMatch('${p}')"><span class="tgls"></span></label></div>
+      <div id="${p}sec-custom">
+        <div class="crow"><div class="clbl">Color</div>
+          <div class="crow-row"><input type="color" id="${p}sec-col" value="#cccccc" onchange="rSC('${p}')">
+            <input type="text" class="cinp" id="${p}sec-colh" value="#cccccc" oninput="rSyncHex('${p}sec-col')"></div></div>
+        <div class="crow"><div class="clbl">Size: <span id="${p}sec-fsz-v">34</span>px</div>
+          <input type="range" id="${p}sec-fsz" min="12" max="100" value="34" oninput="rSC('${p}')"></div>
+        <div class="crow"><div class="clbl">Opacity: <span id="${p}sec-op-v">88</span>%</div>
+          <input type="range" id="${p}sec-op" min="10" max="100" value="88" oninput="rSC('${p}')"></div>
+        <div class="tglrow"><span class="tgllbl">Italic</span>
+          <label class="tgl"><input type="checkbox" id="${p}sec-ital" onchange="rSC('${p}')"><span class="tgls"></span></label></div>
+      </div>
+    </div>
   </div>
   <div id="${p}tp-pos" style="display:none">
     <div class="crow"><div class="clbl">Horizontal: <span id="${p}ph-v">50</span>%</div><input type="range" id="${p}pos-h" min="0" max="100" value="50" oninput="rSC('${p}')"></div>
@@ -1196,6 +1260,16 @@ function rWriteCfg(pfx){
   const bwv=document.getElementById(pfx+'bw-v');if(bwv)bwv.textContent=cfg.blockW;
   rUpdateBGUI(pfx);rUpdateOCrow(pfx);rBuildThemes(pfx);rBuildFonts(pfx);
   ['aln-btns','pad-btns','ani-btns'].forEach((id,i)=>{const vals=[['left','center','right'],['S','M','L'],['cut','fade','slide']][i];const active=[cfg.textAlign,cfg.padding,cfg.animation][i];document.querySelectorAll('#'+pfx+id+' .btn-sm').forEach((b,j)=>b.classList.toggle('on',vals[j]===active));});
+  // Translation style
+  const sec=cfg.sec||{};
+  const svp=(id,v)=>{const e=document.getElementById(pfx+id);if(e)e.value=v;};
+  const scp2=(id,v)=>{const e=document.getElementById(pfx+id);if(e)e.checked=v;};
+  svp('sec-col',sec.color||'#cccccc');svp('sec-colh',sec.color||'#cccccc');
+  svp('sec-fsz',sec.fontSize||34);svp('sec-op',sec.opacity??88);
+  scp2('sec-match',sec.matchPrimary||false);scp2('sec-ital',sec.italic||false);
+  const scp=document.getElementById(pfx+'sec-custom');if(scp)scp.style.display=(sec.matchPrimary||false)?'none':'';
+  const sfv=document.getElementById(pfx+'sec-fsz-v');if(sfv)sfv.textContent=sec.fontSize||34;
+  const sov=document.getElementById(pfx+'sec-op-v');if(sov)sov.textContent=sec.opacity??88;
 }
 
 function rSC(pfx){
@@ -1210,6 +1284,21 @@ function rSC(pfx){
   const phv=document.getElementById(pfx+'ph-v');if(phv)phv.textContent=cfg.posH;
   const pvv=document.getElementById(pfx+'pv-v');if(pvv)pvv.textContent=cfg.posV;
   const bwv=document.getElementById(pfx+'bw-v');if(bwv)bwv.textContent=cfg.blockW;
+  // Translation style
+  const gcp2=id=>{const e=document.getElementById(pfx+id);return e?e.checked:false};
+  const sm2=gcp2('sec-match');
+  const secFszEl=document.getElementById(pfx+'sec-fsz');
+  const secOpEl=document.getElementById(pfx+'sec-op');
+  cfg.sec={
+    matchPrimary:sm2,
+    color:document.getElementById(pfx+'sec-col')?.value||cfg.sec?.color||'#cccccc',
+    fontSize:secFszEl?+secFszEl.value:cfg.sec?.fontSize||34,
+    opacity:secOpEl?+secOpEl.value:cfg.sec?.opacity??88,
+    italic:gcp2('sec-ital')
+  };
+  const scp=document.getElementById(pfx+'sec-custom');if(scp)scp.style.display=sm2?'none':'';
+  const sfv=document.getElementById(pfx+'sec-fsz-v');if(sfv)sfv.textContent=cfg.sec.fontSize;
+  const sov=document.getElementById(pfx+'sec-op-v');if(sov)sov.textContent=cfg.sec.opacity;
   saveAll();pushLive();
 }
 function rSyncHex(id){const hexEl=document.getElementById(id+'h');const picEl=document.getElementById(id);if(!hexEl||!picEl)return;const h=hexEl.value;if(h&&/^#[0-9a-fA-F]{6}$/.test(h)){picEl.value=h;}}
@@ -1579,7 +1668,18 @@ function showSlide(slide,song,c){
   // Title anchor
   const ta2=$('ttl-anchor');if(ta2){const needAnchor=(c.showTitle&&song?.title)||(c.showArtist&&song?.artist);if(needAnchor){const pos=c.titlePos||'bottom-center';const posMap={'top-left':'top:0;left:0;right:auto;bottom:auto;text-align:left','top-center':'top:0;left:0;right:0;bottom:auto;text-align:center','top-right':'top:0;right:0;left:auto;bottom:auto;text-align:right','bottom-left':'bottom:0;left:0;right:auto;top:auto;text-align:left','bottom-center':'bottom:0;left:0;right:0;top:auto;text-align:center','bottom-right':'bottom:0;right:0;left:auto;top:auto;text-align:right'};ta2.style.cssText=`position:absolute;z-index:3;pointer-events:none;padding:10px 16px;display:block;${posMap[pos]||posMap['bottom-center']}`;const tsz=Math.max(14,(c.fontSize||48)*.55)+'px';const asz=Math.max(12,(c.fontSize||48)*.42)+'px';const td=$('ttl-disp');if(td){if(c.showTitle&&song?.title){td.style.cssText=`font-family:${font};font-size:${tsz};color:${tc};text-shadow:${sh};display:block`;td.textContent=song.title;}else{td.style.display='none';}}const ad=$('artist-disp');if(ad){if(c.showArtist&&song?.artist){ad.style.cssText=`font-family:${font};font-size:${asz};color:${tc};opacity:.75;text-shadow:${sh};display:block`;ad.textContent=song.artist;}else{ad.style.display='none';}}}else{ta2.style.display='none';}}
   const anim=c.animation||'fade';
-  function setContent(){priEl.innerHTML=slide.primary.map(l=>`<span class="dl">${l}</span>`).join('');Object.assign(priEl.style,{fontFamily:font,fontSize:fsz,color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block'});if(slide.secondary&&slide.secondary.length){secEl.innerHTML=slide.secondary.map(l=>`<span class="dl">${l}</span>`).join('');Object.assign(secEl.style,{fontFamily:font,fontSize:Math.max(14,(c.fontSize||48)*.7)+'px',color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block',marginTop:'5px',opacity:'.88'});}else{secEl.style.display='none';}}
+  function setContent(){priEl.innerHTML=slide.primary.map(l=>`<span class="dl">${l}</span>`).join('');Object.assign(priEl.style,{fontFamily:font,fontSize:fsz,color:tc,textAlign:ta,lineHeight:ls,textShadow:sh,display:'block'});if(slide.secondary&&slide.secondary.length){
+    secEl.innerHTML=slide.secondary.map(l=>`<span class="dl">${l}</span>`).join('');
+    const sc2=c.sec||{};
+    const secMatch=sc2.matchPrimary||false;
+    const secColor=secMatch?tc:(sc2.color||'#cccccc');
+    const secFsz=secMatch?fsz:(Math.max(12,sc2.fontSize||34))+'px';
+    const secOp=secMatch?1:((sc2.opacity??88)/100);
+    const secStyle=secMatch?'':(sc2.italic?'font-style:italic;':'');
+    Object.assign(secEl.style,{fontFamily:font,fontSize:secFsz,color:secColor,textAlign:ta,
+      lineHeight:ls,textShadow:sh,display:'block',marginTop:'6px',opacity:String(secOp),cssText:undefined});
+    secEl.style.cssText=`font-family:${font};font-size:${secFsz};color:${secColor};text-align:${ta};line-height:${ls};text-shadow:${sh};display:block;margin-top:6px;opacity:${secOp};${secStyle}`;
+  }else{secEl.style.display='none';}}
   if(anim==='cut'||!dispCur){txEl.className='';setContent();}
   else{txEl.classList.remove('afi','asi');txEl.classList.add(anim==='slide'?'aso':'afo');setTimeout(()=>{setContent();txEl.classList.remove('afo','aso');txEl.classList.add(anim==='slide'?'asi':'afi');},210);}
   dispCur=slide;
